@@ -38,7 +38,7 @@ export class PermissionService {
   private questionPort: number | null = null;
   private rateLimiter = new RateLimiter(RATE_LIMIT_WINDOW_MS, RATE_LIMIT_MAX_REQUESTS);
 
-  constructor(authToken: string, fileOperationPolicy: FileOperationPolicy = 'standard') {
+  constructor(authToken: string, fileOperationPolicy: FileOperationPolicy = 'create_copy_only') {
     this.permissionHandler = createPermissionHandler();
     this.authToken = authToken;
     this.fileOperationPolicy = fileOperationPolicy;

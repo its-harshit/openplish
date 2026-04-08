@@ -32,11 +32,11 @@ export function PermissionDialog({ permissionRequest, onRespond }: PermissionDia
       try {
         const caps = await getAccomplish().getBuildCapabilities();
         if (!cancelled) {
-          setFileOpPolicy(caps.fileOperationPolicy ?? 'standard');
+          setFileOpPolicy(caps.fileOperationPolicy ?? 'create_copy_only');
         }
       } catch {
         if (!cancelled) {
-          setFileOpPolicy('standard');
+          setFileOpPolicy('create_copy_only');
         }
       }
     };

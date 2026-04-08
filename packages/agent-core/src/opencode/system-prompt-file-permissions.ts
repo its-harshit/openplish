@@ -1,15 +1,17 @@
 /**
  * File permission blocks for the agent system prompt.
- * Policy is selected via ACCOMPLISH_FILE_OPERATION_POLICY=create_copy_only (strict) or unset/standard.
+ * Default is create_copy_only (read + create/copy only; no modify/move/delete).
+ * Set ACCOMPLISH_FILE_OPERATION_POLICY=standard (or full) for full file operations with approval prompts.
  */
 
 export type FileOperationPolicy = 'standard' | 'create_copy_only';
 
 export function resolveFileOperationPolicyFromEnv(): FileOperationPolicy {
-  if (process.env.ACCOMPLISH_FILE_OPERATION_POLICY === 'create_copy_only') {
-    return 'create_copy_only';
+  const raw = process.env.ACCOMPLISH_FILE_OPERATION_POLICY?.trim().toLowerCase();
+  if (raw === 'standard' || raw === 'full') {
+    return 'standard';
   }
-  return 'standard';
+  return 'create_copy_only';
 }
 
 export function getFilePermissionSection(): string {
