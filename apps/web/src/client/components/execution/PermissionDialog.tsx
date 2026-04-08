@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { springs } from '../../lib/animations';
 import { Button } from '@/components/ui/button';
@@ -6,7 +6,12 @@ import { Card } from '@/components/ui/card';
 import { AlertTriangle, AlertCircle, File, Brain, Monitor } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { PermissionRequest } from '@accomplish_ai/agent-core/common';
-import { isDeleteOperation, getDisplayFilePaths } from './permission-utils';
+import { getAccomplish } from '@/lib/accomplish';
+import {
+  isDeleteOperation,
+  getDisplayFilePaths,
+  isFileOperationBlockedByPolicy,
+} from './permission-utils';
 import { PermissionDialogFile } from './PermissionDialogFile';
 import { PermissionDialogQuestion } from './PermissionDialogQuestion';
 import { PermissionDialogDesktopTool } from './PermissionDialogDesktopTool';
@@ -19,6 +24,31 @@ interface PermissionDialogProps {
 export function PermissionDialog({ permissionRequest, onRespond }: PermissionDialogProps) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [customResponse, setCustomResponse] = useState('');
+  const [fileOpPolicy, setFileOpPolicy] = useState<'standard' | 'create_copy_only' | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const caps = await getAccomplish().getBuildCapabilities();
+        if (!cancelled) {
+          setFileOpPolicy(caps.fileOperationPolicy ?? 'standard');
+        }
+      } catch {
+        if (!cancelled) {
+          setFileOpPolicy('standard');
+        }
+      }
+    };
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const effectiveFilePolicy = fileOpPolicy ?? 'standard';
+  const restrictedFileMode = effectiveFilePolicy === 'create_copy_only';
+  const blockedByPolicy = isFileOperationBlockedByPolicy(permissionRequest, effectiveFilePolicy);
 
   const handleRespond = (allowed: boolean) => {
     const isQuestion = permissionRequest.type === 'question';
@@ -76,24 +106,37 @@ export function PermissionDialog({ permissionRequest, onRespond }: PermissionDia
                 <AlertCircle className="h-5 w-5 text-warning" />
               )}
             </div>
-            <h3
-              className={cn('text-lg font-semibold', isDelete ? 'text-red-600' : 'text-foreground')}
-            >
-              {isDelete
-                ? 'File Deletion Warning'
-                : permissionRequest.type === 'file'
-                  ? 'File Permission Required'
-                  : permissionRequest.type === 'question'
-                    ? permissionRequest.header || 'Question'
-                    : permissionRequest.type === 'desktop'
-                      ? 'Desktop Action Approval'
-                      : 'Permission Required'}
-            </h3>
+            <div className="min-w-0 flex-1">
+              <h3
+                className={cn(
+                  'text-lg font-semibold',
+                  isDelete ? 'text-red-600' : 'text-foreground',
+                )}
+              >
+                {isDelete
+                  ? 'File Deletion Warning'
+                  : permissionRequest.type === 'file'
+                    ? 'File Permission Required'
+                    : permissionRequest.type === 'question'
+                      ? permissionRequest.header || 'Question'
+                      : permissionRequest.type === 'desktop'
+                        ? 'Desktop Action Approval'
+                        : 'Permission Required'}
+              </h3>
+              {blockedByPolicy && (
+                <p className="text-sm text-muted-foreground mt-1">
+                  This action is disabled by app policy. Allow is not available for this operation.
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="flex-1 overflow-y-auto px-6 min-h-0">
             {permissionRequest.type === 'file' && (
-              <PermissionDialogFile permissionRequest={permissionRequest} />
+              <PermissionDialogFile
+                permissionRequest={permissionRequest}
+                restrictedFilePolicy={restrictedFileMode && fileOpPolicy !== null}
+              />
             )}
             {permissionRequest.type === 'question' && (
               <PermissionDialogQuestion
@@ -124,9 +167,10 @@ export function PermissionDialog({ permissionRequest, onRespond }: PermissionDia
               className={cn('flex-1', isDelete && 'bg-red-600 hover:bg-red-700 text-white')}
               data-testid="permission-allow-button"
               disabled={
-                permissionRequest.type === 'question' &&
-                selectedOptions.length === 0 &&
-                !customResponse.trim()
+                blockedByPolicy ||
+                (permissionRequest.type === 'question' &&
+                  selectedOptions.length === 0 &&
+                  !customResponse.trim())
               }
             >
               {isDelete

@@ -82,63 +82,12 @@ Do not list capabilities unless the user explicitly asks.
 ##############################################################################
 </behavior>`;
 
-export const FILE_PERMISSION_SECTION = `<important name="filesystem-rules">
-##############################################################################
-# CRITICAL: FILE PERMISSION WORKFLOW - NEVER SKIP
-##############################################################################
-
-BEFORE using Write, Edit, Bash (with file ops), or ANY tool that touches files:
-1. FIRST: Call request_file_permission tool and wait for response
-2. ONLY IF response is "allowed": Proceed with the file operation
-3. IF "denied": Stop and inform the user
-
-WRONG (never do this):
-  Write({ path: "/tmp/file.txt", content: "..." })  ← NO! Permission not requested!
-
-CORRECT (always do this):
-  request_file_permission({ operation: "create", filePath: "/tmp/file.txt" })
-  → Wait for "allowed"
-  Write({ path: "/tmp/file.txt", content: "..." })  ← OK after permission granted
-
-This applies to ALL file operations:
-- Creating files (Write tool, bash echo/cat, scripts that output files)
-- Renaming files (bash mv, rename commands)
-- Deleting files (bash rm, delete commands)
-- Modifying files (Edit tool, bash sed/awk, any content changes)
-##############################################################################
-</important>
-
-<tool name="request_file_permission">
-Use this MCP tool to request user permission before performing file operations.
-
-<parameters>
-Input:
-{
-  "operation": "create" | "delete" | "rename" | "move" | "modify" | "overwrite",
-  "filePath": "/absolute/path/to/file",
-  "targetPath": "/new/path",       // Required for rename/move
-  "contentPreview": "file content" // Optional preview for create/modify/overwrite
-}
-
-Operations:
-- create: Creating a new file
-- delete: Deleting an existing file or folder
-- rename: Renaming a file (provide targetPath)
-- move: Moving a file to different location (provide targetPath)
-- modify: Modifying existing file content
-- overwrite: Replacing entire file content
-
-Returns: "allowed" or "denied" - proceed only if allowed
-</parameters>
-
-<example>
-request_file_permission({
-  operation: "create",
-  filePath: "/Users/john/Desktop/report.txt"
-})
-// Wait for response, then proceed only if "allowed"
-</example>
-</tool>`;
+export {
+  FILE_PERMISSION_SECTION_STANDARD as FILE_PERMISSION_SECTION,
+  FILE_PERMISSION_SECTION_CREATE_COPY_ONLY,
+  getFilePermissionSection,
+  resolveFileOperationPolicyFromEnv,
+} from './system-prompt-file-permissions.js';
 
 export const TASK_COMPLETION_BEHAVIOR = `<behavior>
 - Use AskUserQuestion tool for clarifying questions before starting ambiguous tasks

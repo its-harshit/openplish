@@ -669,6 +669,20 @@ const accomplishAPI = {
     ipcRenderer.invoke('connectors:complete-oauth', state, code),
   disconnectConnector: (connectorId: string): Promise<void> =>
     ipcRenderer.invoke('connectors:disconnect', connectorId),
+
+  getLocalMcpServers: (): Promise<import('@accomplish_ai/agent-core').LocalMcpServer[]> =>
+    ipcRenderer.invoke('local-mcp:list'),
+  addLocalMcpServer: (
+    name: string,
+    commandJson: string,
+    environmentJson?: string,
+    cwd?: string,
+  ): Promise<import('@accomplish_ai/agent-core').LocalMcpServer> =>
+    ipcRenderer.invoke('local-mcp:add', name, commandJson, environmentJson, cwd),
+  deleteLocalMcpServer: (id: string): Promise<void> => ipcRenderer.invoke('local-mcp:delete', id),
+  setLocalMcpServerEnabled: (id: string, enabled: boolean): Promise<void> =>
+    ipcRenderer.invoke('local-mcp:set-enabled', id, enabled),
+
   onMcpAuthCallback: (callback: (url: string) => void) => {
     const listener = (_: unknown, url: string) => callback(url);
     ipcRenderer.on('auth:mcp-callback', listener);
@@ -855,8 +869,11 @@ const accomplishAPI = {
   },
 
   // ── Build Capabilities ───────────────────────────────────────────────────
-  getBuildCapabilities: (): Promise<{ hasFreeMode: boolean; hasAnalytics: boolean }> =>
-    ipcRenderer.invoke('app:get-build-capabilities'),
+  getBuildCapabilities: (): Promise<{
+    hasFreeMode: boolean;
+    hasAnalytics: boolean;
+    fileOperationPolicy: 'standard' | 'create_copy_only';
+  }> => ipcRenderer.invoke('app:get-build-capabilities'),
 
   // ── App Close Dialog ────────────────────────────────────────────────────
   onCloseRequested: (callback: () => void): (() => void) => {

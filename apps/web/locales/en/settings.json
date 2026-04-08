@@ -367,6 +367,19 @@
     "disable": "Disable",
     "confirmDelete": "Click again to confirm",
     "delete": "Delete",
+    "localMcp": {
+      "title": "Local MCP servers",
+      "description": "Run stdio MCP servers on your machine (JSON argv array). Bundled Node is prepended to PATH for npx. Only add servers you trust.",
+      "loading": "Loading local MCP servers...",
+      "namePlaceholder": "Display name",
+      "commandPlaceholder": "[\"npx\", \"-y\", \"@scope/mcp-package\"]",
+      "envPlaceholder": "Optional environment JSON, e.g. {\"KEY\":\"value\"}",
+      "cwdPlaceholder": "Optional working directory (absolute path)",
+      "add": "Add local server",
+      "adding": "Adding...",
+      "addFailed": "Failed to add local MCP server",
+      "empty": "No local MCP servers configured"
+    },
     "slack": {
       "title": "Slack",
       "description": "Authenticate Slack so the agent can send messages and use Slack context through the built-in Slack MCP.",

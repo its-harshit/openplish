@@ -9,6 +9,7 @@ import {
   acquirePidLock,
   installCrashHandlers,
   noopRuntime,
+  resolveFileOperationPolicyFromEnv,
   type PidLockHandle,
   type AccomplishRuntime,
   PERMISSION_API_PORT,
@@ -123,7 +124,7 @@ async function main(): Promise<void> {
     accomplishRuntime,
   });
   const healthService = new HealthService();
-  const permissionService = new PermissionService(authToken);
+  const permissionService = new PermissionService(authToken, resolveFileOperationPolicyFromEnv());
   const thoughtStreamService = new ThoughtStreamService(authToken);
   const schedulerService = new SchedulerService(storage, (prompt, workspaceId) => {
     void taskService.startTask({ prompt, workspaceId });

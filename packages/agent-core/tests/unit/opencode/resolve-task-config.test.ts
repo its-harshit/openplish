@@ -28,6 +28,7 @@ function createMockStorage() {
     getConnectorTokens: vi.fn(() => null),
     setConnectorStatus: vi.fn(),
     storeConnectorTokens: vi.fn(),
+    getEnabledLocalMcpServers: vi.fn(() => []),
     getCloudBrowserConfig: vi.fn(() => null),
   } as unknown as Parameters<typeof resolveTaskConfig>[0]['storage'];
 }
@@ -168,6 +169,36 @@ describe('resolveTaskConfig', () => {
     });
 
     expect(result.configOptions.connectors).toBeUndefined();
+  });
+
+  it('includes localMcpServers when enabled entries exist', async () => {
+    const storage = createMockStorage();
+    vi.mocked(storage.getEnabledLocalMcpServers).mockReturnValue([
+      {
+        id: 'lm-1',
+        name: 'Test Local',
+        command: ['npx', '-y', '@example/mcp'],
+        isEnabled: true,
+        createdAt: '2025-01-01T00:00:00.000Z',
+        updatedAt: '2025-01-01T00:00:00.000Z',
+      },
+    ]);
+
+    const result = await resolveTaskConfig({
+      storage,
+      platform: 'darwin',
+      mcpToolsPath: '/tools',
+      userDataPath: '/data',
+      isPackaged: false,
+      getApiKey: () => null,
+    });
+
+    expect(result.configOptions.localMcpServers).toHaveLength(1);
+    expect(result.configOptions.localMcpServers![0]).toMatchObject({
+      id: 'lm-1',
+      name: 'Test Local',
+      command: ['npx', '-y', '@example/mcp'],
+    });
   });
 
   it('passes through authToken and port overrides', async () => {

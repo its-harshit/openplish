@@ -12,10 +12,11 @@
 import type { StorageAPI } from '../types/storage.js';
 import type { Skill } from '../common/types/skills.js';
 import type { ConfigGeneratorOptions, ProviderConfig } from './config-generator.js';
-import type { BrowserConfig } from './generator-mcp.js';
+import type { BrowserConfig, LocalMcpServerConfigEntry } from './generator-mcp.js';
 import { isTokenExpired, refreshAccessToken } from '../connectors/oauth-tokens.js';
 import { getKnowledgeNotesForPrompt } from '../storage/repositories/knowledgeNotes.js';
 import { buildProviderConfigs } from './config-builder.js';
+import type { AccomplishRuntime, StorageDeps } from './accomplish-runtime.js';
 
 export interface ResolveTaskConfigOptions {
   /** Storage API for reading connectors, cloud browser, sandbox, etc. */
@@ -33,6 +34,11 @@ export interface ResolveTaskConfigOptions {
 
   /** Optional Azure Foundry token for Entra ID auth */
   azureFoundryToken?: string;
+
+  /** Accomplish AI gateway (daemon injects real runtime; desktop may omit) */
+  accomplishRuntime?: AccomplishRuntime;
+  /** Key-value deps for Accomplish AI identity (daemon secure storage) */
+  accomplishStorageDeps?: StorageDeps;
 
   /** Permission and question API ports */
   permissionApiPort?: number;
@@ -90,6 +96,8 @@ export async function resolveTaskConfig(
     bundledNodeBinPath,
     getApiKey,
     azureFoundryToken,
+    accomplishRuntime,
+    accomplishStorageDeps,
     permissionApiPort,
     questionApiPort,
     authToken,
@@ -104,6 +112,8 @@ export async function resolveTaskConfig(
   const { providerConfigs, enabledProviders, modelOverride } = await buildProviderConfigs({
     getApiKey,
     azureFoundryToken,
+    accomplishRuntime,
+    accomplishStorageDeps,
   });
 
   // 2. Inject store:false for OpenAI to prevent 403 errors with project-scoped keys
@@ -112,10 +122,13 @@ export async function resolveTaskConfig(
   // 3. Resolve connectors with token refresh
   const connectors = await resolveConnectors(storage, log);
 
-  // 4. Resolve cloud browser config
+  // 4. User-defined local stdio MCP servers
+  const localMcpServers = resolveLocalMcpServers(storage);
+
+  // 5. Resolve cloud browser config
   const browser = resolveCloudBrowser(storage);
 
-  // 5. Resolve workspace knowledge notes
+  // 6. Resolve workspace knowledge notes
   let knowledgeNotes: string | undefined;
   if (workspaceId) {
     try {
@@ -147,6 +160,7 @@ export async function resolveTaskConfig(
       model: modelOverride?.model,
       smallModel: modelOverride?.smallModel,
       connectors: connectors.length > 0 ? connectors : undefined,
+      localMcpServers: localMcpServers.length > 0 ? localMcpServers : undefined,
       browser,
       knowledgeNotes,
       skillRootPaths,
@@ -224,6 +238,24 @@ async function resolveConnectors(
     });
   }
 
+  return result;
+}
+
+function resolveLocalMcpServers(storage: StorageAPI): LocalMcpServerConfigEntry[] {
+  const enabled = storage.getEnabledLocalMcpServers();
+  const result: LocalMcpServerConfigEntry[] = [];
+  for (const s of enabled) {
+    if (!s.command || s.command.length === 0) {
+      continue;
+    }
+    result.push({
+      id: s.id,
+      name: s.name,
+      command: [...s.command],
+      environment: s.environment,
+      cwd: s.cwd,
+    });
+  }
   return result;
 }
 

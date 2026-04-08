@@ -1,8 +1,10 @@
 import http from 'node:http';
+import { access } from 'node:fs/promises';
 import {
   createPermissionHandler,
   isFilePermissionRequest as coreIsFilePermissionRequest,
   isQuestionRequest as coreIsQuestionRequest,
+  type FileOperationPolicy,
   type PermissionHandlerAPI,
   type PermissionFileRequestData,
   type PermissionQuestionRequestData,
@@ -14,6 +16,15 @@ import { RateLimiter } from './rate-limiter.js';
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX_REQUESTS = 120;
 
+async function pathExists(path: string): Promise<boolean> {
+  try {
+    await access(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export class PermissionService {
   private permissionHandler: PermissionHandlerAPI;
   private permissionServer: http.Server | null = null;
@@ -22,13 +33,15 @@ export class PermissionService {
   private onPermissionRequest: ((request: unknown) => void) | null = null;
   private hasConnectedClients: (() => boolean) | null = null;
   private authToken: string;
+  private fileOperationPolicy: FileOperationPolicy;
   private permissionPort: number | null = null;
   private questionPort: number | null = null;
   private rateLimiter = new RateLimiter(RATE_LIMIT_WINDOW_MS, RATE_LIMIT_MAX_REQUESTS);
 
-  constructor(authToken: string) {
+  constructor(authToken: string, fileOperationPolicy: FileOperationPolicy = 'standard') {
     this.permissionHandler = createPermissionHandler();
     this.authToken = authToken;
+    this.fileOperationPolicy = fileOperationPolicy;
   }
 
   init(
@@ -96,11 +109,67 @@ export class PermissionService {
             return;
           }
 
+          const requestData = data as PermissionFileRequestData;
+          const operation = requestData.operation;
+
+          if (this.fileOperationPolicy === 'create_copy_only') {
+            if (
+              operation === 'delete' ||
+              operation === 'move' ||
+              operation === 'rename' ||
+              operation === 'modify' ||
+              operation === 'overwrite'
+            ) {
+              res.writeHead(200, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({ allowed: false }));
+              return;
+            }
+
+            if (operation === 'create') {
+              const isCopyRequest = Boolean(requestData.targetPath);
+              if (isCopyRequest && (!requestData.filePaths || requestData.filePaths.length === 0)) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(
+                  JSON.stringify({
+                    error:
+                      'Copy requests must include filePaths (sources) and targetPath (destination)',
+                  }),
+                );
+                return;
+              }
+
+              const destinations: string[] = [];
+              if (requestData.targetPath) {
+                destinations.push(requestData.targetPath);
+              } else if (requestData.filePath) {
+                destinations.push(requestData.filePath);
+              } else if (requestData.filePaths && requestData.filePaths.length > 0) {
+                // Batch create: treat filePaths as destination paths.
+                destinations.push(...requestData.filePaths);
+              }
+
+              if (destinations.length === 0) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(
+                  JSON.stringify({ error: 'Create requests must include a destination path' }),
+                );
+                return;
+              }
+
+              const destinationExists = await Promise.all(destinations.map((p) => pathExists(p)));
+              if (destinationExists.some(Boolean)) {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ allowed: false }));
+                return;
+              }
+            }
+          }
+
           const { requestId, promise } = this.permissionHandler.createPermissionRequest();
           const permissionRequest = this.permissionHandler.buildFilePermissionRequest(
             requestId,
             taskId,
-            data as PermissionFileRequestData,
+            requestData,
           );
 
           this.onPermissionRequest?.(permissionRequest);

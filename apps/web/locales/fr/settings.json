@@ -391,6 +391,19 @@
     "delete": "Supprimer",
     "customTitle": "Serveurs MCP personnalisés",
     "customDescription": "Ajoutez votre propre URL de serveur MCP distant. OAuth est pris en charge pour les serveurs qui exposent le flux d'autorisation standard.",
+    "localMcp": {
+      "title": "Serveurs MCP locaux",
+      "description": "Lancez des MCP stdio sur votre machine (tableau JSON argv). Le Node fourni est ajouté au PATH pour npx. N'ajoutez que des serveurs de confiance.",
+      "loading": "Chargement des MCP locaux...",
+      "namePlaceholder": "Nom affiché",
+      "commandPlaceholder": "[\"npx\", \"-y\", \"@scope/mcp-package\"]",
+      "envPlaceholder": "Environnement JSON facultatif, ex. {\"KEY\":\"value\"}",
+      "cwdPlaceholder": "Répertoire de travail facultatif (chemin absolu)",
+      "add": "Ajouter un serveur local",
+      "adding": "Ajout...",
+      "addFailed": "Échec de l'ajout du MCP local",
+      "empty": "Aucun MCP local configuré"
+    },
     "slack": {
       "title": "Slack",
       "description": "Authentifiez Slack pour que l'agent puisse envoyer des messages et utiliser le contexte Slack via le MCP Slack intégré.",

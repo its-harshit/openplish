@@ -391,6 +391,19 @@
     "delete": "Удалить",
     "customTitle": "Пользовательские MCP-серверы",
     "customDescription": "Добавьте собственный URL удалённого MCP-сервера. OAuth поддерживается для серверов со стандартным потоком авторизации.",
+    "localMcp": {
+      "title": "Локальные MCP-серверы",
+      "description": "Запуск stdio MCP на вашем компьютере (JSON-массив argv). К bundled Node добавляется PATH для npx. Добавляйте только доверенные серверы.",
+      "loading": "Загрузка локальных MCP...",
+      "namePlaceholder": "Отображаемое имя",
+      "commandPlaceholder": "[\"npx\", \"-y\", \"@scope/mcp-package\"]",
+      "envPlaceholder": "Необязательное окружение JSON, напр. {\"KEY\":\"value\"}",
+      "cwdPlaceholder": "Необязательная рабочая папка (абсолютный путь)",
+      "add": "Добавить локальный сервер",
+      "adding": "Добавление...",
+      "addFailed": "Не удалось добавить локальный MCP",
+      "empty": "Локальные MCP не настроены"
+    },
     "slack": {
       "title": "Slack",
       "description": "Подключите Slack, чтобы агент мог отправлять сообщения и использовать контекст Slack через встроенный Slack MCP.",

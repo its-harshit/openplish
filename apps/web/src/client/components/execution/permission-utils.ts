@@ -20,6 +20,28 @@ export function isDeleteOperation(request: { type: string; fileOperation?: strin
   return request.type === 'file' && request.fileOperation === 'delete';
 }
 
+const FILE_OPS_BLOCKED_IN_CREATE_COPY_ONLY = [
+  'delete',
+  'move',
+  'rename',
+  'modify',
+  'overwrite',
+] as const;
+
+export function isFileOperationBlockedByPolicy(
+  request: { type: string; fileOperation?: string },
+  policy: 'standard' | 'create_copy_only',
+): boolean {
+  if (policy !== 'create_copy_only' || request.type !== 'file') {
+    return false;
+  }
+  const op = request.fileOperation;
+  if (!op) {
+    return false;
+  }
+  return (FILE_OPS_BLOCKED_IN_CREATE_COPY_ONLY as readonly string[]).includes(op);
+}
+
 export function getDisplayFilePaths(request: {
   filePath?: string;
   filePaths?: string[];

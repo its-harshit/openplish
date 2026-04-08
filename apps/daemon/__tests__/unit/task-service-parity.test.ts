@@ -96,6 +96,10 @@ function createMockStorage() {
     getConnectorTokens: vi.fn(() => null),
     setConnectorStatus: vi.fn(),
     storeConnectorTokens: vi.fn(),
+    getEnabledLocalMcpServers: vi.fn(() => []),
+    getEnabledSkills: vi.fn(() => []),
+    get: vi.fn(() => null),
+    set: vi.fn(),
     getCloudBrowserConfig: vi.fn(() => null),
   } as unknown as Parameters<typeof TaskService>[0];
 }

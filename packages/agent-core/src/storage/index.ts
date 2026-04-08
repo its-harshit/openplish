@@ -115,3 +115,12 @@ export {
   deleteConnector,
   clearAllConnectors,
 } from './repositories/index.js';
+
+export {
+  getAllLocalMcpServers,
+  getEnabledLocalMcpServers,
+  getLocalMcpServerById,
+  upsertLocalMcpServer,
+  setLocalMcpServerEnabled,
+  deleteLocalMcpServer,
+} from './repositories/index.js';

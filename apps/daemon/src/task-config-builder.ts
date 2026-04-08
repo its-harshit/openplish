@@ -12,7 +12,7 @@ import {
   resolveCliPath,
   isCliAvailable as coreIsCliAvailable,
   generateConfig,
-  buildProviderConfigs,
+  resolveTaskConfig,
   syncApiKeysToOpenCodeAuth,
   getOpenCodeAuthPath,
   getBundledNodePaths,
@@ -131,16 +131,6 @@ export async function onBeforeStart(
   const apiKeys = await storage.getAllApiKeys();
   await syncApiKeysToOpenCodeAuth(authPath, apiKeys);
 
-  const { providerConfigs, enabledProviders, modelOverride } = await buildProviderConfigs({
-    getApiKey: (provider) => storage.getApiKey(provider),
-    accomplishRuntime: opts.accomplishRuntime,
-    accomplishStorageDeps: {
-      readKey: (key) => storage.get(key),
-      writeKey: (key, value) => storage.set(key, value),
-      readGaClientId: () => null, // GA client ID not available in daemon — fingerprint fallback used
-    },
-  });
-
   const getPort = (envVar: string) => {
     const val = process.env[envVar];
     if (!val) {
@@ -158,21 +148,33 @@ export async function onBeforeStart(
     : path.join(opts.appPath, 'bundled-skills');
   const userSkillsPath = path.join(opts.userDataPath, 'skills');
 
-  const result = generateConfig({
+  const bundledNodeBinPath = getBundledNodeBinPath(opts);
+  if (!bundledNodeBinPath) {
+    throw new Error('[Daemon] Bundled Node.js path is missing; cannot generate OpenCode config');
+  }
+
+  const { configOptions } = await resolveTaskConfig({
+    storage,
     platform: process.platform,
     mcpToolsPath: opts.mcpToolsPath,
     userDataPath: opts.userDataPath,
     isPackaged: opts.isPackaged,
-    bundledNodeBinPath: getBundledNodeBinPath(opts),
-    providerConfigs,
-    enabledProviders,
+    bundledNodeBinPath,
+    getApiKey: (provider) => storage.getApiKey(provider),
     permissionApiPort,
     questionApiPort,
     authToken: process.env.ACCOMPLISH_DAEMON_AUTH_TOKEN,
-    model: modelOverride?.model,
-    smallModel: modelOverride?.smallModel,
     skillRootPaths: [bundledSkillsPath, userSkillsPath],
+    skills: storage.getEnabledSkills(),
+    accomplishRuntime: opts.accomplishRuntime,
+    accomplishStorageDeps: {
+      readKey: (key) => storage.get(key),
+      writeKey: (key, value) => storage.set(key, value),
+      readGaClientId: () => null,
+    },
   });
+
+  const result = generateConfig(configOptions);
 
   return {
     configPath: result.configPath,

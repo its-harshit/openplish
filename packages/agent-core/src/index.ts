@@ -108,10 +108,15 @@ export { OpenCodeCliNotFoundError } from './internal/classes/OpenCodeAdapter.js'
 // Low-level OpenCode utilities for advanced integrations
 export { resolveCliPath, isCliAvailable } from './opencode/cli-resolver.js';
 export { generateConfig, ACCOMPLISH_AGENT_NAME } from './opencode/config-generator.js';
+export {
+  getFilePermissionSection,
+  resolveFileOperationPolicyFromEnv,
+} from './opencode/system-prompt.js';
+export type { FileOperationPolicy } from './opencode/system-prompt.js';
 export { buildCliArgs } from './opencode/cli-args.js';
 export type { BuildCliArgsOptions } from './opencode/cli-args.js';
 
-export type { BrowserConfig } from './opencode/generator-mcp.js';
+export type { BrowserConfig, LocalMcpServerConfigEntry } from './opencode/generator-mcp.js';
 
 export { buildOpenCodeEnvironment } from './opencode/environment.js';
 export type { EnvironmentConfig } from './opencode/environment.js';
@@ -452,6 +457,8 @@ export type {
   OAuthClientRegistration,
   McpConnector,
 } from './common/types/connector.js';
+
+export type { LocalMcpServer } from './common/types/local-mcp.js';
 
 // MCP OAuth
 export {

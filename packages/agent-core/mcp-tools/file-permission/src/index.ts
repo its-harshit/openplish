@@ -21,8 +21,24 @@ function getHeaders(): Record<string, string> {
 
 interface FilePermissionInput {
   operation: 'create' | 'delete' | 'rename' | 'move' | 'modify' | 'overwrite';
+  /**
+   * For operation="create": destination path for a new file.
+   * For operation="delete"/"modify"/"overwrite": the path being changed.
+   */
   filePath?: string;
+  /**
+   * Batch paths.
+   *
+   * For operation="create": destination paths for batch create.
+   * For operation="delete": paths to delete.
+   * For operation="create" + targetPath: source paths to copy from.
+   */
   filePaths?: string[];
+  /**
+   * Destination path for rename/move.
+   *
+   * For operation="create": when combined with filePaths (sources), represents a copy to targetPath.
+   */
   targetPath?: string;
   contentPreview?: string;
 }
@@ -37,7 +53,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     {
       name: 'request_file_permission',
       description:
-        'Request user permission before performing file operations (create, delete, rename, move, modify, overwrite). Always call this tool BEFORE executing any file modification. Returns "allowed" or "denied".',
+        'Request user permission before performing file operations (create, copy, delete, rename, move, modify, overwrite). Always call this tool BEFORE executing any file modification. Returns "allowed" or "denied".',
       inputSchema: {
         type: 'object',
         properties: {
@@ -48,17 +64,18 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
           },
           filePath: {
             type: 'string',
-            description: 'Absolute path to the file being operated on',
+            description: 'Absolute path to the file being operated on (or destination for create)',
           },
           filePaths: {
             type: 'array',
             items: { type: 'string' },
             description:
-              'Array of absolute paths for batch operations (e.g., deleting multiple files)',
+              'Array of absolute paths for batch operations (e.g., deleting multiple files). For copy, these are the source paths.',
           },
           targetPath: {
             type: 'string',
-            description: 'Target path for rename/move operations',
+            description:
+              'Target path for rename/move operations. For copy, this is the destination path.',
           },
           contentPreview: {
             type: 'string',

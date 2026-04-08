@@ -22,6 +22,8 @@ export interface BrowserConfig {
 export interface McpServerConfig {
   type?: 'local' | 'remote';
   command?: string[];
+  /** Working directory for the MCP subprocess when supported by OpenCode */
+  cwd?: string;
   url?: string;
   headers?: Record<string, string>;
   enabled?: boolean;
@@ -53,6 +55,15 @@ function resolveMcpCommand(
   return [nodePath, distPath];
 }
 
+/** User-defined stdio MCP entries from storage (resolved in resolveTaskConfig). */
+export interface LocalMcpServerConfigEntry {
+  id: string;
+  name: string;
+  command: string[];
+  environment?: Record<string, string>;
+  cwd?: string;
+}
+
 export interface BuildMcpServersOptions {
   mcpToolsPath: string;
   nodeExe: string;
@@ -67,6 +78,20 @@ export interface BuildMcpServersOptions {
     url: string;
     accessToken: string;
   }>;
+  /** User-configured local MCP servers (stdio) */
+  localMcpServers?: LocalMcpServerConfigEntry[];
+}
+
+const LOCAL_USER_MCP_TIMEOUT_MS = 600000;
+
+function prependBundledNodeToPath(
+  bundledBinDir: string,
+  userEnv?: Record<string, string>,
+): Record<string, string> {
+  const sep = path.delimiter;
+  const rest = userEnv?.PATH ?? process.env.PATH ?? '';
+  const merged = { ...userEnv, PATH: `${bundledBinDir}${sep}${rest}` };
+  return merged;
 }
 
 /**
@@ -82,7 +107,10 @@ export function buildMcpServers(options: BuildMcpServersOptions): Record<string,
     browserConfig,
     authToken,
     connectors,
+    localMcpServers,
   } = options;
+
+  const bundledNodeBinDir = path.dirname(nodeExe);
 
   // Auth env for daemon HTTP APIs — MCP tools send this as Authorization header
   const authEnv: Record<string, string> = authToken
@@ -158,6 +186,42 @@ export function buildMcpServers(options: BuildMcpServersOptions): Record<string,
       ...(Object.keys(browserEnv).length > 0 && { environment: browserEnv }),
       timeout: 30000,
     };
+  }
+
+  if (localMcpServers && localMcpServers.length > 0) {
+    for (const entry of localMcpServers) {
+      if (!entry.command || entry.command.length === 0) {
+        continue;
+      }
+      const sanitized = entry.name
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '')
+        .slice(0, 20);
+      const baseName = sanitized || 'mcp-local';
+      const idSuffix = entry.id.slice(0, 6);
+      let key = `local-${baseName}-${idSuffix}`;
+      if (mcpServers[key]) {
+        let i = 1;
+        while (mcpServers[`${key}-${i}`]) {
+          i += 1;
+        }
+        key = `${key}-${i}`;
+      }
+      const environment = prependBundledNodeToPath(bundledNodeBinDir, entry.environment);
+      const localConfig: McpServerConfig = {
+        type: 'local',
+        command: entry.command,
+        enabled: true,
+        environment,
+        timeout: LOCAL_USER_MCP_TIMEOUT_MS,
+      };
+      if (entry.cwd) {
+        localConfig.cwd = entry.cwd;
+      }
+      mcpServers[key] = localConfig;
+    }
   }
 
   if (connectors) {

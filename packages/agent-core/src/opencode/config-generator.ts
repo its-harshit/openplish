@@ -4,6 +4,7 @@ import { createConsoleLogger } from '../utils/logging.js';
 import {
   getPlatformEnvironmentInstructions,
   ACCOMPLISH_SYSTEM_PROMPT_TEMPLATE,
+  getFilePermissionSection,
 } from './system-prompt.js';
 import { buildMcpServers } from './generator-mcp.js';
 export type { BrowserConfig, McpServerConfig } from './generator-mcp.js';
@@ -48,7 +49,7 @@ export function generateConfig(options: ConfigGeneratorOptions): GeneratedConfig
   let systemPrompt = ACCOMPLISH_SYSTEM_PROMPT_TEMPLATE.replace(
     /\{\{ENVIRONMENT_INSTRUCTIONS\}\}/g,
     environmentInstructions,
-  );
+  ).replace(/\{\{FILE_PERMISSION_SECTION\}\}/g, getFilePermissionSection());
 
   if (skills.length > 0) {
     const skillsSection = `
@@ -119,6 +120,7 @@ ${options.knowledgeNotes}
     browserConfig,
     authToken: options.authToken,
     connectors: options.connectors,
+    localMcpServers: options.localMcpServers,
   });
 
   const hasBrowser = browserConfig.mode !== 'none';

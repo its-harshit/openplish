@@ -201,6 +201,34 @@ describe('ConfigGenerator', () => {
       expect(result.mcpServers['desktop-control']).toBeDefined();
     });
 
+    it('should add user local stdio MCP entries with bundled PATH', () => {
+      const options: ConfigGeneratorOptions = {
+        ...baseOptions,
+        mcpToolsPath,
+        userDataPath,
+        localMcpServers: [
+          {
+            id: 'abc123def',
+            name: 'Gmail Helper',
+            command: ['npx', '-y', '@example/gmail-mcp'],
+            environment: { FOO: 'bar' },
+          },
+        ],
+      };
+
+      const result = generateConfig(options);
+
+      const key = Object.keys(result.mcpServers).find((k) => k.startsWith('local-gmail-'));
+      expect(key).toBeDefined();
+      const entry = result.mcpServers[key!];
+      expect(entry?.type).toBe('local');
+      expect(entry?.command).toEqual(['npx', '-y', '@example/gmail-mcp']);
+      expect(entry?.enabled).toBe(true);
+      expect(entry?.timeout).toBe(600000);
+      expect(entry?.environment?.FOO).toBe('bar');
+      expect(entry?.environment?.PATH).toContain(sharedBundledNodeBinPath);
+    });
+
     it('should include the Slack MCP with OpenCode-compatible OAuth config', () => {
       const options: ConfigGeneratorOptions = {
         ...baseOptions,
@@ -466,7 +494,7 @@ describe('ConfigGenerator', () => {
       // Should use node + dist path instead of tsx + src
       const command = result.mcpServers['file-permission'].command;
       expect(command?.[0]).toContain('node');
-      expect(command?.[1]).toContain('dist/index.mjs');
+      expect(command?.[1]?.replace(/\\/g, '/')).toContain('dist/index.mjs');
     });
 
     it('should throw when bundled node is missing in packaged mode', () => {
@@ -493,7 +521,7 @@ describe('ConfigGenerator', () => {
 
       const command = result.mcpServers['file-permission'].command;
       expect(command?.[0]).toContain('node');
-      expect(command?.[1]).toContain('dist/index.mjs');
+      expect(command?.[1]?.replace(/\\/g, '/')).toContain('dist/index.mjs');
     });
 
     it('should throw when MCP dist entry is missing', () => {

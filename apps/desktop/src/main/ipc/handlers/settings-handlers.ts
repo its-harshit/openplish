@@ -263,9 +263,11 @@ export function registerSettingsHandlers(): void {
   // Build capabilities — tells renderer which features are available
   handle('app:get-build-capabilities', async () => {
     const { isFreeMode, isAnalyticsEnabled } = await import('../../config/build-config');
+    const { resolveFileOperationPolicyFromEnv } = await import('@accomplish_ai/agent-core');
     return {
       hasFreeMode: isFreeMode(),
       hasAnalytics: isAnalyticsEnabled(),
+      fileOperationPolicy: resolveFileOperationPolicyFromEnv(),
     };
   });
 }

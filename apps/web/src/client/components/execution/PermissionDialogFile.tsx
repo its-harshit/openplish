@@ -8,15 +8,29 @@ import {
 
 interface PermissionDialogFileProps {
   permissionRequest: PermissionRequest;
+  /** When true, show notice that only create/copy-to-new-path can be approved. */
+  restrictedFilePolicy?: boolean;
 }
 
-export function PermissionDialogFile({ permissionRequest }: PermissionDialogFileProps) {
+export function PermissionDialogFile({
+  permissionRequest,
+  restrictedFilePolicy = false,
+}: PermissionDialogFileProps) {
   const paths = getDisplayFilePaths(permissionRequest);
   const isDelete = isDeleteOperation(permissionRequest);
   const hasPaths = paths.length > 0;
 
   return (
     <>
+      {restrictedFilePolicy && (
+        <div className="mb-4 p-3 rounded-lg bg-muted border border-border">
+          <p className="text-sm text-muted-foreground">
+            Restricted file mode is on: you can approve creating new files or copying to paths that
+            do not exist yet. Modify, overwrite, move, rename, and delete are blocked by policy
+            before they reach approval.
+          </p>
+        </div>
+      )}
       {isDelete && (
         <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
           <p className="text-sm text-red-600">

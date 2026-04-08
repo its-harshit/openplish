@@ -9,9 +9,14 @@ export { getPlatformEnvironmentInstructions } from './system-prompt-sections.js'
 import {
   CONVERSATIONAL_BYPASS_BEHAVIOR,
   TASK_PLANNING_BEHAVIOR,
-  FILE_PERMISSION_SECTION,
   TASK_COMPLETION_BEHAVIOR,
 } from './system-prompt-behaviors.js';
+
+export {
+  getFilePermissionSection,
+  resolveFileOperationPolicyFromEnv,
+} from './system-prompt-file-permissions.js';
+export type { FileOperationPolicy } from './system-prompt-file-permissions.js';
 
 /**
  * The Accomplish agent system prompt template.
@@ -19,6 +24,7 @@ import {
  * Placeholder tokens:
  * - `{{AGENT_ROLE}}` — replaced with the agent role (e.g., "task execution")
  * - `{{ENVIRONMENT_INSTRUCTIONS}}` — replaced by getPlatformEnvironmentInstructions()
+ * - `{{FILE_PERMISSION_SECTION}}` — replaced by getFilePermissionSection()
  * - `{{BROWSER_CAPABILITY}}` — browser capability line (or empty)
  * - `{{BROWSER_BEHAVIOR}}` — browser behavior rules (or empty)
  */
@@ -39,7 +45,7 @@ When users ask about your capabilities, mention:
 - **Slack**: Use the built-in Slack connector for Slack work. When authenticated, read Slack context and send messages to channels, threads, or direct messages
 </capabilities>
 
-${FILE_PERMISSION_SECTION}
+{{FILE_PERMISSION_SECTION}}
 
 <important name="user-communication">
 CRITICAL: The user CANNOT see your text output or CLI prompts!

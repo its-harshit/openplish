@@ -24,6 +24,7 @@ import type {
   ToolSupportStatus,
   Skill,
   McpConnector,
+  LocalMcpServer,
   FileAttachmentInfo,
   Workspace,
   WorkspaceCreateInput,
@@ -612,6 +613,17 @@ interface AccomplishAPI {
   disconnectConnector(connectorId: string): Promise<void>;
   onMcpAuthCallback?(callback: (url: string) => void): () => void;
 
+  // Local stdio MCP servers
+  getLocalMcpServers(): Promise<LocalMcpServer[]>;
+  addLocalMcpServer(
+    name: string,
+    commandJson: string,
+    environmentJson?: string,
+    cwd?: string,
+  ): Promise<LocalMcpServer>;
+  deleteLocalMcpServer(id: string): Promise<void>;
+  setLocalMcpServerEnabled(id: string, enabled: boolean): Promise<void>;
+
   // Accomplish AI Free Tier
   accomplishAiConnect(): Promise<{
     deviceFingerprint: string;
@@ -639,7 +651,11 @@ interface AccomplishAPI {
   ): () => void;
 
   // Build capabilities
-  getBuildCapabilities(): Promise<{ hasFreeMode: boolean; hasAnalytics: boolean }>;
+  getBuildCapabilities(): Promise<{
+    hasFreeMode: boolean;
+    hasAnalytics: boolean;
+    fileOperationPolicy: 'standard' | 'create_copy_only';
+  }>;
 }
 
 interface AccomplishShell {

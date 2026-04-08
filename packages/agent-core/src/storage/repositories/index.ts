@@ -85,6 +85,15 @@ export {
 } from './connectors.js';
 
 export {
+  getAllLocalMcpServers,
+  getEnabledLocalMcpServers,
+  getLocalMcpServerById,
+  upsertLocalMcpServer,
+  setLocalMcpServerEnabled,
+  deleteLocalMcpServer,
+} from './local-mcp-servers.js';
+
+export {
   listKnowledgeNotes,
   getKnowledgeNote,
   createKnowledgeNote,

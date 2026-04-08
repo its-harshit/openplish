@@ -88,6 +88,15 @@ import {
   clearAllConnectors,
 } from '../storage/repositories/connectors.js';
 import {
+  getAllLocalMcpServers,
+  getEnabledLocalMcpServers,
+  getLocalMcpServerById,
+  upsertLocalMcpServer,
+  setLocalMcpServerEnabled,
+  deleteLocalMcpServer,
+} from '../storage/repositories/local-mcp-servers.js';
+import { getEnabledSkills } from '../storage/repositories/skills.js';
+import {
   getDesktopBlocklist,
   setDesktopBlocklist,
   addDesktopBlocklistEntry,
@@ -223,6 +232,16 @@ export function createStorage(options: StorageOptions = {}): StorageAPI {
       }
     },
     deleteConnectorTokens: (connectorId) => secureStorage.delete(`connector-tokens:${connectorId}`),
+
+    // Local MCP servers
+    getAllLocalMcpServers: () => getAllLocalMcpServers(),
+    getEnabledLocalMcpServers: () => getEnabledLocalMcpServers(),
+    getLocalMcpServerById: (id) => getLocalMcpServerById(id),
+    upsertLocalMcpServer: (server) => upsertLocalMcpServer(server),
+    setLocalMcpServerEnabled: (id, enabled) => setLocalMcpServerEnabled(id, enabled),
+    deleteLocalMcpServer: (id) => deleteLocalMcpServer(id),
+
+    getEnabledSkills: () => getEnabledSkills(),
 
     // Desktop Control
     getDesktopBlocklist: () => getDesktopBlocklist(),

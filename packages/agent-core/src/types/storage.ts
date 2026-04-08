@@ -16,11 +16,13 @@ import type {
   ConnectedProvider,
 } from '../common/types/providerSettings.js';
 import type { McpConnector, ConnectorStatus, OAuthTokens } from '../common/types/connector.js';
+import type { LocalMcpServer } from '../common/types/local-mcp.js';
 import type { SandboxConfig } from '../common/types/sandbox.js';
 import type { CloudBrowserConfig } from '../common/types/cloud-browser.js';
 import type { MessagingConfig } from '../common/types/messaging.js';
 import type { BlocklistEntry } from '../common/types/desktop.js';
 import type { ScheduledTask } from '../common/types/daemon.js';
+import type { Skill } from '../common/types/skills.js';
 
 /** Options for creating a Storage instance */
 export interface StorageOptions {
@@ -274,6 +276,21 @@ export interface ConnectorStorageAPI {
   deleteConnectorTokens(connectorId: string): void;
 }
 
+/** Enabled skills for task config (daemon/desktop shared DB access) */
+export interface SkillsStorageAPI {
+  getEnabledSkills(): Skill[];
+}
+
+/** API for user-defined local (stdio) MCP server entries */
+export interface LocalMcpStorageAPI {
+  getAllLocalMcpServers(): LocalMcpServer[];
+  getEnabledLocalMcpServers(): LocalMcpServer[];
+  getLocalMcpServerById(id: string): LocalMcpServer | null;
+  upsertLocalMcpServer(server: LocalMcpServer): void;
+  setLocalMcpServerEnabled(id: string, enabled: boolean): void;
+  deleteLocalMcpServer(id: string): void;
+}
+
 /** API for database initialization and lifecycle management */
 export interface DatabaseLifecycleAPI {
   /** Initialize the database, creating it if needed and running migrations */
@@ -318,7 +335,7 @@ export interface SchedulerStorageAPI {
   updateScheduledTaskLastRun(id: string, timestamp: string, nextRunAt: string): void;
 }
 
-/** Unified storage API combining task, settings, provider, secure storage, connector, desktop control, scheduler, and database lifecycle operations */
+/** Unified storage API combining task, settings, provider, secure storage, connector, local MCP, desktop control, scheduler, and database lifecycle operations */
 export interface StorageAPI
   extends
     TaskStorageAPI,
@@ -326,6 +343,8 @@ export interface StorageAPI
     ProviderSettingsAPI,
     SecureStorageAPI,
     ConnectorStorageAPI,
+    LocalMcpStorageAPI,
+    SkillsStorageAPI,
     DesktopControlStorageAPI,
     SchedulerStorageAPI,
     DatabaseLifecycleAPI {}
@@ -346,6 +365,8 @@ export type {
   McpConnector,
   ConnectorStatus,
   OAuthTokens,
+  LocalMcpServer,
+  Skill,
   CloudBrowserConfig,
   MessagingConfig,
 };

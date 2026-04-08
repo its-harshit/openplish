@@ -26,6 +26,9 @@ export type {
   AppSettingsAPI,
   ProviderSettingsAPI,
   SecureStorageAPI,
+  ConnectorStorageAPI,
+  LocalMcpStorageAPI,
+  SkillsStorageAPI,
   DatabaseLifecycleAPI,
   SchedulerStorageAPI,
 } from './storage.js';

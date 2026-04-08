@@ -43,6 +43,8 @@ export interface ConfigGeneratorOptions {
     url: string;
     accessToken: string;
   }>;
+  /** User-defined local stdio MCP servers */
+  localMcpServers?: import('./generator-mcp.js').LocalMcpServerConfigEntry[];
   /** Formatted workspace knowledge notes to inject into the system prompt */
   knowledgeNotes?: string;
   /**

@@ -363,6 +363,19 @@
     "disable": "禁用",
     "confirmDelete": "再次点击确认",
     "delete": "删除",
+    "localMcp": {
+      "title": "本地 MCP 服务器",
+      "description": "在本机运行 stdio MCP（JSON 参数数组）。会将捆绑的 Node 置于 PATH 前以便 npx 使用。请仅添加您信任的服务器。",
+      "loading": "正在加载本地 MCP…",
+      "namePlaceholder": "显示名称",
+      "commandPlaceholder": "[\"npx\", \"-y\", \"@scope/mcp-package\"]",
+      "envPlaceholder": "可选环境变量 JSON，例如 {\"KEY\":\"value\"}",
+      "cwdPlaceholder": "可选工作目录（绝对路径）",
+      "add": "添加本地服务器",
+      "adding": "正在添加…",
+      "addFailed": "添加本地 MCP 失败",
+      "empty": "尚未配置本地 MCP"
+    },
     "slack": {
       "title": "Slack",
       "description": "验证 Slack 后，智能体就可以通过内置 Slack MCP 发送消息并使用 Slack 上下文。",

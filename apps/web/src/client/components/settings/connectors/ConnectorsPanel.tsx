@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
 import { settingsVariants, settingsTransitions } from '@/lib/animations';
 import { SlackConnectorSection } from './SlackConnectorSection';
+import { LocalMcpServersSection } from './LocalMcpServersSection';
 import { ConnectorAddForm } from './ConnectorAddForm';
 import { ConnectorList } from './ConnectorList';
 import { useConnectorsPanel } from './useConnectorsPanel';
@@ -46,6 +47,8 @@ export function ConnectorsPanel() {
         onAuthenticate={handleSlackAuthenticate}
         onDisconnect={handleSlackDisconnect}
       />
+
+      <LocalMcpServersSection />
 
       <ConnectorAddForm
         url={url}
