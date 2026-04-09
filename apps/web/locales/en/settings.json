@@ -273,7 +273,49 @@
     "general": "General",
     "about": "About",
     "integrations": "Integrations",
-    "scheduler": "Scheduler"
+    "scheduler": "Scheduler",
+    "policies": "Policies"
+  },
+  "policies": {
+    "loading": "Loading…",
+    "intro": "Control how the agent may change files. \"Inherit\" follows the app environment (.env). Explicit modes override the environment on this device.",
+    "effectiveNow": "Effective behavior now",
+    "effective": {
+      "restricted": "Restricted: read, create new files, and copy to new paths only",
+      "full": "Full: all file operations (still subject to permission prompts)"
+    },
+    "filePolicy": "File operation policy",
+    "modes": {
+      "inherit": {
+        "label": "Inherit from environment",
+        "desc": "Use ACCOMPLISH_FILE_OPERATION_POLICY from .env or system environment (default is restricted unless set to standard/full)."
+      },
+      "restricted": {
+        "label": "Restricted (recommended)",
+        "desc": "Only read, create new files, and copy to paths that do not exist yet."
+      },
+      "full": {
+        "label": "Full file access",
+        "desc": "Allow modify, move, rename, and delete when you approve each prompt."
+      }
+    },
+    "currentPassword": "Current password",
+    "passwordPlaceholder": "Required to change policy when a lock is set",
+    "savePolicy": "Save policy",
+    "saving": "Saving…",
+    "saved": "Policy saved.",
+    "lockTitle": "Protect policy changes",
+    "lockIntro": "Optional: require a password to change this policy or the lock itself. If you lose the password, clear app secure storage or reinstall.",
+    "newPassword": "New password (min 8 characters)",
+    "confirmPassword": "Confirm password",
+    "setPassword": "Set lock password",
+    "changePasswordSection": "Change or remove lock",
+    "updatePassword": "Update password",
+    "removePassword": "Remove password lock",
+    "passwordSet": "Lock password saved.",
+    "passwordChanged": "Password updated.",
+    "passwordCleared": "Lock removed.",
+    "passwordMismatch": "Passwords must match and be at least 8 characters."
   },
   "notifications": {
     "toggle": {

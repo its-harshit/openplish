@@ -59,6 +59,8 @@ import {
   setNotificationsEnabled,
   getCloseBehavior,
   setCloseBehavior,
+  getFileOperationPolicyMode,
+  setFileOperationPolicyMode,
 } from '../storage/repositories/appSettings.js';
 import {
   getProviderSettings,
@@ -192,6 +194,8 @@ export function createStorage(options: StorageOptions = {}): StorageAPI {
     setNotificationsEnabled: (enabled) => setNotificationsEnabled(enabled),
     getCloseBehavior: () => getCloseBehavior(),
     setCloseBehavior: (behavior) => setCloseBehavior(behavior),
+    getFileOperationPolicyMode: () => getFileOperationPolicyMode(),
+    setFileOperationPolicyMode: (mode) => setFileOperationPolicyMode(mode),
 
     // Provider Settings
     getProviderSettings: () => getProviderSettings(),
@@ -264,6 +268,7 @@ export function createStorage(options: StorageOptions = {}): StorageAPI {
     // Secure Storage
     set: (key, value) => secureStorage.set(key, value),
     get: (key) => secureStorage.get(key),
+    deleteSecureKey: (key) => secureStorage.delete(key),
     storeApiKey: (provider, apiKey) => secureStorage.storeApiKey(provider, apiKey),
     getApiKey: (provider) => secureStorage.getApiKey(provider),
     deleteApiKey: (provider) => secureStorage.deleteApiKey(provider),

@@ -245,7 +245,8 @@
     "general": "通用",
     "about": "关于",
     "integrations": "集成",
-    "scheduler": "Scheduler"
+    "scheduler": "Scheduler",
+    "policies": "Policies"
   },
   "integrations": {
     "title": "消息平台集成",

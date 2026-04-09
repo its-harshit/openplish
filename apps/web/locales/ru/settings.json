@@ -273,7 +273,8 @@
     "browsers": "Облачные браузеры",
     "general": "Общие",
     "integrations": "Интеграции",
-    "scheduler": "Scheduler"
+    "scheduler": "Scheduler",
+    "policies": "Policies"
   },
   "notifications": {
     "toggle": {

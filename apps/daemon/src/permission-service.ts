@@ -4,7 +4,7 @@ import {
   createPermissionHandler,
   isFilePermissionRequest as coreIsFilePermissionRequest,
   isQuestionRequest as coreIsQuestionRequest,
-  type FileOperationPolicy,
+  resolveEffectiveFileOperationPolicy,
   type PermissionHandlerAPI,
   type PermissionFileRequestData,
   type PermissionQuestionRequestData,
@@ -33,15 +33,13 @@ export class PermissionService {
   private onPermissionRequest: ((request: unknown) => void) | null = null;
   private hasConnectedClients: (() => boolean) | null = null;
   private authToken: string;
-  private fileOperationPolicy: FileOperationPolicy;
   private permissionPort: number | null = null;
   private questionPort: number | null = null;
   private rateLimiter = new RateLimiter(RATE_LIMIT_WINDOW_MS, RATE_LIMIT_MAX_REQUESTS);
 
-  constructor(authToken: string, fileOperationPolicy: FileOperationPolicy = 'create_copy_only') {
+  constructor(authToken: string) {
     this.permissionHandler = createPermissionHandler();
     this.authToken = authToken;
-    this.fileOperationPolicy = fileOperationPolicy;
   }
 
   init(
@@ -112,7 +110,7 @@ export class PermissionService {
           const requestData = data as PermissionFileRequestData;
           const operation = requestData.operation;
 
-          if (this.fileOperationPolicy === 'create_copy_only') {
+          if (resolveEffectiveFileOperationPolicy() === 'create_copy_only') {
             if (
               operation === 'delete' ||
               operation === 'move' ||

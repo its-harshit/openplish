@@ -1,4 +1,5 @@
-import type { ThemePreference } from '../../types/storage.js';
+import type { AppSettings, ThemePreference } from '../../types/storage.js';
+import type { FileOperationPolicyMode } from '../../common/types/file-operation-policy.js';
 import type { SandboxConfig } from '../../common/types/sandbox.js';
 import type { CloudBrowserConfig } from '../../common/types/cloud-browser.js';
 import type { MessagingConfig } from '../../common/types/messaging.js';
@@ -68,19 +69,34 @@ interface AppSettingsRow {
   messaging_config: string | null;
   notifications_enabled: number;
   nim_config: string | null;
+  file_operation_policy_mode: string;
 }
 
-export interface AppSettings {
-  debugMode: boolean;
-  onboardingComplete: boolean;
-  selectedModel: SelectedModel | null;
-  ollamaConfig: OllamaConfig | null;
-  litellmConfig: LiteLLMConfig | null;
-  azureFoundryConfig: AzureFoundryConfig | null;
-  lmstudioConfig: LMStudioConfig | null;
-  huggingfaceLocalConfig: HuggingFaceLocalConfig | null;
-  openaiBaseUrl: string;
-  theme: ThemePreference;
+export type { AppSettings };
+
+const VALID_FILE_OPERATION_POLICY_MODES: FileOperationPolicyMode[] = [
+  'inherit',
+  'standard',
+  'create_copy_only',
+];
+
+function parseFileOperationPolicyMode(raw: string | undefined | null): FileOperationPolicyMode {
+  if (raw === 'standard' || raw === 'create_copy_only' || raw === 'inherit') {
+    return raw;
+  }
+  return 'inherit';
+}
+
+export function getFileOperationPolicyMode(): FileOperationPolicyMode {
+  return parseFileOperationPolicyMode(getRow().file_operation_policy_mode);
+}
+
+export function setFileOperationPolicyMode(mode: FileOperationPolicyMode): void {
+  if (!VALID_FILE_OPERATION_POLICY_MODES.includes(mode)) {
+    throw new Error(`Invalid file_operation_policy_mode: ${mode}`);
+  }
+  const db = getDatabase();
+  db.prepare('UPDATE app_settings SET file_operation_policy_mode = ? WHERE id = 1').run(mode);
 }
 
 const VALID_THEMES_LOCAL: ThemePreference[] = ['system', 'light', 'dark'];
@@ -163,6 +179,7 @@ export function getAppSettings(): AppSettings {
     theme: VALID_THEMES_LOCAL.includes(row.theme as ThemePreference)
       ? (row.theme as ThemePreference)
       : 'system',
+    fileOperationPolicyMode: parseFileOperationPolicyMode(row.file_operation_policy_mode),
   };
 }
 
@@ -184,7 +201,8 @@ export function clearAppSettings(): void {
       sandbox_config = '${JSON.stringify(DEFAULT_SANDBOX_CONFIG)}',
       cloud_browser_config = NULL,
       messaging_config = NULL,
-      notifications_enabled = 1
+      notifications_enabled = 1,
+      file_operation_policy_mode = 'inherit'
     WHERE id = 1`,
   ).run();
 }

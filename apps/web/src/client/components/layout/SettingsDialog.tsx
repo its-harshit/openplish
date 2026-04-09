@@ -14,6 +14,7 @@ import { SandboxSection } from '@/components/settings/SandboxSection';
 import { ConnectorsPanel } from '@/components/settings/connectors';
 import { IntegrationsPanel } from '@/components/settings/integrations';
 import { SchedulerPanel } from '@/components/settings/scheduler';
+import { PoliciesTab } from '@/components/settings/PoliciesTab';
 
 import { CloudBrowsersPanel } from '@/components/settings/CloudBrowsersPanel';
 import { cn } from '@/lib/utils';
@@ -220,6 +221,11 @@ export function SettingsDialog({
               {s.activeTab === 'voice' && (
                 <div className="space-y-6">
                   <SpeechSettingsForm />
+                </div>
+              )}
+              {s.activeTab === 'policies' && (
+                <div className="space-y-6">
+                  <PoliciesTab />
                 </div>
               )}
               {s.activeTab === 'general' && (

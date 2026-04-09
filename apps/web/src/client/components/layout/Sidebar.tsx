@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import ConversationListItem from './ConversationListItem';
 import SettingsDialog from './SettingsDialog';
+import type { SettingsTabId } from './settings-tabs';
 import WorkspaceSelector from './WorkspaceSelector';
 import { Gear, ChatText, MagnifyingGlass } from '@phosphor-icons/react';
 import { DaemonStatusDot } from '@/components/DaemonStatusDot';
@@ -19,16 +20,7 @@ import logoImage from '/assets/logo-1.png';
 export default function Sidebar() {
   const navigate = useNavigate();
   const [showSettings, setShowSettings] = useState(false);
-  const [settingsInitialTab, setSettingsInitialTab] = useState<
-    | 'providers'
-    | 'voice'
-    | 'skills'
-    | 'connectors'
-    | 'workspaces'
-    | 'scheduler'
-    | 'general'
-    | 'about'
-  >('providers');
+  const [settingsInitialTab, setSettingsInitialTab] = useState<SettingsTabId>('providers');
   const { tasks, loadTasks, updateTaskStatus, addTaskUpdate, openLauncher } = useTaskStore();
   const accomplish = getAccomplish();
   const { t } = useTranslation('sidebar');

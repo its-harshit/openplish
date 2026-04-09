@@ -60,6 +60,8 @@ export interface StoredFavorite {
 }
 export type ThemePreference = 'system' | 'light' | 'dark';
 
+import type { FileOperationPolicyMode } from '../common/types/file-operation-policy.js';
+
 /** Application settings snapshot */
 export interface AppSettings {
   debugMode: boolean;
@@ -72,6 +74,7 @@ export interface AppSettings {
   huggingfaceLocalConfig: HuggingFaceLocalConfig | null;
   openaiBaseUrl: string;
   theme: ThemePreference;
+  fileOperationPolicyMode: FileOperationPolicyMode;
 }
 
 // ---------------------------------------------------------------------------
@@ -184,6 +187,10 @@ export interface AppSettingsAPI {
   getSandboxConfig(): SandboxConfig;
   /** Set the sandbox configuration */
   setSandboxConfig(config: SandboxConfig): void;
+  /** Get persisted file operation policy mode (inherit uses env; explicit overrides env) */
+  getFileOperationPolicyMode(): FileOperationPolicyMode;
+  /** Set persisted file operation policy mode */
+  setFileOperationPolicyMode(mode: FileOperationPolicyMode): void;
 }
 
 /** API for managing AI provider configurations */
@@ -230,6 +237,8 @@ export interface SecureStorageAPI {
   set(key: string, value: string): void;
   /** Retrieve an arbitrary encrypted value by key */
   get(key: string): string | null;
+  /** Remove an arbitrary encrypted key (e.g. policy lock credentials) */
+  deleteSecureKey(key: string): boolean;
   /** Store an API key for a provider */
   storeApiKey(provider: string, apiKey: string): void;
   /** Retrieve an API key for a provider */

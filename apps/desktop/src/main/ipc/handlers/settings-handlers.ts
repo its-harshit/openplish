@@ -9,9 +9,12 @@ import { registerAuthHandlers } from './settings-handlers/auth-handlers';
 import { registerOnboardingHandlers } from './settings-handlers/onboarding-handlers';
 import { registerOpenCodeHandlers } from './settings-handlers/opencode-handlers';
 import { registerWhatsAppHandlers } from './whatsapp-handlers';
+import { registerPolicyHandlers } from './policy-handlers';
 
 export function registerSettingsHandlers(): void {
   const storage = getStorage();
+
+  registerPolicyHandlers(handle);
 
   handle('settings:notifications-enabled', async (_event: IpcMainInvokeEvent) => {
     return storage.getNotificationsEnabled();
@@ -263,11 +266,12 @@ export function registerSettingsHandlers(): void {
   // Build capabilities — tells renderer which features are available
   handle('app:get-build-capabilities', async () => {
     const { isFreeMode, isAnalyticsEnabled } = await import('../../config/build-config');
-    const { resolveFileOperationPolicyFromEnv } = await import('@accomplish_ai/agent-core');
+    const { resolveEffectiveFileOperationPolicy } = await import('@accomplish_ai/agent-core');
     return {
       hasFreeMode: isFreeMode(),
       hasAnalytics: isAnalyticsEnabled(),
-      fileOperationPolicy: resolveFileOperationPolicyFromEnv(),
+      fileOperationPolicy: resolveEffectiveFileOperationPolicy(),
+      fileOperationPolicyMode: storage.getFileOperationPolicyMode(),
     };
   });
 }

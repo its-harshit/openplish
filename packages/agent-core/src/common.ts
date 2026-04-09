@@ -28,6 +28,7 @@ export type {
   PermissionOption,
   PermissionResponse,
 } from './common/types/permission.js';
+export type { FileOperationPolicyMode } from './common/types/file-operation-policy.js';
 export {
   FILE_OPERATIONS,
   FILE_PERMISSION_REQUEST_PREFIX,

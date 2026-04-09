@@ -15,6 +15,7 @@ import {
 export {
   getFilePermissionSection,
   resolveFileOperationPolicyFromEnv,
+  resolveEffectiveFileOperationPolicy,
 } from './system-prompt-file-permissions.js';
 export type { FileOperationPolicy } from './system-prompt-file-permissions.js';
 

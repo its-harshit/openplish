@@ -87,6 +87,7 @@ export {
   FILE_PERMISSION_SECTION_CREATE_COPY_ONLY,
   getFilePermissionSection,
   resolveFileOperationPolicyFromEnv,
+  resolveEffectiveFileOperationPolicy,
 } from './system-prompt-file-permissions.js';
 
 export const TASK_COMPLETION_BEHAVIOR = `<behavior>

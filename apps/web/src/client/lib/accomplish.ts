@@ -650,11 +650,32 @@ interface AccomplishAPI {
     }) => void,
   ): () => void;
 
+  policyGetState(): Promise<{
+    lockConfigured: boolean;
+    mode: 'inherit' | 'standard' | 'create_copy_only';
+    effective: 'standard' | 'create_copy_only';
+  }>;
+
+  policySetMode(payload: {
+    mode: 'inherit' | 'standard' | 'create_copy_only';
+    currentPassword?: string;
+  }): Promise<{ ok: true }>;
+
+  policySetInitialPassword(password: string): Promise<{ ok: true }>;
+
+  policyChangePassword(payload: {
+    currentPassword: string;
+    newPassword: string;
+  }): Promise<{ ok: true }>;
+
+  policyClearPassword(currentPassword?: string): Promise<{ ok: true }>;
+
   // Build capabilities
   getBuildCapabilities(): Promise<{
     hasFreeMode: boolean;
     hasAnalytics: boolean;
     fileOperationPolicy: 'standard' | 'create_copy_only';
+    fileOperationPolicyMode: 'inherit' | 'standard' | 'create_copy_only';
   }>;
 }
 

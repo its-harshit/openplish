@@ -23,6 +23,8 @@ export {
   setTheme,
   getAppSettings,
   clearAppSettings,
+  getFileOperationPolicyMode,
+  setFileOperationPolicyMode,
   type AppSettings,
 } from './appSettings.js';
 

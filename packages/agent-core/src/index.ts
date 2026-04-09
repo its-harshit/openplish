@@ -111,8 +111,10 @@ export { generateConfig, ACCOMPLISH_AGENT_NAME } from './opencode/config-generat
 export {
   getFilePermissionSection,
   resolveFileOperationPolicyFromEnv,
+  resolveEffectiveFileOperationPolicy,
 } from './opencode/system-prompt.js';
 export type { FileOperationPolicy } from './opencode/system-prompt.js';
+export type { FileOperationPolicyMode } from './common/types/file-operation-policy.js';
 export { buildCliArgs } from './opencode/cli-args.js';
 export type { BuildCliArgsOptions } from './opencode/cli-args.js';
 

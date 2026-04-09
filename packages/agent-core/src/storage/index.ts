@@ -53,6 +53,8 @@ export {
   setTheme,
   getAppSettings,
   clearAppSettings,
+  getFileOperationPolicyMode,
+  setFileOperationPolicyMode,
   type AppSettings,
 } from './repositories/index.js';
 

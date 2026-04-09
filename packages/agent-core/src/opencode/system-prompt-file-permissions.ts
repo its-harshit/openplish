@@ -4,6 +4,8 @@
  * Set ACCOMPLISH_FILE_OPERATION_POLICY=standard (or full) for full file operations with approval prompts.
  */
 
+import { getFileOperationPolicyMode } from '../storage/repositories/appSettings.js';
+
 export type FileOperationPolicy = 'standard' | 'create_copy_only';
 
 export function resolveFileOperationPolicyFromEnv(): FileOperationPolicy {
@@ -14,8 +16,24 @@ export function resolveFileOperationPolicyFromEnv(): FileOperationPolicy {
   return 'create_copy_only';
 }
 
+/** Combines SQLite app_settings (when inherit) with env; explicit modes override env. */
+export function resolveEffectiveFileOperationPolicy(): FileOperationPolicy {
+  try {
+    const mode = getFileOperationPolicyMode();
+    if (mode === 'standard') {
+      return 'standard';
+    }
+    if (mode === 'create_copy_only') {
+      return 'create_copy_only';
+    }
+    return resolveFileOperationPolicyFromEnv();
+  } catch {
+    return resolveFileOperationPolicyFromEnv();
+  }
+}
+
 export function getFilePermissionSection(): string {
-  return resolveFileOperationPolicyFromEnv() === 'create_copy_only'
+  return resolveEffectiveFileOperationPolicy() === 'create_copy_only'
     ? FILE_PERMISSION_SECTION_CREATE_COPY_ONLY
     : FILE_PERMISSION_SECTION_STANDARD;
 }

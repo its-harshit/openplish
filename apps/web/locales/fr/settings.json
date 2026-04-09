@@ -273,7 +273,8 @@
     "browsers": "Navigateurs cloud",
     "general": "Général",
     "integrations": "Intégrations",
-    "scheduler": "Scheduler"
+    "scheduler": "Scheduler",
+    "policies": "Policies"
   },
   "notifications": {
     "toggle": {
