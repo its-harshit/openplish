@@ -491,13 +491,13 @@ export const DEFAULT_PROVIDERS: ProviderConfig[] = [
   },
   {
     id: 'accomplish-ai',
-    name: 'Accomplish AI',
+    name: 'SomeHow AI',
     requiresApiKey: false,
     defaultModelId: 'accomplish-ai/accomplish-free',
     models: [
       {
         id: 'accomplish-free',
-        displayName: 'Accomplish',
+        displayName: 'SomeHow',
         provider: 'accomplish-ai',
         fullId: 'accomplish-ai/accomplish-free',
         contextWindow: 128_000,

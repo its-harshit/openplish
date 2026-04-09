@@ -3,7 +3,7 @@
   "version": "0.3.8",
   "private": true,
   "type": "module",
-  "description": "Accomplish Desktop App",
+  "description": "SomeHow Desktop App",
   "main": "dist-electron/main/index.js",
   "scripts": {
     "postinstall": "node scripts/postinstall.cjs",
@@ -98,9 +98,17 @@
   "build": {
     "npmRebuild": false,
     "compression": "normal",
-    "appId": "ai.accomplish.desktop",
-    "productName": "Accomplish (formerly Openwork)",
-    "artifactName": "Accomplish-${version}-${os}-${arch}.${ext}",
+    "appId": "ai.somehow.desktop",
+    "productName": "SomeHow",
+    "artifactName": "SomeHow-${version}-${os}-${arch}.${ext}",
+    "protocols": [
+      {
+        "name": "SomeHow OAuth",
+        "schemes": [
+          "somehow"
+        ]
+      }
+    ],
     "directories": {
       "output": "release",
       "buildResources": "resources"
@@ -245,7 +253,7 @@
       "allowToChangeInstallationDirectory": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Accomplish",
+      "shortcutName": "SomeHow",
       "runAfterFinish": true,
       "installerIcon": "resources/icon.ico",
       "uninstallerIcon": "resources/icon.ico",

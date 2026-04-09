@@ -1,5 +1,5 @@
 /**
- * Behavior block string constants for the Accomplish agent system prompt.
+ * Behavior block string constants for the SomeHow agent system prompt.
  * Imported by system-prompt-sections.ts and ultimately system-prompt.ts.
  */
 

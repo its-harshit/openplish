@@ -127,8 +127,8 @@ export function importTaskHistory(db: Database, isPackaged: boolean): void {
 
     const insertMessage = db.prepare(
       `INSERT OR IGNORE INTO task_messages
-        (id, task_id, type, content, tool_name, tool_input, timestamp, sort_order)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        (id, task_id, type, content, thinking, tool_name, tool_input, timestamp, sort_order)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     );
 
     const insertAttachment = db.prepare(
@@ -161,6 +161,7 @@ export function importTaskHistory(db: Database, isPackaged: boolean): void {
               task.id as string,
               msg.type as string,
               msg.content as string,
+              (msg.thinking as string | null | undefined) ?? null,
               msg.toolName as string | null,
               msg.toolInput ? JSON.stringify(msg.toolInput) : null,
               msg.timestamp as string,

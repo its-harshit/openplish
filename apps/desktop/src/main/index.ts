@@ -4,11 +4,13 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-const APP_DATA_NAME = 'Accomplish';
+const APP_DATA_NAME = 'SomeHow';
 app.setPath('userData', path.join(app.getPath('appData'), APP_DATA_NAME));
 
+const APP_ID = 'ai.somehow.desktop';
+
 if (process.platform === 'win32') {
-  app.setAppUserModelId('ai.accomplish.desktop');
+  app.setAppUserModelId(APP_ID);
 }
 
 import { getLogCollector, initializeLogCollector } from './logging';
@@ -23,6 +25,7 @@ import {
   handleSecondInstanceProtocolUrl,
 } from './protocol-handlers';
 import { createMainWindow } from './app-window';
+import { CUSTOM_URL_SCHEME } from './url-scheme';
 
 function logMain(level: 'INFO' | 'WARN' | 'ERROR', msg: string, data?: Record<string, unknown>) {
   try {
@@ -58,7 +61,7 @@ if (process.env.CLEAN_START === '1') {
   logMain('INFO', '[Clean Mode] All singletons reset');
 }
 
-app.setName('Accomplish');
+app.setName('SomeHow');
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const envPath = app.isPackaged
@@ -166,9 +169,11 @@ app.on('before-quit', (event) => {
 });
 
 if (process.platform === 'win32' && !app.isPackaged) {
-  app.setAsDefaultProtocolClient('accomplish', process.execPath, [path.resolve(process.argv[1])]);
+  app.setAsDefaultProtocolClient(CUSTOM_URL_SCHEME, process.execPath, [
+    path.resolve(process.argv[1]),
+  ]);
 } else {
-  app.setAsDefaultProtocolClient('accomplish');
+  app.setAsDefaultProtocolClient(CUSTOM_URL_SCHEME);
 }
 
 handleProtocolUrlFromArgs(() => mainWindow);

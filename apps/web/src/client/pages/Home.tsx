@@ -57,7 +57,7 @@ export function HomePage() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={springs.gentle}
-              className="font-apparat text-[32px] tracking-[-0.015em] text-foreground w-full text-center pt-[250px]"
+              className="font-apparat text-[32px] tracking-[-0.015em] text-foreground w-full text-center pt-[250px] after:content-[''] after:block after:w-14 after:h-1 after:rounded-full after:bg-saffron/85 after:mx-auto after:mt-4"
             >
               {t('title')}
             </motion.h1>

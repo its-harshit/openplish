@@ -1,5 +1,5 @@
 /**
- * Accomplish API - Interface to the Electron main process
+ * SomeHow shell API - Interface to the Electron main process
  *
  * This module provides type-safe access to the accomplish API
  * exposed by the preload script via contextBridge.
@@ -699,7 +699,7 @@ declare global {
  */
 export function getAccomplish() {
   if (!window.accomplish) {
-    throw new Error('Accomplish API not available - not running in Electron');
+    throw new Error('SomeHow API not available - not running in Electron');
   }
   return {
     ...window.accomplish,
@@ -787,7 +787,7 @@ export function getShellPlatform(): string | null {
 export function useAccomplish(): AccomplishAPI {
   const api = window.accomplish;
   if (!api) {
-    throw new Error('Accomplish API not available - not running in Electron');
+    throw new Error('SomeHow API not available - not running in Electron');
   }
   return api;
 }

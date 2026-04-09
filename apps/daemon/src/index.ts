@@ -73,16 +73,16 @@ async function main(): Promise<void> {
         'database, socket, and PID file as the desktop app.\n\n' +
         'Usage: node daemon/index.js --data-dir /path/to/userData\n\n' +
         'For local development without --data-dir, set ACCOMPLISH_DAEMON_DEV=1\n' +
-        'to fall back to ~/.accomplish.',
+        'to fall back to ~/.somehow.',
     );
     process.exit(1);
   }
 
   if (!dataDir && isDevMode) {
-    log.warn('[Daemon] Warning: running in dev mode without --data-dir, using ~/.accomplish');
+    log.warn('[Daemon] Warning: running in dev mode without --data-dir, using ~/.somehow');
   }
 
-  log.info(`[Daemon] Starting... (dataDir=${dataDir ?? '~/.accomplish (dev fallback)'})`);
+  log.info(`[Daemon] Starting... (dataDir=${dataDir ?? '~/.somehow (dev fallback)'})`);
 
   // 1. Acquire PID lock scoped to dataDir (atomic, with stale detection)
   const pidPath = getPidFilePath(dataDir);
@@ -106,7 +106,7 @@ async function main(): Promise<void> {
 
   // 5. Create services
   // Packaged-mode context: CLI args take precedence over env vars (for Windows login-item).
-  const userDataPath = dataDir || path.join(homedir(), '.accomplish');
+  const userDataPath = dataDir || path.join(homedir(), '.somehow');
   const isPackaged = args.isPackaged || process.env.ACCOMPLISH_IS_PACKAGED === '1';
   const resourcesPath = args.resourcesPath || process.env.ACCOMPLISH_RESOURCES_PATH || '';
   const appPath = args.appPath || process.env.ACCOMPLISH_APP_PATH || '';

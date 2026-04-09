@@ -41,7 +41,9 @@ export function SpeechSettingsForm({ onSave, onChange }: SpeechSettingsFormProps
       setSaveResult({ success: true, message: t('speech.apiKeySaved') });
       setIsConfigured(true);
       setApiKey('');
-      window.dispatchEvent(new CustomEvent('speech-config-updated', { detail: { isConfigured: true } }));
+      window.dispatchEvent(
+        new CustomEvent('speech-config-updated', { detail: { isConfigured: true } }),
+      );
       onChange?.({ apiKey, enabled: true });
       onSave?.();
     } catch (error) {
@@ -57,7 +59,7 @@ export function SpeechSettingsForm({ onSave, onChange }: SpeechSettingsFormProps
       {/* Header: Title + Toggle */}
       <div className="mb-1.5">
         <span className="flex items-center gap-1.5 text-[13px] font-semibold text-foreground">
-          <Microphone className="h-3.5 w-3.5 text-blue-500" />
+          <Microphone className="h-3.5 w-3.5 text-primary" />
           {t('speech.title')}
         </span>
       </div>
@@ -76,7 +78,7 @@ export function SpeechSettingsForm({ onSave, onChange }: SpeechSettingsFormProps
             href="https://elevenlabs.io/app/settings/api-keys"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500 hover:underline"
+            className="text-primary hover:underline"
           >
             {t('speech.elevenlabsLink')}
           </a>
@@ -86,7 +88,7 @@ export function SpeechSettingsForm({ onSave, onChange }: SpeechSettingsFormProps
       {/* Configured status */}
       {isConfigured && !apiKey && (
         <div className="mb-2.5 flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-2 text-[11px] text-foreground">
-          <CheckCircle className="h-3.5 w-3.5 shrink-0 text-green-500" />
+          <CheckCircle className="h-3.5 w-3.5 shrink-0 text-success" />
           <span>{t('speech.apiKeyConfigured')}</span>
         </div>
       )}
@@ -121,9 +123,7 @@ export function SpeechSettingsForm({ onSave, onChange }: SpeechSettingsFormProps
       {saveResult && (
         <div
           className={`mt-2 flex items-center gap-1.5 rounded-md px-2 py-1.5 text-[10px] ${
-            saveResult.success
-              ? 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300'
-              : 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300'
+            saveResult.success ? 'bg-success/10 text-success' : 'bg-destructive/10 text-destructive'
           }`}
         >
           {saveResult.success ? (
@@ -136,11 +136,9 @@ export function SpeechSettingsForm({ onSave, onChange }: SpeechSettingsFormProps
       )}
 
       {/* Usage Instructions */}
-      <div className="mt-2.5 rounded-md bg-blue-50 p-2.5 text-[11px] dark:bg-blue-950">
-        <p className="mb-1.5 font-medium text-blue-900 dark:text-blue-100">
-          {t('speech.howToUse')}
-        </p>
-        <ul className="space-y-1 text-[10px] text-blue-800 dark:text-blue-200">
+      <div className="mt-2.5 rounded-md bg-info-bg p-2.5 text-[11px] border border-info-border">
+        <p className="mb-1.5 font-medium text-info">{t('speech.howToUse')}</p>
+        <ul className="space-y-1 text-[10px] text-info/90">
           <li>
             <strong>{t('speech.clickMicButton')}</strong>
           </li>

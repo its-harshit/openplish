@@ -65,7 +65,7 @@ export function useSkillsPanel(refreshTrigger?: number): UseSkillsPanelResult {
     let isCurrent = true;
 
     if (!window.accomplish) {
-      logger.error('Accomplish API not available');
+      logger.error('SomeHow API not available');
       setLoading(false);
       return;
     }

@@ -1,7 +1,8 @@
 {
   "app": {
-    "name": "Accomplish"
+    "name": "SomeHow"
   },
+  "npciLogoAlt": "SomeHow and National Payments Corporation of India (NPCI)",
   "buttons": {
     "send": "Send",
     "submit": "Submit",

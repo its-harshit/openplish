@@ -85,7 +85,7 @@ export function HuggingFaceProviderForm({
               className="space-y-3"
             >
               {/* Info banner */}
-              <div className="flex items-start gap-2 rounded-md border border-blue-500/20 bg-blue-500/8 p-3 text-xs text-blue-400">
+              <div className="flex items-start gap-2 rounded-md border border-info-border bg-info-bg p-3 text-xs text-info">
                 <svg
                   className="mt-0.5 h-4 w-4 flex-shrink-0"
                   fill="none"
@@ -182,7 +182,7 @@ export function HuggingFaceProviderForm({
 
               {/* Status footer */}
               <div className="flex items-center gap-2 pt-1 text-xs text-muted-foreground">
-                <span className="flex h-2 w-2 rounded-full bg-green-500" />
+                <span className="flex h-2 w-2 rounded-full bg-success" />
                 <span>Inference server running locally</span>
               </div>
             </motion.div>

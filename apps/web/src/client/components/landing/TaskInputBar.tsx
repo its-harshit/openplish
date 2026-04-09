@@ -112,7 +112,7 @@ export function TaskInputBar({
 
       <div
         className={cn(
-          'rounded-[12px] border bg-popover/70 transition-all duration-200 ease-accomplish cursor-text focus-within:border-muted-foreground/40',
+          'rounded-[12px] border bg-popover/70 transition-all duration-200 ease-accomplish cursor-text focus-within:border-saffron/50 focus-within:ring-1 focus-within:ring-saffron/25',
           isDragOver
             ? 'border-primary border-dashed ring-1 ring-primary bg-primary/5'
             : 'border-border',

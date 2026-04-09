@@ -13,15 +13,15 @@ interface SlackConnectorSectionProps {
 }
 
 const slackStatusClass = {
-  connected: 'text-green-600',
+  connected: 'text-success',
   disconnected: 'text-muted-foreground',
-  pending: 'text-yellow-600',
+  pending: 'text-warning',
 };
 
 const slackStatusDotClass = {
-  connected: 'bg-green-500',
+  connected: 'bg-success',
   disconnected: 'bg-muted-foreground',
-  pending: 'bg-yellow-500 animate-pulse',
+  pending: 'bg-warning animate-pulse',
 };
 
 export function SlackConnectorSection({

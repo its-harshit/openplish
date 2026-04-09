@@ -50,7 +50,7 @@ export const ProviderCard = memo(function ProviderCard({
           ? 'border-provider-border-active border-2 bg-provider-bg-active'
           : isSelected
             ? 'border-provider-border-active border-2 bg-provider-bg-hover'
-            : 'border-border bg-provider-bg-hover hover:border-ring'
+            : 'border-border bg-provider-bg-hover hover:border-saffron/50'
       }`}
     >
       <AnimatePresence>

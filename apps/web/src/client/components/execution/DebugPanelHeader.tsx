@@ -82,7 +82,7 @@ export function DebugPanelHeader({
               }}
             >
               {debugExported ? (
-                <Check className="h-3 w-3 mr-1 text-green-400" />
+                <Check className="h-3 w-3 mr-1 text-success" />
               ) : (
                 <Download className="h-3 w-3 mr-1" />
               )}
@@ -118,7 +118,7 @@ export function DebugPanelHeader({
             {bugReporting ? (
               <SpinnerGap className="h-3 w-3 mr-1 animate-spin" />
             ) : bugReportSaved ? (
-              <Check className="h-3 w-3 mr-1 text-green-400" />
+              <Check className="h-3 w-3 mr-1 text-success" />
             ) : (
               <File className="h-3 w-3 mr-1" />
             )}

@@ -6,11 +6,17 @@ import type { CreditUsage } from '@accomplish_ai/agent-core/common';
 export type { CreditUsage };
 
 export function getCreditStatusColor(usage: CreditUsage): string {
-  if (usage.remainingCredits <= 0) return 'bg-red-500';
+  if (usage.remainingCredits <= 0) {
+    return 'bg-destructive';
+  }
   const pct = usage.totalCredits > 0 ? (usage.spentCredits / usage.totalCredits) * 100 : 0;
-  if (pct < 60) return 'bg-emerald-500';
-  if (pct < 85) return 'bg-amber-500';
-  return 'bg-red-500';
+  if (pct < 60) {
+    return 'bg-success';
+  }
+  if (pct < 85) {
+    return 'bg-saffron';
+  }
+  return 'bg-destructive';
 }
 
 export function useCreditsState() {

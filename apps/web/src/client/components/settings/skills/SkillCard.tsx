@@ -57,7 +57,7 @@ export const SkillCard = memo(function SkillCard({
         <span className="flex items-center gap-1.5 text-[13px] font-semibold text-foreground">
           {skill.name}
           {skill.isVerified && (
-            <svg className="h-3.5 w-3.5 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
+            <svg className="h-3.5 w-3.5 text-primary" viewBox="0 0 24 24" fill="currentColor">
               <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           )}
@@ -89,7 +89,7 @@ export const SkillCard = memo(function SkillCard({
             {skill.source === 'official' && (
               <>
                 <img src={accomplishFavicon} alt="" className="h-2.5 w-2.5" />
-                {t('skills.byAccomplish')}
+                {t('skills.bySomeHow')}
               </>
             )}
             {skill.source === 'community' && (

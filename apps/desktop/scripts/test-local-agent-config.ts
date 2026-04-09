@@ -48,7 +48,7 @@ function getSystemPrompt(): string {
         : 'You are running on Linux.';
 
   return `<identity>
-You are Accomplish, a browser automation assistant.
+You are SomeHow, a browser automation assistant.
 </identity>
 
 <environment>
@@ -86,11 +86,11 @@ export function generateTestLocalAgentConfig(): string {
 
   const config: OpenCodeConfig = {
     $schema: 'https://opencode.ai/config.json',
-    default_agent: 'accomplish',
+    default_agent: 'somehow',
     enabled_providers: ['anthropic', 'openai', 'google', 'xai'],
     permission: 'allow',
     agent: {
-      accomplish: {
+      somehow: {
         description: 'Browser automation assistant for test local agent',
         prompt: getSystemPrompt(),
         mode: 'primary',

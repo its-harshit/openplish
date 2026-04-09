@@ -32,8 +32,8 @@ export function PermissionDialogFile({
         </div>
       )}
       {isDelete && (
-        <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
-          <p className="text-sm text-red-600">
+        <div className="mb-4 p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+          <p className="text-sm text-destructive">
             {hasPaths && paths.length > 1
               ? `${paths.length} files will be permanently deleted:`
               : hasPaths
@@ -59,7 +59,7 @@ export function PermissionDialogFile({
       <div
         className={cn(
           'mb-4 p-3 rounded-lg',
-          isDelete ? 'bg-red-500/5 border border-red-500/20' : 'bg-muted',
+          isDelete ? 'bg-destructive/5 border border-destructive/20' : 'bg-muted',
         )}
       >
         {!hasPaths ? (
@@ -71,7 +71,7 @@ export function PermissionDialogFile({
                 key={idx}
                 className={cn(
                   'text-sm font-mono break-all',
-                  isDelete ? 'text-red-600' : 'text-foreground',
+                  isDelete ? 'text-destructive' : 'text-foreground',
                 )}
               >
                 • {path}
@@ -82,7 +82,7 @@ export function PermissionDialogFile({
           <p
             className={cn(
               'text-sm font-mono break-all',
-              isDelete ? 'text-red-600' : 'text-foreground',
+              isDelete ? 'text-destructive' : 'text-foreground',
             )}
           >
             {paths[0]}
@@ -95,7 +95,9 @@ export function PermissionDialogFile({
         )}
       </div>
 
-      {isDelete && <p className="text-sm text-red-600/80 mb-4">This action cannot be undone.</p>}
+      {isDelete && (
+        <p className="text-sm text-destructive/80 mb-4">This action cannot be undone.</p>
+      )}
 
       {permissionRequest.contentPreview && (
         <details className="mb-4">

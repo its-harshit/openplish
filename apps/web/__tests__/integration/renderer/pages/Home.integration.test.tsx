@@ -205,7 +205,7 @@ describe('Home Page Integration', () => {
 
       // Assert
       expect(
-        screen.getByRole('heading', { name: /what will you accomplish today/i }),
+        screen.getByRole('heading', { name: /what should we work on today/i }),
       ).toBeInTheDocument();
     });
 

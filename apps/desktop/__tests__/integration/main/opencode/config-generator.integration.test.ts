@@ -118,11 +118,11 @@ vi.mock('@accomplish_ai/agent-core', async () => {
         // Build a realistic config object
         const config = {
           $schema: 'https://opencode.ai/config.json',
-          default_agent: 'accomplish',
+          default_agent: 'somehow',
           permission: { '*': 'allow', todowrite: 'allow' },
           enabled_providers: options.enabledProviders,
           agent: {
-            accomplish: {
+            somehow: {
               description: 'Browser automation assistant using dev-browser',
               mode: 'primary',
               prompt: `<environment>
@@ -160,14 +160,14 @@ Use AskUserQuestion tool for user interaction.`,
 
         return {
           configPath,
-          systemPrompt: config.agent.accomplish.prompt,
+          systemPrompt: config.agent.somehow.prompt,
           mcpServers: config.mcp,
           providerConfigs: {},
           enabledProviders: options.enabledProviders,
         };
       },
     ),
-    ACCOMPLISH_AGENT_NAME: 'accomplish',
+    ACCOMPLISH_AGENT_NAME: 'somehow',
 
     // Proxy functions
     ensureAzureFoundryProxy: vi.fn(() => Promise.resolve()),
@@ -494,21 +494,21 @@ describe('OpenCode Config Generator Integration', () => {
       const config = JSON.parse(configContent);
 
       expect(config.$schema).toBe('https://opencode.ai/config.json');
-      expect(config.default_agent).toBe('accomplish');
+      expect(config.default_agent).toBe('somehow');
       expect(config.permission).toEqual({ '*': 'allow', todowrite: 'allow' });
       expect(config.enabled_providers).toContain('anthropic');
       expect(config.enabled_providers).toContain('openai');
       expect(config.enabled_providers).toContain('google');
     });
 
-    it('should include accomplish agent configuration', async () => {
+    it('should include somehow agent configuration', async () => {
       // Act
       const { generateOpenCodeConfig } = await import('@main/opencode/config-generator');
       const configPath = await generateOpenCodeConfig();
 
       // Assert
       const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-      const agent = config.agent['accomplish'];
+      const agent = config.agent['somehow'];
 
       expect(agent).toBeDefined();
       expect(agent.description).toBe('Browser automation assistant using dev-browser');
@@ -545,7 +545,7 @@ describe('OpenCode Config Generator Integration', () => {
 
       // Assert
       const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-      const prompt = config.agent['accomplish'].prompt;
+      const prompt = config.agent['somehow'].prompt;
 
       // Prompt should include environment instructions (varies by platform)
       expect(prompt).toContain('<environment>');
@@ -648,7 +648,7 @@ describe('OpenCode Config Generator Integration', () => {
 
       // Assert
       const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-      const prompt = config.agent['accomplish'].prompt;
+      const prompt = config.agent['somehow'].prompt;
 
       // Should contain browser guidance (detailed tool docs are now in SKILL.md)
       expect(prompt).toContain('browser_script');
@@ -663,7 +663,7 @@ describe('OpenCode Config Generator Integration', () => {
 
       // Assert
       const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-      const prompt = config.agent['accomplish'].prompt;
+      const prompt = config.agent['somehow'].prompt;
 
       expect(prompt).toContain('FILE PERMISSION WORKFLOW');
       expect(prompt).toContain('request_file_permission');
@@ -676,7 +676,7 @@ describe('OpenCode Config Generator Integration', () => {
 
       // Assert
       const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-      const prompt = config.agent['accomplish'].prompt;
+      const prompt = config.agent['somehow'].prompt;
 
       expect(prompt).toContain('user-communication');
       expect(prompt).toContain('AskUserQuestion');
@@ -689,7 +689,7 @@ describe('OpenCode Config Generator Integration', () => {
       const { ACCOMPLISH_AGENT_NAME } = await import('@main/opencode/config-generator');
 
       // Assert
-      expect(ACCOMPLISH_AGENT_NAME).toBe('accomplish');
+      expect(ACCOMPLISH_AGENT_NAME).toBe('somehow');
     });
   });
 

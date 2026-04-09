@@ -15,6 +15,7 @@ import type {
   OAuthClientRegistration,
 } from '@accomplish_ai/agent-core';
 import { getStorage } from '../../store/storage';
+import { MCP_OAUTH_REDIRECT_URI } from '../../url-scheme';
 import { handle } from './utils';
 
 // In-memory store for pending OAuth flows (keyed by state parameter)
@@ -101,11 +102,7 @@ export function registerConnectorHandlers(): void {
 
     let clientReg = connector.clientRegistration;
     if (!clientReg) {
-      clientReg = await registerOAuthClient(
-        metadata,
-        'accomplish://callback/mcp',
-        'Accomplish Desktop',
-      );
+      clientReg = await registerOAuthClient(metadata, MCP_OAUTH_REDIRECT_URI, 'SomeHow Desktop');
     }
 
     storage.upsertConnector({
@@ -131,7 +128,7 @@ export function registerConnectorHandlers(): void {
     const authUrl = buildAuthorizationUrl({
       authorizationEndpoint: metadata.authorizationEndpoint,
       clientId: clientReg.clientId,
-      redirectUri: 'accomplish://callback/mcp',
+      redirectUri: MCP_OAUTH_REDIRECT_URI,
       codeChallenge: pkce.codeChallenge,
       state,
       scope: metadata.scopesSupported?.join(' '),
@@ -156,7 +153,7 @@ export function registerConnectorHandlers(): void {
         codeVerifier: flow.codeVerifier,
         clientId: flow.clientRegistration.clientId,
         clientSecret: flow.clientRegistration.clientSecret,
-        redirectUri: 'accomplish://callback/mcp',
+        redirectUri: MCP_OAUTH_REDIRECT_URI,
       });
 
       storage.storeConnectorTokens(flow.connectorId, tokens);

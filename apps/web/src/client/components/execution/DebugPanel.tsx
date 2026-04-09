@@ -106,7 +106,7 @@ export function DebugPanel({
     const parts = text.split(new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'));
     return parts.map((part, i) =>
       part.toLowerCase() === query.toLowerCase() ? (
-        <mark key={i} className="bg-yellow-500/40 text-yellow-200 rounded px-0.5">
+        <mark key={i} className="bg-warning/40 text-foreground rounded px-0.5">
           {part}
         </mark>
       ) : (

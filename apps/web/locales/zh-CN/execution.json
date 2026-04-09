@@ -20,8 +20,10 @@
     "executing": "运行中...",
     "running": "处理中...",
     "handling": "处理中...",
-    "accomplishing": "完成中..."
+    "accomplishing": "寻根中..."
   },
+  "assistantThinkingToggle": "思考过程",
+  "assistantThinkingInProgress": "…",
   "coldStartHint": "首次任务需要更长时间...",
   "agentWorking": "智能体工作中...",
   "stopAgent": "停止智能体 (Ctrl+C)",

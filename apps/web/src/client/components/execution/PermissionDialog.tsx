@@ -84,9 +84,9 @@ export function PermissionDialog({ permissionRequest, onRespond }: PermissionDia
               className={cn(
                 'flex h-10 w-10 items-center justify-center rounded-full shrink-0',
                 isDelete
-                  ? 'bg-red-500/10'
+                  ? 'bg-destructive/10'
                   : permissionRequest.type === 'file'
-                    ? 'bg-amber-500/10'
+                    ? 'bg-warning/10'
                     : permissionRequest.type === 'question'
                       ? 'bg-primary/10'
                       : permissionRequest.type === 'desktop'
@@ -95,9 +95,9 @@ export function PermissionDialog({ permissionRequest, onRespond }: PermissionDia
               )}
             >
               {isDelete ? (
-                <AlertTriangle className="h-5 w-5 text-red-600" />
+                <AlertTriangle className="h-5 w-5 text-destructive" />
               ) : permissionRequest.type === 'file' ? (
-                <File className="h-5 w-5 text-amber-600" />
+                <File className="h-5 w-5 text-warning" />
               ) : permissionRequest.type === 'question' ? (
                 <Brain className="h-5 w-5 text-primary" />
               ) : permissionRequest.type === 'desktop' ? (
@@ -110,7 +110,7 @@ export function PermissionDialog({ permissionRequest, onRespond }: PermissionDia
               <h3
                 className={cn(
                   'text-lg font-semibold',
-                  isDelete ? 'text-red-600' : 'text-foreground',
+                  isDelete ? 'text-destructive' : 'text-foreground',
                 )}
               >
                 {isDelete
@@ -164,7 +164,10 @@ export function PermissionDialog({ permissionRequest, onRespond }: PermissionDia
             </Button>
             <Button
               onClick={() => handleRespond(true)}
-              className={cn('flex-1', isDelete && 'bg-red-600 hover:bg-red-700 text-white')}
+              className={cn(
+                'flex-1',
+                isDelete && 'bg-destructive hover:bg-destructive/90 text-destructive-foreground',
+              )}
               data-testid="permission-allow-button"
               disabled={
                 blockedByPolicy ||

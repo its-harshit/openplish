@@ -73,11 +73,9 @@ export function SchedulerPanel() {
       </div>
 
       {!autoStartEnabled && (
-        <div className="flex items-start gap-2 rounded-lg border border-blue-200 bg-blue-50 p-3 dark:border-blue-800 dark:bg-blue-950/30">
-          <Info className="h-4 w-4 mt-0.5 shrink-0 text-blue-600 dark:text-blue-400" />
-          <p className="text-xs text-blue-700 dark:text-blue-300">
-            {t('scheduler.autoStartWarning')}
-          </p>
+        <div className="flex items-start gap-2 rounded-lg border border-info-border bg-info-bg p-3">
+          <Info className="h-4 w-4 mt-0.5 shrink-0 text-info-icon" />
+          <p className="text-xs text-info">{t('scheduler.autoStartWarning')}</p>
         </div>
       )}
 

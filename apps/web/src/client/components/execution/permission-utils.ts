@@ -1,18 +1,18 @@
 export function getOperationBadgeClasses(operation?: string): string {
   switch (operation) {
     case 'delete':
-      return 'bg-red-500/10 text-red-600';
+      return 'bg-destructive/10 text-destructive';
     case 'overwrite':
-      return 'bg-orange-500/10 text-orange-600';
+      return 'bg-warning/10 text-warning';
     case 'modify':
-      return 'bg-yellow-500/10 text-yellow-600';
+      return 'bg-warning/10 text-warning';
     case 'create':
-      return 'bg-green-500/10 text-green-600';
+      return 'bg-success/10 text-success';
     case 'rename':
     case 'move':
-      return 'bg-blue-500/10 text-blue-600';
+      return 'bg-primary/10 text-primary';
     default:
-      return 'bg-gray-500/10 text-gray-600';
+      return 'bg-muted text-muted-foreground';
   }
 }
 

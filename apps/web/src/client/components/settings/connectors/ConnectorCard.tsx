@@ -11,16 +11,16 @@ interface ConnectorCardProps {
 }
 
 const statusDotClass: Record<ConnectorStatus, string> = {
-  connected: 'bg-green-500',
+  connected: 'bg-success',
   disconnected: 'bg-muted-foreground',
-  connecting: 'bg-yellow-500 animate-pulse',
+  connecting: 'bg-warning animate-pulse',
   error: 'bg-destructive',
 };
 
 const statusTextClass: Record<ConnectorStatus, string> = {
-  connected: 'text-green-600',
+  connected: 'text-success',
   disconnected: 'text-muted-foreground',
-  connecting: 'text-yellow-600',
+  connecting: 'text-warning',
   error: 'text-destructive',
 };
 

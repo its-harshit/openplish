@@ -77,7 +77,7 @@ export function SkillsSubmenu({
                   {skill.source === 'official' && (
                     <>
                       <img src={accomplishFavicon} alt="" className="h-2.5 w-2.5" />
-                      {t('skills.byAccomplish')}
+                      {t('skills.bySomeHow')}
                     </>
                   )}
                   {skill.source === 'community' && (

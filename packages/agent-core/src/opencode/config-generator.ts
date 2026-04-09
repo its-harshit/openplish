@@ -27,7 +27,7 @@ import { BASE_PROVIDERS, getBrowserBehaviorInstructions } from './config-generat
 
 const log = createConsoleLogger({ prefix: 'OpenCodeConfig' });
 
-export const ACCOMPLISH_AGENT_NAME = 'accomplish';
+export const ACCOMPLISH_AGENT_NAME = 'somehow';
 
 export function generateConfig(options: ConfigGeneratorOptions): GeneratedConfig {
   const {

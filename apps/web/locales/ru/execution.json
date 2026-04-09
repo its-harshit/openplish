@@ -20,8 +20,10 @@
     "executing": "Выполняю...",
     "running": "Запускаю...",
     "handling": "Обрабатываю...",
-    "accomplishing": "Выполняю задачу..."
+    "accomplishing": "Доходим до сути..."
   },
+  "assistantThinkingToggle": "Рассуждение",
+  "assistantThinkingInProgress": "…",
   "loadingAgent": "Загрузка агента...",
   "waitingForResponse": "Ожидание ответа...",
   "connectingToModel": "Подключение к {{modelName}}...",

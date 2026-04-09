@@ -69,13 +69,13 @@ export function SpeechInputButton({
 
   const buttonClasses = useMemo(() => {
     if (isRecording) {
-      return 'bg-transparent text-red-600 hover:text-red-700';
+      return 'bg-transparent text-destructive hover:text-destructive/90';
     }
     if (isTranscribing) {
-      return 'bg-transparent text-blue-600 hover:text-blue-700 cursor-wait';
+      return 'bg-transparent text-info-icon hover:text-info cursor-wait';
     }
     if (error) {
-      return 'bg-transparent text-orange-600 hover:text-orange-700';
+      return 'bg-transparent text-warning hover:text-warning/90';
     }
     if (!isConfigured) {
       return 'bg-transparent text-muted-foreground hover:text-foreground';
@@ -151,13 +151,11 @@ export function SpeechInputButton({
       )}
 
       {/* Status indicator */}
-      {isTranscribing && (
-        <div className="text-xs text-blue-600 dark:text-blue-400 shrink-0">Processing...</div>
-      )}
+      {isTranscribing && <div className="text-xs text-info-icon shrink-0">Processing...</div>}
 
       {/* Error retry helper text */}
       {error && !isRecording && !isTranscribing && (
-        <div className="text-xs text-orange-600 dark:text-orange-400 shrink-0">Retry</div>
+        <div className="text-xs text-warning shrink-0">Retry</div>
       )}
     </div>
   );

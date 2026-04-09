@@ -704,7 +704,7 @@ vi.mock('@main/opencode/config-generator', () => ({
   generateOpenCodeConfig: vi.fn(() => Promise.resolve('/mock/config/path')),
   syncApiKeysToOpenCodeAuth: vi.fn(() => Promise.resolve()),
   getMcpToolsPath: vi.fn(() => '/mock/mcp-tools'),
-  ACCOMPLISH_AGENT_NAME: 'accomplish',
+  ACCOMPLISH_AGENT_NAME: 'somehow',
 }));
 
 // Mock electron-options - provides adapter options for desktop wrapper

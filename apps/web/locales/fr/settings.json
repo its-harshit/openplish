@@ -1,6 +1,6 @@
 {
   "title": "Paramètres",
-  "setupTitle": "Configurer Accomplish",
+  "setupTitle": "Configurer SomeHow",
   "model": {
     "title": "Modèle",
     "cloudProviders": "Fournisseurs cloud",
@@ -60,9 +60,9 @@
     "fireworks": "Fireworks AI",
     "groq": "Groq",
     "huggingface-local": "HuggingFace Local",
-    "accomplish-ai": "Accomplish AI",
+    "accomplish-ai": "SomeHow AI",
     "accomplishAi": {
-      "description": "Utilisez le modèle intégré propulsé par Accomplish - aucune clé API requise.\nInclut 200 crédits gratuits par mois pour commencer.",
+      "description": "Utilisez le modèle intégré propulsé par SomeHow - aucune clé API requise.\nInclut 200 crédits gratuits par mois pour commencer.",
       "disconnect": "Déconnecter",
       "exhaustedMessage": "Crédits épuisés. Ils seront réinitialisés le {{date}}.",
       "exhaustedMessageSoon": "Crédits épuisés. Ils seront réinitialisés bientôt."
@@ -276,6 +276,47 @@
     "scheduler": "Scheduler",
     "policies": "Policies"
   },
+  "policies": {
+    "loading": "Chargement…",
+    "intro": "Contrôlez comment l'agent peut modifier les fichiers. « Hériter » suit l'environnement de l'application (.env). Les modes explicites remplacent l'environnement sur cet appareil.",
+    "effectiveNow": "Comportement effectif actuellement",
+    "effective": {
+      "restricted": "Restreint : lecture, création de nouveaux fichiers et copie vers de nouveaux chemins uniquement",
+      "full": "Complet : toutes les opérations sur fichiers (toujours soumises aux demandes d'autorisation)"
+    },
+    "filePolicy": "Politique des opérations sur fichiers",
+    "modes": {
+      "inherit": {
+        "label": "Hériter de l'environnement",
+        "desc": "Utiliser ACCOMPLISH_FILE_OPERATION_POLICY depuis .env ou l'environnement système (par défaut restreint sauf si défini sur standard/full)."
+      },
+      "restricted": {
+        "label": "Restreint (recommandé)",
+        "desc": "Lecture uniquement, création de nouveaux fichiers et copie vers des chemins qui n'existent pas encore."
+      },
+      "full": {
+        "label": "Accès fichiers complet",
+        "desc": "Autoriser modifier, déplacer, renommer et supprimer lorsque vous approuvez chaque invite."
+      }
+    },
+    "currentPassword": "Mot de passe actuel",
+    "passwordPlaceholder": "Requis pour modifier la politique lorsqu'un verrou est défini",
+    "savePolicy": "Enregistrer la politique",
+    "saving": "Enregistrement…",
+    "saved": "Politique enregistrée.",
+    "lockTitle": "Protéger les modifications de politique",
+    "lockIntro": "Facultatif : exiger un mot de passe pour modifier cette politique ou le verrou lui-même. Si vous perdez le mot de passe, effacez le stockage sécurisé de l'application ou réinstallez.",
+    "newPassword": "Nouveau mot de passe (min. 8 caractères)",
+    "confirmPassword": "Confirmer le mot de passe",
+    "setPassword": "Définir le mot de passe du verrou",
+    "changePasswordSection": "Modifier ou supprimer le verrou",
+    "updatePassword": "Mettre à jour le mot de passe",
+    "removePassword": "Supprimer le verrou par mot de passe",
+    "passwordSet": "Mot de passe du verrou enregistré.",
+    "passwordChanged": "Mot de passe mis à jour.",
+    "passwordCleared": "Verrou supprimé.",
+    "passwordMismatch": "Les mots de passe doivent correspondre et comporter au moins 8 caractères."
+  },
   "notifications": {
     "toggle": {
       "label": "Notifications de bureau",
@@ -332,7 +373,7 @@
   },
   "integrations": {
     "title": "Intégrations de messagerie",
-    "description": "Connectez des plateformes de messagerie pour déclencher des tâches Accomplish à distance. Une fois activé, vous pouvez démarrer et surveiller des tâches depuis votre téléphone ou n'importe quel appareil.",
+    "description": "Connectez des plateformes de messagerie pour déclencher des tâches SomeHow à distance. Une fois activé, vous pouvez démarrer et surveiller des tâches depuis votre téléphone ou n'importe quel appareil.",
     "enabled": "Activé",
     "comingSoon": "Bientôt disponible",
     "enable": "Activer {{name}}",
@@ -344,25 +385,25 @@
     "platforms": {
       "whatsapp": "Déclencher des tâches et recevoir des mises à jour via WhatsApp",
       "slack": "Connecter un espace de travail Slack pour la gestion des tâches",
-      "telegram": "Utiliser le bot Telegram pour interagir avec Accomplish",
+      "telegram": "Utiliser le bot Telegram pour interagir avec SomeHow",
       "teams": "Intégrer avec les canaux et chats Teams"
     },
     "whatsapp": {
       "connect": "Connecter WhatsApp",
       "scanQr": "Scannez le QR code ci-dessous avec votre application WhatsApp pour connecter cet appareil. Allez dans WhatsApp > Paramètres > Appareils liés > Lier un appareil.",
       "qrPlaceholder": "Le QR code apparaîtra ici lorsque le service WhatsApp démarrera",
-      "securityNotice": "En connectant WhatsApp, vous accordez à Accomplish l'accès à vos messages WhatsApp. Toutes les données restent sur votre appareil et ne sont pas partagées à l'extérieur."
+      "securityNotice": "En connectant WhatsApp, vous accordez à SomeHow l'accès à vos messages WhatsApp. Toutes les données restent sur votre appareil et ne sont pas partagées à l'extérieur."
     }
   },
   "appearance": {
     "title": "Thème",
-    "description": "Choisissez l'apparence d'Accomplish. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
+    "description": "Choisissez l'apparence de SomeHow. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
     "ariaLabel": "Préférence de thème",
     "system": "Système",
     "light": "Clair",
     "dark": "Sombre",
     "themeTitle": "Thème",
-    "themeDescription": "Choisissez l'apparence d'Accomplish. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
+    "themeDescription": "Choisissez l'apparence de SomeHow. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
     "themeSystem": "Système",
     "themeLight": "Clair",
     "themeDark": "Sombre"
@@ -413,7 +454,7 @@
       "restartAuth": "Relancer l'authentification",
       "disconnect": "Déconnecter Slack",
       "disconnecting": "Déconnexion...",
-      "authHint": "Accomplish ouvrira votre navigateur pour que vous puissiez approuver l'accès Slack.",
+      "authHint": "SomeHow ouvrira votre navigateur pour que vous puissiez approuver l'accès Slack.",
       "pendingHint": "Une connexion Slack a été initiée mais non terminée. Relancez-la pour réessayer.",
       "connectedHint": "Slack est authentifié et prêt à être utilisé par l'agent.",
       "authFailed": "Échec de l'authentification Slack",
@@ -452,7 +493,7 @@
     "filterAll": "Toutes",
     "filterActive": "Actives",
     "filterInactive": "Inactives",
-    "byAccomplish": "Par Accomplish",
+    "bySomeHow": "Par SomeHow",
     "github": "GitHub",
     "builtByYou": "Créées par vous",
     "loading": "Chargement des compétences...",
@@ -467,7 +508,7 @@
     "showInFolder": "Afficher dans le dossier",
     "delete": "Supprimer",
     "add": "Ajouter",
-    "buildWithAccomplish": "Créer avec Accomplish",
+    "buildWithSomeHow": "Créer avec SomeHow",
     "buildDescription": "Créez des compétences par conversation",
     "uploadSkill": "Importer une compétence",
     "uploadDescription": "Sélectionnez un dossier de compétences à importer",
@@ -497,7 +538,7 @@
     "exported": "Exporté",
     "exportFailed": "Échec de l'exportation",
     "exportDialogTitle": "Exporter les journaux de l'application",
-    "exportHeader": "Journaux de l'application Accomplish\nExporté : {{timestamp}}\nRépertoire des journaux : {{logDir}}\n\nAucun journal enregistré.\n"
+    "exportHeader": "Journaux de l'application SomeHow\nExporté : {{timestamp}}\nRépertoire des journaux : {{logDir}}\n\nAucun journal enregistré.\n"
   },
   "language": {
     "title": "Langue",
@@ -512,13 +553,17 @@
   "about": {
     "title": "À propos",
     "version": "Version {{version}}",
-    "description": "Accomplish est un agent IA local pour votre Mac qui lit vos fichiers, crée des documents et automatise les tâches répétitives - le tout en open source avec les modèles d'IA de votre choix.",
+    "description": "SomeHow est un agent IA local pour votre Mac qui lit vos fichiers, crée des documents et automatise les tâches répétitives - le tout en open source avec les modèles d'IA de votre choix.",
     "contact": "Des questions ou des commentaires ? Cliquez ici pour nous contacter",
     "visitUs": "Visitez-nous",
+    "websiteUrl": "https://www.somehow.ai",
+    "websiteLinkText": "www.somehow.ai",
+    "supportMailto": "mailto:support@somehow.ai",
+    "supportLinkText": "support@somehow.ai",
     "haveQuestion": "Une question ?",
     "versionLabel": "Version",
     "loading": "Chargement...",
-    "allRightsReserved": "Accomplish™ Tous droits réservés."
+    "allRightsReserved": "SomeHow™ Tous droits réservés."
   },
   "warnings": {
     "noProviderReady": "Aucun fournisseur prêt",

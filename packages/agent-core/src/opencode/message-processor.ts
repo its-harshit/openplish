@@ -3,7 +3,7 @@ import type { TaskMessage } from '../common/types/task.js';
 import { createMessageId } from '../common/index.js';
 import { extractScreenshots } from './message-attachments.js';
 import {
-  sanitizeAssistantTextForDisplay,
+  partitionAssistantTextForDisplay,
   sanitizeToolOutput,
   getToolDisplayName,
 } from './message-sanitization.js';
@@ -13,10 +13,12 @@ export { MESSAGE_BATCH_DELAY_MS } from './message-batcher.js';
 export type { MessageBatcher } from './message-batcher.js';
 export { createMessageBatcher, queueMessage, flushAndCleanupBatcher } from './message-batcher.js';
 export {
+  partitionAssistantTextForDisplay,
   sanitizeAssistantTextForDisplay,
   sanitizeToolOutput,
   getToolDisplayName,
 } from './message-sanitization.js';
+export type { PartitionAssistantTextResult } from './message-sanitization.js';
 export { extractScreenshots } from './message-attachments.js';
 
 const MAX_TOOL_OUTPUT_LENGTH = 200_000;
@@ -27,14 +29,18 @@ const MAX_TOOL_OUTPUT_LENGTH = 200_000;
  */
 export function toTaskMessage(message: OpenCodeMessage): TaskMessage | null {
   if (message.type === 'text') {
-    const sanitized = sanitizeAssistantTextForDisplay(message.part.text || '');
-    if (sanitized) {
-      return {
+    const { thinking, visible } = partitionAssistantTextForDisplay(message.part.text || '');
+    if (visible) {
+      const taskMessage: TaskMessage = {
         id: createMessageId(),
         type: 'assistant',
-        content: sanitized,
+        content: visible,
         timestamp: new Date().toISOString(),
       };
+      if (thinking) {
+        taskMessage.thinking = thinking;
+      }
+      return taskMessage;
     }
     return null;
   }

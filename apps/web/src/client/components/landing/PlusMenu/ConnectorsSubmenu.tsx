@@ -9,9 +9,9 @@ interface ConnectorsSubmenuProps {
 }
 
 const statusDot: Record<ConnectorStatus, string> = {
-  connected: 'bg-green-500',
+  connected: 'bg-success',
   disconnected: 'bg-muted-foreground/50',
-  connecting: 'bg-yellow-500 animate-pulse',
+  connecting: 'bg-warning animate-pulse',
   error: 'bg-destructive',
 };
 

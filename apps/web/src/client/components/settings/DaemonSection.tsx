@@ -60,20 +60,23 @@ function getDisplayStatus(
 function getStatusDotClass(displayStatus: string): string {
   switch (displayStatus) {
     case 'running':
-      return 'bg-green-500';
+      return 'bg-success';
     case 'starting':
-      return 'bg-green-500 animate-pulse';
+      return 'bg-success animate-pulse';
     case 'stopping':
-      return 'bg-red-500 animate-pulse';
+      return 'bg-destructive animate-pulse';
     case 'reconnecting':
-      return 'bg-yellow-500 animate-pulse';
+      return 'bg-warning animate-pulse';
     case 'failed':
     case 'stopped':
-      return 'bg-red-500';
+      return 'bg-destructive';
     default:
-      return 'bg-gray-500';
+      return 'bg-muted-foreground';
   }
 }
+
+/** Polling must not overwrite store while these statuses are active. */
+const DAEMON_TRANSITIONAL_STATES = new Set(['starting', 'stopping', 'reconnecting']);
 
 export function DaemonSection() {
   const accomplish = useAccomplish();
@@ -93,8 +96,6 @@ export function DaemonSection() {
   // Poll daemon for uptime/lastPing — status comes from store.
   // Skips overwriting transitional states (starting/stopping/reconnecting)
   // to prevent the polling loop from defeating intentional state transitions.
-  const TRANSITIONAL_STATES = new Set(['starting', 'stopping', 'reconnecting']);
-
   const pollStatus = useCallback(async () => {
     try {
       const result = await accomplish.daemonPing();
@@ -102,13 +103,13 @@ export function DaemonSection() {
         setUptime(result.uptime);
         // Only set connected if not in a transitional state
         const currentStatus = useDaemonStore.getState().status;
-        if (!TRANSITIONAL_STATES.has(currentStatus)) {
+        if (!DAEMON_TRANSITIONAL_STATES.has(currentStatus)) {
           setGlobalStatus('connected');
         }
       } else {
         setUptime(0);
         const currentStatus = useDaemonStore.getState().status;
-        if (!TRANSITIONAL_STATES.has(currentStatus)) {
+        if (!DAEMON_TRANSITIONAL_STATES.has(currentStatus)) {
           setGlobalStatus('stopped');
         }
       }

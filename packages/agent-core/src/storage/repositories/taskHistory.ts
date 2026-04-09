@@ -60,8 +60,8 @@ export function saveTask(task: Task, workspaceId?: string | null): void {
 
     const insertMessage = db.prepare(
       `INSERT INTO task_messages
-        (id, task_id, type, content, tool_name, tool_input, timestamp, sort_order)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        (id, task_id, type, content, thinking, tool_name, tool_input, timestamp, sort_order)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     );
 
     const insertAttachment = db.prepare(
@@ -75,6 +75,7 @@ export function saveTask(task: Task, workspaceId?: string | null): void {
         task.id,
         msg.type,
         msg.content,
+        msg.thinking ?? null,
         msg.toolName || null,
         msg.toolInput ? JSON.stringify(msg.toolInput) : null,
         msg.timestamp,
@@ -136,13 +137,14 @@ export function addTaskMessage(taskId: string, message: TaskMessage): void {
 
     db.prepare(
       `INSERT INTO task_messages
-        (id, task_id, type, content, tool_name, tool_input, timestamp, sort_order)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        (id, task_id, type, content, thinking, tool_name, tool_input, timestamp, sort_order)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     ).run(
       message.id,
       taskId,
       message.type,
       message.content,
+      message.thinking ?? null,
       message.toolName || null,
       message.toolInput ? JSON.stringify(message.toolInput) : null,
       message.timestamp,

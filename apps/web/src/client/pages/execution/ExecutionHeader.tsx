@@ -10,7 +10,7 @@ function StatusBadge({ status }: { status: TaskStatus }) {
   switch (status) {
     case 'queued':
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-600 shrink-0">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-saffron-subtle text-saffron border border-saffron/25 shrink-0">
           <Clock className="h-3 w-3" />
           {t('status.queued')}
         </span>
@@ -18,14 +18,14 @@ function StatusBadge({ status }: { status: TaskStatus }) {
     case 'running':
       return (
         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 dark:bg-primary/5 shrink-0">
-          <span className="animate-shimmer bg-gradient-to-r from-primary via-primary/50 to-primary dark:from-primary/70 dark:via-primary/30 dark:to-primary/70 bg-[length:200%_100%] bg-clip-text text-transparent">
+          <span className="animate-shimmer bg-gradient-to-r from-primary via-saffron to-primary dark:from-primary/70 dark:via-saffron/80 dark:to-primary/70 bg-[length:200%_100%] bg-clip-text text-transparent">
             {t('status.running')}
           </span>
         </span>
       );
     case 'completed':
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-600 shrink-0">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-success/10 text-success ring-1 ring-saffron/30 shrink-0">
           <CheckCircle className="h-3 w-3" />
           {t('status.completed')}
         </span>
@@ -46,7 +46,7 @@ function StatusBadge({ status }: { status: TaskStatus }) {
       );
     case 'interrupted':
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-600 shrink-0">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-saffron-subtle text-saffron border border-saffron/25 shrink-0">
           <Square className="h-3 w-3" />
           {t('status.stopped')}
         </span>
@@ -60,7 +60,7 @@ function StatusBadge({ status }: { status: TaskStatus }) {
       );
     case 'waiting_permission':
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-600 shrink-0">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-info-bg text-info border border-info-border shrink-0">
           <Hourglass className="h-3 w-3" />
           {t('status.waiting_permission')}
         </span>

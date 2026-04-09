@@ -59,15 +59,16 @@ export function ConversationListItem({ task }: ConversationListItemProps) {
       }}
       title={task.summary || task.prompt}
       className={cn(
-        'w-full text-left p-2 rounded-lg text-xs font-medium transition-colors duration-200',
+        'w-full text-left py-2 pr-2 rounded-lg text-xs font-medium transition-colors duration-200',
+        'border-l-2 border-transparent pl-[10px]',
         'text-foreground hover:bg-accent hover:text-foreground',
         'flex items-center gap-3 group relative cursor-pointer',
-        isActive && 'bg-accent text-foreground',
+        isActive && 'bg-saffron-subtle text-foreground border-saffron',
       )}
     >
       <span className="flex items-center justify-center shrink-0 w-3 h-3">
         {task.status === 'running' || task.status === 'waiting_permission' ? (
-          <SpinnerGap className="w-3 h-3 animate-spin text-muted-foreground" />
+          <SpinnerGap className="w-3 h-3 animate-spin text-saffron" />
         ) : (
           <span className={cn('w-2 h-2 rounded-full', statusColor)} />
         )}
@@ -117,7 +118,7 @@ export function ConversationListItem({ task }: ConversationListItemProps) {
               'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto',
               'transition-opacity duration-200',
               'p-1 rounded hover:bg-accent shrink-0',
-              isFavorited && 'opacity-100 text-amber-500',
+              isFavorited && 'opacity-100 text-saffron',
             )}
           >
             <Star className={cn('h-3 w-3', isFavorited && 'fill-current')} />
@@ -130,8 +131,8 @@ export function ConversationListItem({ task }: ConversationListItemProps) {
             'absolute right-0 top-1/2 -translate-y-1/2',
             'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto',
             'transition-opacity duration-200',
-            'p-1 rounded hover:bg-red-100 dark:hover:bg-red-900/20',
-            'text-zinc-400 hover:text-red-600 dark:hover:text-red-400',
+            'p-1 rounded hover:bg-destructive/10',
+            'text-zinc-400 hover:text-destructive',
           )}
           aria-label={t('deleteTask')}
         >

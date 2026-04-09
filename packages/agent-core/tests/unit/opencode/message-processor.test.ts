@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   sanitizeAssistantTextForDisplay,
+  partitionAssistantTextForDisplay,
   sanitizeToolOutput,
   toTaskMessage,
   getToolDisplayName,
@@ -71,6 +72,35 @@ describe('sanitizeAssistantTextForDisplay', () => {
     const result = sanitizeAssistantTextForDisplay(text);
     expect(result).toBe('Visible text');
   });
+
+  it('strips unclosed <redacted_thinking> from visible (streaming edge)', () => {
+    const text = 'Hello\n<redacted_thinking>partial reasoning';
+    const result = sanitizeAssistantTextForDisplay(text);
+    expect(result).toBe('Hello');
+  });
+});
+
+describe('partitionAssistantTextForDisplay', () => {
+  it('extracts <redacted_thinking> body and leaves visible greeting', () => {
+    const raw = '<redacted_thinking>internal reasoning here</redacted_thinking>\n\nHello user';
+    const { thinking, visible } = partitionAssistantTextForDisplay(raw);
+    expect(thinking).toBe('internal reasoning here');
+    expect(visible).toBe('Hello user');
+  });
+
+  it('is case-insensitive for redacted_thinking tags', () => {
+    const raw = '<REDACTED_THINKING>caps</REDACTED_THINKING>\nDone';
+    const { thinking, visible } = partitionAssistantTextForDisplay(raw);
+    expect(thinking).toBe('caps');
+    expect(visible).toBe('Done');
+  });
+
+  it('concatenates multiple reasoning blocks', () => {
+    const raw = '<thought>a</thought>\n<thinking>b</thinking>\nVisible';
+    const { thinking, visible } = partitionAssistantTextForDisplay(raw);
+    expect(thinking).toBe('a\n\nb');
+    expect(visible).toBe('Visible');
+  });
 });
 
 describe('toTaskMessage', () => {
@@ -103,6 +133,41 @@ describe('toTaskMessage', () => {
     expect(result).not.toBeNull();
     expect(result!.type).toBe('assistant');
     expect(result!.content).toBe('Hello user');
+    expect(result!.thinking).toBeUndefined();
+  });
+
+  it('sets thinking and content for redacted_thinking plus visible reply', () => {
+    const message: OpenCodeMessage = {
+      type: 'text',
+      part: {
+        id: '2b',
+        sessionID: 's1',
+        messageID: 'm2b',
+        type: 'text',
+        text: '<redacted_thinking>planning</redacted_thinking>\n\nHello user',
+      },
+    };
+    const result = toTaskMessage(message);
+    expect(result).not.toBeNull();
+    expect(result!.thinking).toBe('planning');
+    expect(result!.content).toBe('Hello user');
+  });
+
+  it('sets thinking for mixed <thought> and visible text', () => {
+    const message: OpenCodeMessage = {
+      type: 'text',
+      part: {
+        id: '2c',
+        sessionID: 's1',
+        messageID: 'm2c',
+        type: 'text',
+        text: 'Hi\n<thought>internal reasoning</thought>',
+      },
+    };
+    const result = toTaskMessage(message);
+    expect(result).not.toBeNull();
+    expect(result!.thinking).toBe('internal reasoning');
+    expect(result!.content).toBe('Hi');
   });
 
   it('returns null for hidden tool names like discard', () => {

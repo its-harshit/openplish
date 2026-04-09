@@ -59,7 +59,7 @@ export function CloseConfirmDialog() {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-base">
             <Power className="h-5 w-5" weight="bold" />
-            Close Accomplish
+            Close SomeHow
           </DialogTitle>
           <DialogDescription className="text-sm text-muted-foreground">
             Choose how to close the application.
@@ -125,7 +125,7 @@ export function CloseConfirmDialog() {
               <Warning className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" weight="bold" />
               <p className="text-xs text-destructive leading-relaxed">
                 Background tasks, scheduled jobs, and WhatsApp message processing will stop
-                immediately. They will resume when you reopen Accomplish.
+                immediately. They will resume when you reopen SomeHow.
               </p>
             </div>
           )}

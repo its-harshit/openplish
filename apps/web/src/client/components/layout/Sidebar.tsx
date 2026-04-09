@@ -15,7 +15,7 @@ import type { SettingsTabId } from './settings-tabs';
 import WorkspaceSelector from './WorkspaceSelector';
 import { Gear, ChatText, MagnifyingGlass } from '@phosphor-icons/react';
 import { DaemonStatusDot } from '@/components/DaemonStatusDot';
-import logoImage from '/assets/logo-1.png';
+import { BrandedLogo } from '@/components/layout/BrandedLogo';
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <div className="flex h-screen w-[260px] flex-col border-r border-border bg-card pt-12">
+      <div className="flex h-screen w-[260px] flex-col border-r border-border bg-card pt-12 shadow-[inset_-3px_0_0_0_hsl(var(--saffron)/0.12)]">
         {/* Workspace Selector */}
         <div className="px-3 pt-3 pb-1">
           <WorkspaceSelector
@@ -70,7 +70,7 @@ export default function Sidebar() {
             onClick={handleNewConversation}
             variant="default"
             size="sm"
-            className="flex-1 justify-center gap-2"
+            className="flex-1 justify-center gap-2 shadow-sm shadow-saffron/25"
             title={t('newTask')}
           >
             <ChatText className="h-4 w-4" />
@@ -119,16 +119,8 @@ export default function Sidebar() {
         </ScrollArea>
 
         {/* Bottom Section - Logo and Settings */}
-        <div className="px-3 py-4 border-t border-border flex items-center justify-between">
-          {/* Logo - Bottom Left */}
-          <div className="flex items-center">
-            <img
-              src={logoImage}
-              alt="Accomplish"
-              className="dark:invert"
-              style={{ height: '20px', paddingLeft: '6px' }}
-            />
-          </div>
+        <div className="px-3 py-4 border-t border-border flex items-center justify-between gap-2">
+          <BrandedLogo className="pl-1.5 flex-1" />
 
           {/* Settings Button + Daemon Status - Bottom Right */}
           <div className="flex items-center gap-2">

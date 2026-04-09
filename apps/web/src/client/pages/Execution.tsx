@@ -84,8 +84,8 @@ export default function ExecutionPage() {
             transition={springs.gentle}
             className="flex-1 flex flex-col items-center justify-center gap-6 px-6"
           >
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/10">
-              <Clock className="h-8 w-8 text-amber-600" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-saffron-subtle">
+              <Clock className="h-8 w-8 text-saffron" />
             </div>
             <div className="text-center max-w-md">
               <h2 className="text-xl font-semibold text-foreground mb-2">{t('waiting.title')}</h2>
@@ -109,8 +109,8 @@ export default function ExecutionPage() {
                 transition={springs.gentle}
                 className="flex flex-col items-center gap-4 py-8"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10">
-                  <Clock className="h-6 w-6 text-amber-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-saffron-subtle">
+                  <Clock className="h-6 w-6 text-saffron" />
                 </div>
                 <div className="text-center">
                   <p className="text-sm font-medium text-foreground">{t('waiting.title')}</p>

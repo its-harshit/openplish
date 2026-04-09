@@ -18,7 +18,7 @@ import { PoliciesTab } from '@/components/settings/PoliciesTab';
 
 import { CloudBrowsersPanel } from '@/components/settings/CloudBrowsersPanel';
 import { cn } from '@/lib/utils';
-import logoImage from '/assets/logo-1.png';
+import { BrandedLogo } from '@/components/layout/BrandedLogo';
 import { SETTINGS_TABS, type SettingsTabId } from './settings-tabs';
 import { useSettingsDialog } from './useSettingsDialog';
 
@@ -72,12 +72,7 @@ export function SettingsDialog({
 
         <nav className="w-48 shrink-0 border-r border-border bg-muted/30 p-3 flex flex-col gap-1">
           <div className="px-3 py-2 mb-1">
-            <img
-              src={logoImage}
-              alt="Accomplish"
-              className="dark:invert"
-              style={{ height: '20px', paddingLeft: '6px' }}
-            />
+            <BrandedLogo />
           </div>
           {SETTINGS_TABS.map((tab) => (
             <button
@@ -86,8 +81,8 @@ export function SettingsDialog({
               className={cn(
                 'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors text-left',
                 s.activeTab === tab.id
-                  ? 'bg-background text-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-background/50',
+                  ? 'bg-background text-foreground shadow-sm border-l-2 border-saffron pl-[10px]'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-background/50 border-l-2 border-transparent pl-[10px]',
               )}
             >
               <tab.icon className="h-4 w-4 shrink-0" />
@@ -98,7 +93,7 @@ export function SettingsDialog({
 
         <div className="flex-1 flex flex-col overflow-hidden">
           <div className="flex items-center justify-between px-6 pt-5 pb-3">
-            <h3 className="text-sm font-semibold text-foreground">
+            <h3 className="text-sm font-semibold text-foreground border-b border-saffron/35 pb-2">
               {SETTINGS_TABS.find((tab) => tab.id === s.activeTab)?.labelKey &&
                 t(SETTINGS_TABS.find((tab) => tab.id === s.activeTab)!.labelKey)}
             </h3>

@@ -150,7 +150,11 @@ export {
 } from './opencode/auth.js';
 export type { OpenCodeMcpOauthStatus } from './opencode/auth.js';
 
-export { sanitizeAssistantTextForDisplay } from './opencode/message-processor.js';
+export {
+  sanitizeAssistantTextForDisplay,
+  partitionAssistantTextForDisplay,
+} from './opencode/message-processor.js';
+export type { PartitionAssistantTextResult } from './opencode/message-processor.js';
 // Message processing is now internal to TaskManager (use onBatchedMessages callback)
 // CompletionEnforcerCallbacks is internal (wiring between adapter and enforcer)
 // Proxy lifecycle is now internal to TaskManager.dispose()

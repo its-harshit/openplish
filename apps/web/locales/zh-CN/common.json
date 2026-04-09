@@ -1,7 +1,8 @@
 {
   "app": {
-    "name": "Openwork"
+    "name": "SomeHow"
   },
+  "npciLogoAlt": "SomeHow 与印度国家支付公司（NPCI）",
   "buttons": {
     "send": "发送",
     "submit": "提交",

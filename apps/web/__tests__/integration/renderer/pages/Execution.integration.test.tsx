@@ -436,7 +436,9 @@ describe('Execution Page Integration', () => {
       renderWithRouter('task-123');
 
       expect(
-        screen.getByText(/^(Doing|Executing|Running|Handling it|Accomplishing)\.\.\.$/),
+        screen.getByText(
+          /^(Doing|Executing|Running|Handling it|Getting to the root|Accomplishing)\.\.\.$/,
+        ),
       ).toBeInTheDocument();
     });
 

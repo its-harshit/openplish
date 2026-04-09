@@ -97,7 +97,7 @@ export function CreateSkillModal({ open, onOpenChange, onSettingsClose }: Create
         </DialogHeader>
 
         {hasProvider === false && (
-          <div className="rounded-md bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 p-3 text-sm text-amber-800 dark:text-amber-200">
+          <div className="rounded-md bg-saffron-subtle border border-saffron/35 p-3 text-sm text-saffron">
             <div className="flex items-center gap-2">
               <svg
                 className="h-4 w-4 shrink-0"

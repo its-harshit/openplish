@@ -68,6 +68,8 @@ export interface TaskMessage {
   id: string;
   type: 'assistant' | 'user' | 'tool' | 'system';
   content: string;
+  /** Model reasoning extracted from tags like `<redacted_thinking>`; shown in collapsible UI only. */
+  thinking?: string;
   toolName?: string;
   toolInput?: unknown;
   timestamp: string;

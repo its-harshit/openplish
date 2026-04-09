@@ -67,8 +67,8 @@ export async function startApp(
       await dialog.showMessageBox({
         type: 'error',
         title: 'Update Required',
-        message: `This data was created by a newer version of Accomplish (schema v${err.storedVersion}).`,
-        detail: `Your app supports up to schema v${err.appVersion}. Please update Accomplish to continue.`,
+        message: `This data was created by a newer version of SomeHow (schema v${err.storedVersion}).`,
+        detail: `Your app supports up to schema v${err.appVersion}. Please update SomeHow to continue.`,
         buttons: ['Quit'],
       });
       app.quit();

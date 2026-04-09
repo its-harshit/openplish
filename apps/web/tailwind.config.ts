@@ -35,7 +35,7 @@ const config: Config = {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
           hover: 'hsl(var(--accent-foreground))',
-          blue: '#3397FC', // Keep for backward compatibility
+          blue: 'hsl(var(--primary))',
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
@@ -52,11 +52,18 @@ const config: Config = {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
         },
-        warning: {
-          DEFAULT: '#EE7909',
+        warning: 'hsl(var(--warning) / <alpha-value>)',
+        success: 'hsl(var(--success) / <alpha-value>)',
+        info: {
+          DEFAULT: 'hsl(var(--info-foreground) / <alpha-value>)',
+          bg: 'hsl(var(--info-bg) / <alpha-value>)',
+          border: 'hsl(var(--info-border) / <alpha-value>)',
+          icon: 'hsl(var(--info-icon) / <alpha-value>)',
         },
-        success: {
-          DEFAULT: '#019E55',
+        saffron: {
+          DEFAULT: 'hsl(var(--saffron) / <alpha-value>)',
+          subtle: 'hsl(var(--saffron-subtle) / <alpha-value>)',
+          muted: 'hsl(var(--saffron-muted) / <alpha-value>)',
         },
         'provider-bg': 'hsl(var(--provider-bg))',
         'provider-bg-active': 'hsl(var(--provider-bg-active))',

@@ -218,6 +218,11 @@ export {
 
 // === SANITIZATION ===
 export { PROMPT_DEFAULT_MAX_LENGTH } from './utils/sanitize.js';
+export {
+  partitionAssistantTextForDisplay,
+  sanitizeAssistantTextForDisplay,
+} from './opencode/message-sanitization.js';
+export type { PartitionAssistantTextResult } from './opencode/message-sanitization.js';
 
 // === BROWSER-SAFE UTILS ===
 export {

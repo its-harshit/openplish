@@ -12,19 +12,100 @@ export const TOOL_DISPLAY_NAMES: Record<string, string | null> = {
 
 const INSTRUCTION_BLOCK_RE = /<instruction\b[^>]*>[\s\S]*?<\/instruction>/gi;
 const NUDGE_BLOCK_RE = /<nudge>[\s\S]*?<\/nudge>/gi;
-const THOUGHT_BLOCK_RE = /<thought>[\s\S]*?<\/thought>/gi;
-const SCRATCHPAD_BLOCK_RE = /<scratchpad>[\s\S]*?<\/scratchpad>/gi;
-const THINKING_BLOCK_RE = /<thinking>[\s\S]*?<\/thinking>/gi;
-const REFLECTION_BLOCK_RE = /<reflection>[\s\S]*?<\/reflection>/gi;
+const THOUGHT_BLOCK_RE = /<thought>([\s\S]*?)<\/thought>/gi;
+const SCRATCHPAD_BLOCK_RE = /<scratchpad>([\s\S]*?)<\/scratchpad>/gi;
+const THINKING_BLOCK_RE = /<thinking>([\s\S]*?)<\/thinking>/gi;
+const REFLECTION_BLOCK_RE = /<reflection>([\s\S]*?)<\/reflection>/gi;
+/** Some model streams use `<think>` / `</think>` (short tag) instead of `<thinking>`. */
+const THINK_SHORT_BLOCK_RE = /<think>([\s\S]*?)<\/think>/gi;
+const REDACTED_THINKING_BLOCK_RE = /<redacted_thinking>([\s\S]*?)<\/redacted_thinking>/gi;
+
+/** Trailing unclosed tags stripped from visible text (not user-facing reasoning). */
 const UNCLOSED_INTERNAL_TAG_RE =
-  /<(?:thought|nudge|instruction|scratchpad|thinking|reflection)(?:\b[^>]*)?>[\s\S]*$/gi;
+  /<(?:think|redacted_thinking|thought|nudge|instruction|scratchpad|thinking|reflection)(?:\b[^>]*)?>[\s\S]*$/gi;
 const ORPHAN_TAGS_RE =
-  /<\/?(?:nudge|thought|scratchpad|thinking|reflection)>|<instruction\b[^>]*>|<\/instruction>/gi;
+  /<\/?(?:nudge|thought|scratchpad|thinking|reflection|redacted_thinking|think)>|<instruction\b[^>]*>|<\/instruction>/gi;
 const INTERNAL_LINES_RE =
   /^.*(?:context_management_protocol|policy_level=critical|<prunable-tools>|thoughtSignature).*$/gm;
 const EXCESSIVE_NEWLINES_RE = /\n{3,}/g;
 
-export function sanitizeAssistantTextForDisplay(text: string): string | null {
+const UNCLOSED_REASONING_END_PATTERNS: RegExp[] = [
+  /<think>([\s\S]*)$/i,
+  /<redacted_thinking>([\s\S]*)$/i,
+  /<thinking>([\s\S]*)$/i,
+  /<thought>([\s\S]*)$/i,
+  /<scratchpad>([\s\S]*)$/i,
+  /<reflection>([\s\S]*)$/i,
+];
+
+function pushThinkingPart(parts: string[], inner: string): void {
+  const t = inner.trim();
+  if (t.length > 0) {
+    parts.push(t);
+  }
+}
+
+/** Closed reasoning tags; when multiple appear, leftmost in the string is extracted first (document order). */
+const CLOSED_REASONING_RES: RegExp[] = [
+  THINK_SHORT_BLOCK_RE,
+  REDACTED_THINKING_BLOCK_RE,
+  THINKING_BLOCK_RE,
+  THOUGHT_BLOCK_RE,
+  SCRATCHPAD_BLOCK_RE,
+  REFLECTION_BLOCK_RE,
+];
+
+function extractLeftmostClosedReasoningBlock(text: string): {
+  start: number;
+  end: number;
+  inner: string;
+} | null {
+  let best: { start: number; end: number; inner: string } | null = null;
+  for (const re of CLOSED_REASONING_RES) {
+    const flags = re.flags.includes('g') ? re.flags : `${re.flags}g`;
+    const localRe = new RegExp(re.source, flags);
+    localRe.lastIndex = 0;
+    const m = localRe.exec(text);
+    if (!m || m.index === undefined) {
+      continue;
+    }
+    const inner = m[1] ?? '';
+    const fullLen = m[0].length;
+    if (!best || m.index < best.start) {
+      best = { start: m.index, end: m.index + fullLen, inner };
+    }
+  }
+  return best;
+}
+
+/**
+ * Pulls closed reasoning blocks into `parts` (model streams, Claude-style redacted thinking, etc.).
+ */
+function extractClosedReasoningBlocks(text: string, parts: string[]): string {
+  let result = text;
+  let hit = extractLeftmostClosedReasoningBlock(result);
+  while (hit) {
+    pushThinkingPart(parts, hit.inner);
+    result = result.slice(0, hit.start) + result.slice(hit.end);
+    hit = extractLeftmostClosedReasoningBlock(result);
+  }
+  return result;
+}
+
+/** Moves a trailing unclosed reasoning opener + body into `parts` (streaming chunks). */
+function extractUnclosedReasoningTail(text: string, parts: string[]): string {
+  let s = text;
+  for (const re of UNCLOSED_REASONING_END_PATTERNS) {
+    const m = s.match(re);
+    if (m) {
+      pushThinkingPart(parts, m[1]);
+      s = s.slice(0, m.index);
+    }
+  }
+  return s;
+}
+
+function sanitizeAssistantRemainder(text: string): string | null {
   let result = text;
   result = result.replace(INSTRUCTION_BLOCK_RE, '');
   result = result.replace(NUDGE_BLOCK_RE, '');
@@ -32,12 +113,37 @@ export function sanitizeAssistantTextForDisplay(text: string): string | null {
   result = result.replace(SCRATCHPAD_BLOCK_RE, '');
   result = result.replace(THINKING_BLOCK_RE, '');
   result = result.replace(REFLECTION_BLOCK_RE, '');
+  result = result.replace(THINK_SHORT_BLOCK_RE, '');
+  result = result.replace(REDACTED_THINKING_BLOCK_RE, '');
   result = result.replace(UNCLOSED_INTERNAL_TAG_RE, '');
   result = result.replace(ORPHAN_TAGS_RE, '');
   result = result.replace(INTERNAL_LINES_RE, '');
   result = result.replace(EXCESSIVE_NEWLINES_RE, '\n\n');
   result = result.trim();
   return result.length > 0 ? result : null;
+}
+
+export type PartitionAssistantTextResult = {
+  thinking: string | null;
+  visible: string | null;
+};
+
+/**
+ * Splits assistant text into user-visible content and optional reasoning/thinking (for collapsible UI).
+ * Reasoning wrappers are removed from `visible`; nudges/instructions are discarded, not surfaced as thinking.
+ */
+export function partitionAssistantTextForDisplay(text: string): PartitionAssistantTextResult {
+  const thinkingParts: string[] = [];
+  let work = extractClosedReasoningBlocks(text, thinkingParts);
+  work = extractUnclosedReasoningTail(work, thinkingParts);
+  const visible = sanitizeAssistantRemainder(work);
+  const thinkingJoined = thinkingParts.join('\n\n').trim();
+  const thinking = thinkingJoined.length > 0 ? thinkingJoined : null;
+  return { thinking, visible };
+}
+
+export function sanitizeAssistantTextForDisplay(text: string): string | null {
+  return partitionAssistantTextForDisplay(text).visible;
 }
 
 export function getToolDisplayName(toolName: string): string | null {

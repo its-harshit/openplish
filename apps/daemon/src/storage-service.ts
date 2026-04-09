@@ -4,7 +4,7 @@ import { mkdirSync } from 'node:fs';
 import { createStorage, type StorageAPI } from '@accomplish_ai/agent-core';
 import { log } from './logger.js';
 
-const DEV_DEFAULT_DATA_DIR = join(homedir(), '.accomplish');
+const DEV_DEFAULT_DATA_DIR = join(homedir(), '.somehow');
 
 export class StorageService {
   private storage: StorageAPI | null = null;
@@ -13,7 +13,7 @@ export class StorageService {
    * Initialize storage.
    *
    * @param dataDir — Data directory. Required in production (passed via --data-dir).
-   *                   In dev mode (no --data-dir), falls back to `~/.accomplish`.
+   *                   In dev mode (no --data-dir), falls back to `~/.somehow`.
    */
   initialize(dataDir?: string): StorageAPI {
     const dir = dataDir || DEV_DEFAULT_DATA_DIR;

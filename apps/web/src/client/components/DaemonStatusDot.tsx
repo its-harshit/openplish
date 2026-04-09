@@ -17,13 +17,13 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { useDaemonStore, type DaemonStatus } from '@/stores/daemonStore';
 
 const DOT_STYLES: Record<DaemonStatus, string> = {
-  connected: 'bg-green-500',
-  starting: 'bg-green-500 animate-pulse',
-  stopped: 'bg-red-500',
-  stopping: 'bg-red-500 animate-pulse',
-  reconnecting: 'bg-yellow-500 animate-pulse',
-  disconnected: 'bg-yellow-500 animate-pulse',
-  'reconnect-failed': 'bg-red-500',
+  connected: 'bg-success',
+  starting: 'bg-success animate-pulse',
+  stopped: 'bg-destructive',
+  stopping: 'bg-destructive animate-pulse',
+  reconnecting: 'bg-warning animate-pulse',
+  disconnected: 'bg-warning animate-pulse',
+  'reconnect-failed': 'bg-destructive',
 };
 
 const STATUS_LABELS: Record<DaemonStatus, string> = {

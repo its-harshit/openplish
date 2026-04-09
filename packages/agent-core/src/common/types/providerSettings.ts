@@ -220,7 +220,7 @@ export const PROVIDER_META: Record<ProviderId, ProviderMeta> = {
   },
   'accomplish-ai': {
     id: 'accomplish-ai',
-    name: 'Accomplish AI',
+    name: 'SomeHow AI',
     category: 'accomplish',
     label: 'Free Tier',
     logoKey: 'accomplish',

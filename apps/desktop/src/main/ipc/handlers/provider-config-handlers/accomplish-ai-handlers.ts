@@ -20,7 +20,7 @@ type HandleFn = <Args extends unknown[], ReturnType = unknown>(
 ) => void;
 
 const RUNTIME_UNAVAILABLE_MSG =
-  'Free tier is not available in this build. Please use the official Accomplish release or connect your own API key.';
+  'Free tier is not available in this build. Please use the official SomeHow release or connect your own API key.';
 
 /** Normalize runtime-unavailable errors to a user-friendly message. */
 function normalizeRuntimeError(err: unknown): never {

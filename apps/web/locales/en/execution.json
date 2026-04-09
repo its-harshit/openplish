@@ -20,8 +20,10 @@
     "executing": "Executing...",
     "running": "Running...",
     "handling": "Handling it...",
-    "accomplishing": "Accomplishing..."
+    "accomplishing": "Getting to the root..."
   },
+  "assistantThinkingToggle": "Thinking",
+  "assistantThinkingInProgress": "…",
   "loadingAgent": "Loading agent...",
   "waitingForResponse": "Waiting for response...",
   "connectingToModel": "Connecting to {{modelName}}...",

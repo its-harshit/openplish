@@ -67,8 +67,8 @@ describe('ConfigGenerator', () => {
   });
 
   describe('ACCOMPLISH_AGENT_NAME', () => {
-    it('should be "accomplish"', () => {
-      expect(ACCOMPLISH_AGENT_NAME).toBe('accomplish');
+    it('should be "somehow"', () => {
+      expect(ACCOMPLISH_AGENT_NAME).toBe('somehow');
     });
   });
 
@@ -413,7 +413,7 @@ describe('ConfigGenerator', () => {
       expect(result.config.enabled_providers).toContain('google');
     });
 
-    it('should set default agent to accomplish', () => {
+    it('should set default agent to somehow', () => {
       const options: ConfigGeneratorOptions = {
         ...baseOptions,
         mcpToolsPath,
@@ -575,7 +575,7 @@ describe('ConfigGenerator', () => {
       const result = generateConfig(options);
 
       expect(result.systemPrompt).toContain('<identity>');
-      expect(result.systemPrompt).toContain('Accomplish');
+      expect(result.systemPrompt).toContain('SomeHow');
     });
 
     it('should include task planning behavior with needs_planning', () => {

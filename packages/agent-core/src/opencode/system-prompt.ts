@@ -1,5 +1,5 @@
 /**
- * Accomplish agent system prompt.
+ * SomeHow agent system prompt.
  *
  * Heavy sections are defined in system-prompt-sections.ts /
  * system-prompt-behaviors.ts to keep each file under 200 lines.
@@ -20,7 +20,7 @@ export {
 export type { FileOperationPolicy } from './system-prompt-file-permissions.js';
 
 /**
- * The Accomplish agent system prompt template.
+ * The SomeHow agent system prompt template.
  *
  * Placeholder tokens:
  * - `{{AGENT_ROLE}}` — replaced with the agent role (e.g., "task execution")
@@ -30,7 +30,7 @@ export type { FileOperationPolicy } from './system-prompt-file-permissions.js';
  * - `{{BROWSER_BEHAVIOR}}` — browser behavior rules (or empty)
  */
 export const ACCOMPLISH_SYSTEM_PROMPT_TEMPLATE = `<identity>
-You are Accomplish, a {{AGENT_ROLE}} assistant.
+You are SomeHow, a {{AGENT_ROLE}} assistant.
 </identity>
 
 {{ENVIRONMENT_INSTRUCTIONS}}

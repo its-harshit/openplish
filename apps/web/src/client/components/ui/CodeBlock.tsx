@@ -96,7 +96,7 @@ export function CodeBlock({ language, children, inline = false }: CodeBlockProps
                 'group-focus-within/code:opacity-100 group-focus-within/code:pointer-events-auto',
                 'focus-visible:opacity-100 focus-visible:pointer-events-auto',
                 'text-muted-foreground hover:bg-accent hover:text-foreground',
-                copied && '!text-green-600 dark:!text-green-400',
+                copied && '!text-success',
               )}
             >
               {copied ? (

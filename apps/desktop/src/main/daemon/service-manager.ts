@@ -135,7 +135,7 @@ function getDataDir(): string {
 // macOS: LaunchAgent plist
 // =============================================================================
 
-const LAUNCH_AGENT_LABEL = 'ai.accomplish.daemon';
+const LAUNCH_AGENT_LABEL = 'ai.somehow.daemon';
 
 function getLaunchAgentDir(): string {
   return path.join(process.env.HOME || '~', 'Library', 'LaunchAgents');
@@ -253,7 +253,7 @@ function getSystemdServiceContent(): string {
 
   const lines = [
     '[Unit]',
-    'Description=Accomplish AI Daemon',
+    'Description=SomeHow AI Daemon',
     'After=default.target',
     '',
     '[Service]',

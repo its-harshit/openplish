@@ -29,6 +29,8 @@ export interface MessageRow {
   task_id: string;
   type: string;
   content: string;
+  /** Present after v028 migration; omitted in some test fakes. */
+  thinking?: string | null;
   tool_name: string | null;
   tool_input: string | null;
   timestamp: string;
@@ -94,7 +96,7 @@ export function getMessagesForTask(taskId: string): TaskMessage[] {
         toolInput = row.tool_input;
       }
     }
-    messages.push({
+    const msg: TaskMessage = {
       id: row.id,
       type: row.type as TaskMessage['type'],
       content: row.content,
@@ -102,7 +104,11 @@ export function getMessagesForTask(taskId: string): TaskMessage[] {
       toolInput,
       timestamp: row.timestamp,
       attachments,
-    });
+    };
+    if (row.thinking) {
+      msg.thinking = row.thinking;
+    }
+    messages.push(msg);
   }
 
   return messages;

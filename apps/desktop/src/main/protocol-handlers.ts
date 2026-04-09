@@ -1,5 +1,5 @@
 /**
- * Protocol URL handler helpers for `accomplish://` deep-link callbacks.
+ * Protocol URL handler helpers for custom-scheme deep-link callbacks (OAuth).
  *
  * Handles both the macOS `open-url` event and the Windows argv-based
  * protocol activation on startup and second-instance events.
@@ -10,6 +10,9 @@
 
 import { app, ipcMain } from 'electron';
 import type { BrowserWindow } from 'electron';
+import { CUSTOM_URL_SCHEME } from './url-scheme';
+
+const SCHEME_PREFIX = `${CUSTOM_URL_SCHEME}://`;
 
 /**
  * Reference getter for the main window — injected so this module doesn't
@@ -21,9 +24,9 @@ type WindowGetter = () => BrowserWindow | null;
 const protocolUrlQueue: string[] = [];
 
 function dispatchProtocolUrl(win: BrowserWindow, url: string): void {
-  if (url.startsWith('accomplish://callback/mcp')) {
+  if (url.startsWith(`${SCHEME_PREFIX}callback/mcp`)) {
     win.webContents.send('auth:mcp-callback', url);
-  } else if (url.startsWith('accomplish://callback')) {
+  } else if (url.startsWith(`${SCHEME_PREFIX}callback`)) {
     win.webContents.send('auth:callback', url);
   }
 }
@@ -69,7 +72,7 @@ export function handleProtocolUrlFromArgs(getMainWindow: WindowGetter): void {
     return;
   }
 
-  const protocolUrl = process.argv.find((arg) => arg.startsWith('accomplish://'));
+  const protocolUrl = process.argv.find((arg) => arg.startsWith(SCHEME_PREFIX));
   if (!protocolUrl) {
     return;
   }
@@ -81,7 +84,7 @@ export function handleProtocolUrlFromArgs(getMainWindow: WindowGetter): void {
 
 /**
  * Register the `open-url` (macOS) and `second-instance` (Windows) event
- * handlers for protocol URL routing.
+ * handlers for custom protocol URL routing.
  */
 export function registerProtocolEventHandlers(getMainWindow: WindowGetter): void {
   app.on('open-url', (event, url) => {
@@ -103,7 +106,7 @@ export function handleSecondInstanceProtocolUrl(
     return;
   }
 
-  const protocolUrl = commandLine.find((arg) => arg.startsWith('accomplish://'));
+  const protocolUrl = commandLine.find((arg) => arg.startsWith(SCHEME_PREFIX));
   if (protocolUrl) {
     enqueueProtocolUrl(protocolUrl, getMainWindow);
   }

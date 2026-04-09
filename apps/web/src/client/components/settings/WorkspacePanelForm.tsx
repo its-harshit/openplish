@@ -4,6 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Plus, X, Check } from 'lucide-react';
 
 export const WORKSPACE_COLORS = [
+  '#2B8B4B', // NPCI / UPI green
+  '#FF9933', // Saffron
+  '#D9782D', // NPCI / UPI orange
+  '#6D6E71', // NPCI / UPI grey
   '#6366f1', // indigo
   '#8b5cf6', // violet
   '#ec4899', // pink

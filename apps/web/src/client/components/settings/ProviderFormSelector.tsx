@@ -66,7 +66,7 @@ export function ProviderFormSelector({
     );
   }
 
-  // Handle Accomplish AI separately (device fingerprint flow, no API key)
+  // Handle built-in accomplish-ai separately (device fingerprint flow, no API key)
   if (providerId === 'accomplish-ai') {
     return (
       <AccomplishAiProviderForm

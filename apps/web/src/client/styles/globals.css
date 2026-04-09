@@ -68,39 +68,54 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Shadcn-inspired theme variables */
+/*
+ * Light theme — NPCI / UPI palette (verify hex against official Brand Centre PDFs).
+ * Reference: UPI grey #6D6E71, orange #D9782D, green #2B8B4B, dark grey #434244
+ * Saffron accent ~#FF9933 (flag / cultural saffron — tune per brand guide)
+ */
 :root {
-  --background: 60 15% 96.3%; /* #F7F7F4 */
-  --foreground: 0 0% 12.5%; /* #202020 */
-  --card: 0 0% 98.8%; /* #fcfcfc */
-  --card-foreground: 0 0% 12.5%; /* #202020 */
-  --popover: 0 0% 98.8%; /* #fcfcfc */
-  --popover-foreground: 0 0% 12.5%; /* #202020 */
-  --primary: 123 30% 20%; /* #213c20 */
-  --primary-foreground: 0 0% 100%; /* #ffffff */
-  --secondary: 120 14% 85%; /* #d8dfd7 */
-  --secondary-foreground: 100 20% 18%; /* #2b391e */
-  --muted: 0 0% 93.7%; /* #efefef */
-  --muted-foreground: 0 0% 39.2%; /* #646464 */
-  --accent: 60 15% 96.3%; /* #F7F7F4 */
-  --accent-foreground: 0 0% 12.5%; /* #202020 */
-  --destructive: 8 78% 54%; /* #e54d2e */
-  --destructive-foreground: 0 0% 100%; /* #ffffff */
-  --border: 12 8% 90%; /* #eae2e1 */
-  --input: 0 0% 84.7%; /* #d8d8d8 */
-  --ring: 20 25% 33%; /* #644a40 */
+  --background: 220 9% 97%; /* cool grey shell */
+  --foreground: 280 2% 26%; /* #434244 dark grey */
+  --card: 220 7% 99%;
+  --card-foreground: 280 2% 26%;
+  --popover: 220 7% 99%;
+  --popover-foreground: 280 2% 26%;
+  /* UPI green #2B8B4B — slightly darker for WCAG on white button labels */
+  --primary: 142 53% 32%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 142 14% 91%; /* muted green-grey */
+  --secondary-foreground: 142 48% 22%;
+  --muted: 220 8% 93%;
+  --muted-foreground: 220 3% 44%; /* #6D6E71 UPI grey */
+  --accent: 220 10% 96%;
+  --accent-foreground: 280 2% 26%;
+  --destructive: 8 78% 54%; /* #e54d2e — keep distinct error red */
+  --destructive-foreground: 0 0% 100%;
+  --border: 220 7% 88%;
+  --input: 220 6% 82%;
+  --ring: 25 70% 51%; /* #D9782D UPI orange — focus */
   --radius: 0.25rem;
-  --warning-subtle: 36 95% 95%;
-  --success-subtle: 152 60% 93%;
-  --provider-bg: 40 20% 93%;
-  --provider-bg-active: 130 40% 93%;
-  --provider-bg-hover: 40 15% 96%;
-  --provider-border-active: 40 30% 25%;
-  --provider-accent: 123 30% 30%;
-  --provider-accent-text: 123 30% 15%;
-  --todo-progress-pending: 0 0% 85%;
-  --todo-item-completed: 36 11% 95%;
-  --todo-item-in-progress: 0 0% 98%;
+  --warning-subtle: 28 85% 96%; /* pale UPI orange */
+  --success-subtle: 142 40% 94%; /* pale UPI green */
+  --provider-bg: 220 8% 94%;
+  --provider-bg-active: 142 32% 93%;
+  --provider-bg-hover: 220 8% 96%;
+  --provider-border-active: 25 68% 40%; /* darker UPI orange */
+  --provider-accent: 142 52% 36%; /* #2B8B4B */
+  --provider-accent-text: 142 55% 22%;
+  --todo-progress-pending: 220 6% 86%;
+  --todo-item-completed: 142 22% 94%;
+  --todo-item-in-progress: 220 6% 98%;
+  /* Tailwind semantic colors (NPCI green / orange + neutral info surfaces) */
+  --success: 142 52% 36%;
+  --warning: 25 70% 51%;
+  --info-bg: 220 14% 94%;
+  --info-border: 220 10% 84%;
+  --info-foreground: 220 8% 32%;
+  --info-icon: 142 42% 38%;
+  --saffron: 32 95% 54%;
+  --saffron-subtle: 32 90% 94%;
+  --saffron-muted: 32 80% 82%;
 }
 
 .dark {
@@ -134,6 +149,15 @@
   --todo-progress-pending: 0 0% 24%;
   --todo-item-completed: 0 0% 14%;
   --todo-item-in-progress: 0 0% 11%;
+  --success: 142 48% 52%;
+  --warning: 28 78% 58%;
+  --info-bg: 220 12% 16%;
+  --info-border: 220 10% 28%;
+  --info-foreground: 220 8% 88%;
+  --info-icon: 142 40% 55%;
+  --saffron: 32 88% 58%;
+  --saffron-subtle: 32 45% 16%;
+  --saffron-muted: 32 55% 28%;
 }
 
 /* Custom scrollbar — auto-hide, shown only while scrolling */
@@ -143,7 +167,7 @@
 }
 
 *:hover {
-  scrollbar-color: hsl(var(--border)) transparent;
+  scrollbar-color: hsl(var(--saffron) / 0.35) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -162,11 +186,11 @@
 }
 
 *:hover::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
+  background: hsl(var(--saffron) / 0.35);
 }
 
 *:hover::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground));
+  background: hsl(var(--saffron) / 0.55);
 }
 
 /* Drag region for frameless window - these work when loaded in Electron BrowserView */
@@ -180,7 +204,7 @@
 
 /* Focus visible for accessibility */
 :focus-visible {
-  outline: 2px solid hsl(var(--ring));
+  outline: 2px solid hsl(var(--saffron) / 0.85);
   outline-offset: 2px;
 }
 

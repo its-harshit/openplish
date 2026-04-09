@@ -9,7 +9,7 @@ export function ToolSupportBadge({ status, t }: ToolSupportBadgeProps) {
   const config = {
     supported: {
       label: t('toolBadge.supported'),
-      className: 'bg-green-500/20 text-green-400 border-green-500/30',
+      className: 'bg-success/20 text-success border-success/30',
       icon: (
         <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -18,7 +18,7 @@ export function ToolSupportBadge({ status, t }: ToolSupportBadgeProps) {
     },
     unsupported: {
       label: t('toolBadge.unsupported'),
-      className: 'bg-red-500/20 text-red-400 border-red-500/30',
+      className: 'bg-destructive/20 text-destructive border-destructive/30',
       icon: (
         <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
@@ -32,7 +32,7 @@ export function ToolSupportBadge({ status, t }: ToolSupportBadgeProps) {
     },
     unknown: {
       label: t('toolBadge.unknown'),
-      className: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+      className: 'bg-warning/20 text-warning border-warning/30',
       icon: (
         <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01" />

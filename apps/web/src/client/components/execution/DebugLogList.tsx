@@ -129,11 +129,11 @@ export function DebugLogList({
                         className={cn(
                           'shrink-0 px-1 rounded',
                           log.type === 'error'
-                            ? 'bg-red-500/20 text-red-400'
+                            ? 'bg-destructive/25 text-destructive'
                             : log.type === 'warn'
-                              ? 'bg-yellow-500/20 text-yellow-400'
+                              ? 'bg-warning/20 text-warning'
                               : log.type === 'info'
-                                ? 'bg-blue-500/20 text-blue-400'
+                                ? 'bg-info-bg text-info-icon'
                                 : 'bg-zinc-700 text-zinc-400',
                         )}
                       >

@@ -133,7 +133,7 @@ export function LMStudioProviderForm({
                 </button>
               </div>
               <FormError error={error} />
-              <div className="flex items-start gap-2 rounded-md border border-blue-500/30 bg-blue-500/10 p-3 text-sm text-blue-400">
+              <div className="flex items-start gap-2 rounded-md border border-info-border bg-info-bg p-3 text-sm text-info">
                 <svg
                   className="h-5 w-5 flex-shrink-0 mt-0.5"
                   fill="none"
@@ -149,7 +149,7 @@ export function LMStudioProviderForm({
                 </svg>
                 <div>
                   <p className="font-medium">{t('common.contextLengthWarning')}</p>
-                  <p className="text-blue-400/80 mt-1">{t('common.contextLengthWarningDetail')}</p>
+                  <p className="text-info/80 mt-1">{t('common.contextLengthWarningDetail')}</p>
                 </div>
               </div>
             </motion.div>

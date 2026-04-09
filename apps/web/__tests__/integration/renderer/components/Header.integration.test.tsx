@@ -42,7 +42,7 @@ describe('Header Integration', () => {
       );
 
       // Assert
-      const brandLink = screen.getByRole('link', { name: /accomplish/i });
+      const brandLink = screen.getByRole('link', { name: /SomeHow/i });
       expect(brandLink).toBeInTheDocument();
       expect(brandLink).toHaveAttribute('href', '/');
     });
@@ -56,7 +56,7 @@ describe('Header Integration', () => {
       );
 
       // Assert
-      expect(screen.getByText('Accomplish')).toBeInTheDocument();
+      expect(screen.getByText('SomeHow')).toBeInTheDocument();
     });
   });
 
@@ -226,7 +226,7 @@ describe('Header Integration', () => {
       );
 
       // Assert
-      const brandLink = screen.getByRole('link', { name: /accomplish/i });
+      const brandLink = screen.getByRole('link', { name: /SomeHow/i });
       expect(brandLink.className).toContain('no-drag');
     });
 
@@ -252,7 +252,7 @@ describe('Header Integration', () => {
       );
 
       // Assert
-      const brandLink = screen.getByRole('link', { name: /accomplish/i });
+      const brandLink = screen.getByRole('link', { name: /SomeHow/i });
       const svg = brandLink.querySelector('svg');
       expect(svg).toBeInTheDocument();
     });

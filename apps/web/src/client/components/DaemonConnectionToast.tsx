@@ -23,9 +23,9 @@ export function DaemonConnectionToast({ onOpenSettings }: DaemonConnectionToastP
 
   const borderClass = isFailed
     ? 'border-destructive/50 bg-destructive/10'
-    : 'border-yellow-500/50 bg-yellow-500/10';
-  const iconBgClass = isFailed ? 'bg-destructive/20' : 'bg-yellow-500/20';
-  const iconColorClass = isFailed ? 'text-destructive' : 'text-yellow-600 dark:text-yellow-400';
+    : 'border-warning/50 bg-warning/10';
+  const iconBgClass = isFailed ? 'bg-destructive/20' : 'bg-warning/20';
+  const iconColorClass = isFailed ? 'text-destructive' : 'text-warning';
 
   const handleOpenSettings = () => {
     onOpenSettings?.();

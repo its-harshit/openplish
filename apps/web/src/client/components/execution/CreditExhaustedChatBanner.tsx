@@ -62,8 +62,8 @@ export function CreditExhaustedChatBanner({
         >
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex items-start gap-3 flex-1 min-w-0">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500/10">
-                <WarningCircle className="h-5 w-5 text-amber-600" weight="fill" />
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-saffron-subtle">
+                <WarningCircle className="h-5 w-5 text-saffron" weight="fill" />
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-medium text-foreground">{title}</p>

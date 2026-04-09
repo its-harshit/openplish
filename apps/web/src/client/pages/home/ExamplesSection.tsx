@@ -28,8 +28,10 @@ export function ExamplesSection({ useCaseExamples, onExampleClick }: ExamplesSec
       className="w-full"
     >
       <div className="flex flex-col gap-3 pt-12 pb-[120px]">
-        <h2 className="font-apparat text-[22px] font-light tracking-[-0.66px] text-foreground text-center">
+        <h2 className="font-apparat text-[22px] font-light tracking-[-0.66px] text-foreground text-center flex items-center justify-center gap-3">
+          <span className="h-px w-10 rounded-full bg-saffron/55" aria-hidden />
           {t('examplePrompts')}
+          <span className="h-px w-10 rounded-full bg-saffron/55" aria-hidden />
         </h2>
 
         <div className="grid grid-cols-3 gap-4 w-full">
@@ -42,7 +44,7 @@ export function ExamplesSection({ useCaseExamples, onExampleClick }: ExamplesSec
               transition={{ duration: 0.2, delay: index * 0.05 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => onExampleClick(example.prompt)}
-              className="group flex flex-col justify-between rounded-[4px] border border-border hover:border-muted-foreground/40 active:border-muted-foreground/40 bg-accent pl-3 pr-4 py-3 text-left h-[164px] transition-colors"
+              className="group flex flex-col justify-between rounded-[4px] border border-border hover:border-saffron/45 active:border-saffron/55 bg-accent pl-3 pr-4 py-3 text-left h-[164px] transition-colors"
             >
               <div className="flex items-start justify-between w-full">
                 <span className="font-sans text-[14px] leading-[18px] tracking-[-0.28px] text-foreground whitespace-pre-line w-[120px]">

@@ -13,7 +13,7 @@ import { settingsVariants, settingsTransitions } from '@/lib/animations';
 
 const ACCOMPLISH_CONFIG = DEFAULT_PROVIDERS.find((p) => p.id === 'accomplish-ai');
 if (!ACCOMPLISH_CONFIG || ACCOMPLISH_CONFIG.models.length === 0) {
-  throw new Error('Accomplish provider configuration is missing required models');
+  throw new Error('SomeHow built-in provider configuration is missing required models');
 }
 const STATIC_MODELS = ACCOMPLISH_CONFIG.models.map((m) => ({
   id: m.fullId,
@@ -51,8 +51,8 @@ function ConnectionRetryNotice() {
     >
       <div className="flex items-start gap-2.5">
         <span className="relative mt-[3px] flex h-2 w-2 shrink-0">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400/60" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-500" />
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-saffron/50" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-saffron" />
         </span>
         <div className="space-y-0.5">
           <p className="text-xs font-medium text-foreground/80">
@@ -93,7 +93,7 @@ function UsageRetryNotice() {
           <p className="text-[11px] leading-snug text-muted-foreground">
             {t(
               'providers.accomplishAi.usageRetryingInBackground',
-              'Retrying in the background. Sending with Accomplish should still work.',
+              'Retrying in the background. Sending with SomeHow should still work.',
             )}
           </p>
         </div>
@@ -328,13 +328,13 @@ export function AccomplishAiProviderForm({
       className="rounded-xl border border-border bg-card p-5"
       data-testid="provider-settings-panel"
     >
-      <ProviderFormHeader logoSrc={ACCOMPLISH_LOGO} providerName="Accomplish" />
+      <ProviderFormHeader logoSrc={ACCOMPLISH_LOGO} providerName="SomeHow" />
 
       <div className="space-y-3">
         <p className="text-sm text-muted-foreground whitespace-pre-line">
           {t(
             'providers.accomplishAi.description',
-            'Use the built-in model powered by Accomplish - no API key required.\nIncludes 200 free credits per month to get you started.',
+            'Use the built-in model powered by SomeHow - no API key required.\nIncludes 200 free credits per month to get you started.',
           )}
         </p>
 

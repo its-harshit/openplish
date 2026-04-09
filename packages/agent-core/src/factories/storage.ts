@@ -126,7 +126,7 @@ export function createStorage(options: StorageOptions = {}): StorageAPI {
     databasePath,
     runMigrations = true,
     userDataPath,
-    secureStorageAppId = 'ai.accomplish.desktop',
+    secureStorageAppId = 'ai.somehow.desktop',
     secureStorageFileName,
   } = options;
 

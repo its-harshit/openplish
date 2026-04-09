@@ -97,9 +97,7 @@ export default function ProviderForm({
                 variant={isActive ? 'secondary' : 'outline'}
                 onClick={handleSetActive}
                 disabled={saving}
-                className={
-                  isActive ? '' : 'text-green-600 dark:text-green-400 hover:bg-green-500/10'
-                }
+                className={isActive ? '' : 'text-success hover:bg-success/10'}
               >
                 {isActive ? 'Deactivate' : 'Set Active'}
               </Button>

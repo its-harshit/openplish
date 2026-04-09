@@ -1,13 +1,13 @@
 /**
  * Patches the Electron.app Info.plist for development:
- * - Shows "Accomplish" instead of "Electron" in macOS Cmd+Tab and Dock
- * - Registers the "accomplish://" URL scheme so OAuth callbacks route to the running dev instance
+ * - Shows "SomeHow" instead of "Electron" in macOS Cmd+Tab and Dock
+ * - Registers the "somehow://" URL scheme so OAuth callbacks route to the running dev instance
  */
 const fs = require('fs');
 const path = require('path');
 
-const APP_NAME = 'Accomplish';
-const URL_SCHEME = 'accomplish';
+const APP_NAME = 'SomeHow';
+const URL_SCHEME = 'somehow';
 
 // Only run on macOS
 if (process.platform !== 'darwin') {
@@ -49,7 +49,7 @@ plist = plist.replace(
   `<key>CFBundleName</key>\n\t<string>${APP_NAME}</string>`,
 );
 
-// Add CFBundleURLTypes for the accomplish:// protocol (if not already present)
+// Add CFBundleURLTypes for the somehow:// protocol (if not already present)
 if (!plist.includes('CFBundleURLTypes')) {
   const urlTypesEntry = `\t<key>CFBundleURLTypes</key>
 \t<array>

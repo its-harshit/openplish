@@ -21,14 +21,14 @@ describe('socket-path', () => {
   });
 
   describe('getDaemonDir', () => {
-    it('returns ~/.accomplish', () => {
-      expect(getDaemonDir()).toBe('/Users/testuser/.accomplish');
+    it('returns ~/.somehow', () => {
+      expect(getDaemonDir()).toBe(join('/Users/testuser', '.somehow'));
     });
   });
 
   describe('getSocketPath', () => {
     it('falls back to default dir when no dataDir provided', () => {
-      expect(getSocketPath()).toBe('/Users/testuser/.accomplish/daemon.sock');
+      expect(getSocketPath()).toBe(join('/Users/testuser', '.somehow', 'daemon.sock'));
     });
 
     it('scopes socket to provided dataDir on macOS/Linux', () => {
@@ -45,7 +45,7 @@ describe('socket-path', () => {
     it('produces named pipe with hash on Windows', () => {
       mockPlatform.mockReturnValue('win32');
       const result = getSocketPath('C:\\Users\\test\\AppData\\Accomplish');
-      expect(result).toMatch(/^\\\\.\\pipe\\accomplish-daemon-[a-f0-9]{12}$/);
+      expect(result).toMatch(/^\\\\.\\pipe\\somehow-daemon-[a-f0-9]{12}$/);
     });
 
     it('different dataDirs produce different pipe names on Windows', () => {
@@ -64,13 +64,13 @@ describe('socket-path', () => {
     it('Windows default (no dataDir) produces a valid pipe path', () => {
       mockPlatform.mockReturnValue('win32');
       const result = getSocketPath();
-      expect(result).toMatch(/^\\\\.\\pipe\\accomplish-daemon-[a-f0-9]{12}$/);
+      expect(result).toMatch(/^\\\\.\\pipe\\somehow-daemon-[a-f0-9]{12}$/);
     });
   });
 
   describe('getPidFilePath', () => {
     it('falls back to default dir when no dataDir provided', () => {
-      expect(getPidFilePath()).toBe('/Users/testuser/.accomplish/daemon.pid');
+      expect(getPidFilePath()).toBe(join('/Users/testuser', '.somehow', 'daemon.pid'));
     });
 
     it('scopes PID file to provided dataDir', () => {

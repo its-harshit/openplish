@@ -33,8 +33,10 @@ export function FavoritesSection({
       data-testid="favorites-section"
       className="flex flex-col gap-3 w-full scroll-mt-4"
     >
-      <h2 className="font-apparat text-[22px] font-light tracking-[-0.66px] text-foreground text-center">
+      <h2 className="font-apparat text-[22px] font-light tracking-[-0.66px] text-foreground text-center flex items-center justify-center gap-3">
+        <span className="h-px w-10 rounded-full bg-saffron/55" aria-hidden />
         {t('favorites.title')}
+        <span className="h-px w-10 rounded-full bg-saffron/55" aria-hidden />
       </h2>
       {favoritesList.length > 0 ? (
         <>

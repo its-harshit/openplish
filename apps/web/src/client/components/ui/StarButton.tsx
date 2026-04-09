@@ -47,8 +47,8 @@ export function StarButton({
       title={label}
       className={`p-1 rounded transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring ${
         isFavorite
-          ? 'text-yellow-500 hover:text-yellow-600'
-          : 'text-muted-foreground hover:text-yellow-400'
+          ? 'text-saffron hover:text-saffron/90'
+          : 'text-muted-foreground hover:text-saffron/75'
       } ${className}`}
     >
       <Star className={sizeClasses[size]} weight={isFavorite ? 'fill' : 'regular'} />

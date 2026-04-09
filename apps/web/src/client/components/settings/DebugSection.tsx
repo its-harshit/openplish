@@ -67,7 +67,7 @@ export function DebugSection({ debugMode, onDebugToggle }: DebugSectionProps) {
             title={t('developer.exportLogs')}
             className={`rounded-md p-1.5 transition-colors ${
               exportStatus === 'success'
-                ? 'text-green-500'
+                ? 'text-success'
                 : exportStatus === 'error'
                   ? 'text-destructive'
                   : 'text-muted-foreground hover:text-foreground'
