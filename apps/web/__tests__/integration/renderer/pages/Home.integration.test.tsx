@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import type { Task, TaskStatus } from '@somehow_ai/agent-core';
+import { SOMEHOW_BASELINE_MOCKS } from '../somehow-mock-baseline';
 
 // Create mock functions
 const mockStartTask = vi.fn();
@@ -37,6 +38,9 @@ function createMockTask(
 
 // Mock accomplish API
 const mockAccomplish = {
+  ...SOMEHOW_BASELINE_MOCKS,
+  // These tests assume only API-key providers gate submit (not bundled free mode).
+  getBuildCapabilities: vi.fn().mockResolvedValue({ hasFreeMode: false }),
   hasAnyApiKey: mockHasAnyApiKey,
   getSelectedModel: vi.fn().mockResolvedValue({ provider: 'anthropic', id: 'claude-3-opus' }),
   getOllamaConfig: vi.fn().mockResolvedValue(null),
@@ -68,8 +72,11 @@ const mockAccomplish = {
 };
 
 // Mock the accomplish module
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => mockAccomplish,
+vi.mock('@/lib/somehow', () => ({
+  getSomehow: () => mockAccomplish,
+  useSomehow: () => mockAccomplish,
+  getOptionalWindowBridge: () =>
+    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
 }));
 
 // Mock store state holder
@@ -84,10 +91,13 @@ let mockStoreState = {
   loadFavorites: vi.fn().mockResolvedValue(undefined),
 };
 
-// Mock the task store
-vi.mock('@/stores/taskStore', () => ({
-  useTaskStore: () => mockStoreState,
-}));
+// Mock the task store (must support Zustand selectors: useTaskStore((s) => s.isLoading))
+vi.mock('@/stores/taskStore', () => {
+  const useTaskStoreFn = (selector?: (s: typeof mockStoreState) => unknown) =>
+    selector ? selector(mockStoreState) : mockStoreState;
+  useTaskStoreFn.getState = () => mockStoreState;
+  return { useTaskStore: useTaskStoreFn };
+});
 
 // Mock framer-motion for simpler testing
 vi.mock('framer-motion', () => ({
@@ -408,12 +418,25 @@ describe('Home Page Integration', () => {
     });
 
     it('should execute task after configuring provider in settings', async () => {
-      // Arrange - No ready provider initially
-      mockAccomplish.getProviderSettings.mockResolvedValue({
+      // Arrange - No ready provider until after Save (ModelIndicator refetches on mount, so avoid mockResolvedValueOnce)
+      const emptySettings = {
         activeProviderId: null,
         connectedProviders: {},
         debugMode: false,
-      });
+      };
+      const readySettings = {
+        activeProviderId: 'anthropic',
+        connectedProviders: {
+          anthropic: {
+            providerId: 'anthropic',
+            connectionStatus: 'connected',
+            selectedModelId: 'claude-3-5-sonnet-20241022',
+            credentials: { type: 'api-key', apiKey: 'test-key' },
+          },
+        },
+        debugMode: false,
+      };
+      mockAccomplish.getProviderSettings.mockResolvedValue(emptySettings);
       const mockTask = createMockTask('task-123', 'My task', 'running');
       mockStartTask.mockResolvedValue(mockTask);
 
@@ -434,6 +457,8 @@ describe('Home Page Integration', () => {
       await waitFor(() => {
         expect(screen.getByTestId('settings-dialog')).toBeInTheDocument();
       });
+
+      mockAccomplish.getProviderSettings.mockResolvedValue(readySettings);
 
       // Simulate saving API key (which triggers onApiKeySaved callback)
       const saveButton = screen.getByRole('button', { name: /save api key/i });
@@ -474,8 +499,8 @@ describe('Home Page Integration', () => {
         </MemoryRouter>,
       );
 
-      // Assert
-      const submitButton = screen.getByTitle('Stop');
+      // Assert (title is on a wrapper span; the real control is the submit button)
+      const submitButton = screen.getByTestId('task-input-submit');
       expect(submitButton).not.toBeDisabled();
     });
 
@@ -490,7 +515,7 @@ describe('Home Page Integration', () => {
       );
 
       // The textarea is disabled, so we can't really type, but test submit
-      const submitButton = screen.getByTitle('Stop');
+      const submitButton = screen.getByTestId('task-input-submit');
       fireEvent.click(submitButton);
 
       // Assert

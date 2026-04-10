@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import {
   getDefaultModelForProvider,
   type BedrockProviderCredentials,
@@ -52,7 +52,7 @@ export function useBedrockProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
 
       const credentialsMap = {
         apiKey: {

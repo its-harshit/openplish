@@ -38,8 +38,11 @@ const mockAccomplish = {
   disconnectConnector: vi.fn(),
 };
 
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => mockAccomplish,
+vi.mock('@/lib/somehow', () => ({
+  getSomehow: () => mockAccomplish,
+  useSomehow: () => mockAccomplish,
+  getOptionalWindowBridge: () =>
+    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
 }));
 
 vi.mock('react-i18next', () => ({

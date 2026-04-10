@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import type { Task, TaskStatus } from '@somehow_ai/agent-core';
+import { SOMEHOW_BASELINE_MOCKS } from '../somehow-mock-baseline';
 
 // Create mock functions outside of mock factory
 const mockStartTask = vi.fn();
@@ -33,6 +34,7 @@ function createMockTask(
 
 // Mock accomplish API
 const mockAccomplish = {
+  ...SOMEHOW_BASELINE_MOCKS,
   hasAnyApiKey: mockHasAnyApiKey,
   getSelectedModel: vi.fn().mockResolvedValue({ provider: 'anthropic', id: 'claude-3-opus' }),
   getOllamaConfig: vi.fn().mockResolvedValue(null),
@@ -60,8 +62,11 @@ const mockAccomplish = {
 };
 
 // Mock the accomplish module
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => mockAccomplish,
+vi.mock('@/lib/somehow', () => ({
+  getSomehow: () => mockAccomplish,
+  useSomehow: () => mockAccomplish,
+  getOptionalWindowBridge: () =>
+    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
 }));
 
 // Create a store state holder for testing
@@ -150,8 +155,8 @@ describe('TaskLauncherItem', () => {
         <TaskLauncherItem task={task} isSelected={false} onClick={mockOnClick} />,
       );
 
-      // Assert - Status dot should have green color
-      const dot = container.querySelector('.bg-green-500');
+      // Assert - Status dot uses semantic success token
+      const dot = container.querySelector('.bg-success');
       expect(dot).toBeInTheDocument();
     });
 
@@ -192,8 +197,8 @@ describe('TaskLauncherItem', () => {
         <TaskLauncherItem task={task} isSelected={false} onClick={mockOnClick} />,
       );
 
-      // Assert - Status dot should have yellow color
-      const dot = container.querySelector('.bg-yellow-500');
+      // Assert - Status dot uses semantic warning token for interrupted
+      const dot = container.querySelector('.bg-warning');
       expect(dot).toBeInTheDocument();
     });
   });

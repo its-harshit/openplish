@@ -1,5 +1,5 @@
 import type { PermissionRequest, PermissionResponse } from '@somehow_ai/agent-core/common';
-import { getAccomplish } from '../lib/accomplish';
+import { getSomehow } from '../lib/somehow';
 import type { TaskState } from './taskStore';
 import { hasTaskStateToken } from './task-state-helpers';
 
@@ -23,7 +23,7 @@ export function createTaskPermissionActions(set: SetFn, get: GetFn) {
     },
 
     respondToPermission: async (response: PermissionResponse) => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const taskStateToken = get()._taskStateToken;
       // Save the requestId before the await to detect if a newer request arrived
       const requestId = response.requestId;

@@ -11,9 +11,9 @@ type CoreState = ReturnType<typeof useExecutionCore>;
 
 /** Action callbacks for the execution page. Derived from core state. */
 export function useExecutionActions(s: CoreState) {
-  const { id, navigate, accomplish } = s;
+  const { id, navigate, bridge } = s;
 
-  useExecutionEffects(s, accomplish);
+  useExecutionEffects(s, bridge);
 
   const { handleContinue, handlePauseAction, handleTaskAction } = useExecutionPauseActions(s);
 
@@ -24,9 +24,9 @@ export function useExecutionActions(s: CoreState) {
     if (s.followUp.length > 0 && s.isFollowUpOverLimit) {
       return;
     }
-    const isE2EMode = await accomplish.isE2EMode();
+    const isE2EMode = await bridge.isE2EMode();
     if (!isE2EMode) {
-      const settings = await accomplish.getProviderSettings();
+      const settings = await bridge.getProviderSettings();
       if (!hasAnyReadyProvider(settings)) {
         s.setPendingFollowUp(s.followUp);
         s.setSettingsInitialTab('providers');
@@ -39,7 +39,7 @@ export function useExecutionActions(s: CoreState) {
       s.setFollowUp('');
       s.setAttachments([]);
     }
-  }, [accomplish, s]);
+  }, [bridge, s]);
 
   useEffect(() => {
     if (!s.pendingSpeechFollowUpRef.current) {
@@ -103,10 +103,10 @@ export function useExecutionActions(s: CoreState) {
     s.setBugReporting(true);
     try {
       const [screenshotResult, axtreeResult] = await Promise.all([
-        accomplish.captureScreenshot(),
-        accomplish.captureAxtree(),
+        bridge.captureScreenshot(),
+        bridge.captureAxtree(),
       ]);
-      const result = await accomplish.generateBugReport({
+      const result = await bridge.generateBugReport({
         taskId: s.currentTask.id,
         taskPrompt: s.currentTask.prompt,
         taskStatus: s.currentTask.status,
@@ -132,7 +132,7 @@ export function useExecutionActions(s: CoreState) {
     } finally {
       s.setBugReporting(false);
     }
-  }, [accomplish, s, id]);
+  }, [bridge, s, id]);
 
   const handleRepeatTask = useCallback(async () => {
     if (!s.currentTask) {
@@ -147,14 +147,14 @@ export function useExecutionActions(s: CoreState) {
     }
     s.setRepeatingTask(true);
     try {
-      const newTask = await accomplish.startTask({ prompt: s.currentTask.prompt });
+      const newTask = await bridge.startTask({ prompt: s.currentTask.prompt });
       navigate(`/execution/${newTask.id}`);
     } catch (err) {
       logger.error('Failed to repeat task:', err);
     } finally {
       s.setRepeatingTask(false);
     }
-  }, [accomplish, s, navigate]);
+  }, [bridge, s, navigate]);
 
   const handleOpenSpeechSettings = useCallback(() => {
     s.setSettingsInitialTab('voice');

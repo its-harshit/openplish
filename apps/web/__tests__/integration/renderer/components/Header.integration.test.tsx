@@ -10,13 +10,19 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import Header from '@/components/layout/Header';
 
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => ({
+vi.mock('@/lib/somehow', () => {
+  const api = {
     getTheme: vi.fn().mockResolvedValue('system'),
     setTheme: vi.fn().mockResolvedValue(undefined),
     onThemeChange: undefined,
-  }),
-}));
+  };
+  return {
+    getSomehow: () => api,
+    useSomehow: () => api,
+    getOptionalWindowBridge: () =>
+      typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+  };
+});
 
 describe('Header Integration', () => {
   describe('rendering', () => {

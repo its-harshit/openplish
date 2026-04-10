@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SkillsSubmenu } from './SkillsSubmenu';
 import { ConnectorsSubmenu } from './ConnectorsSubmenu';
+import { getOptionalWindowBridge } from '@/lib/somehow';
 
 interface PlusMenuItemsProps {
   skills: Skill[];
@@ -44,6 +45,7 @@ export function PlusMenuItems({
   onManageConnectors,
 }: PlusMenuItemsProps) {
   const { t } = useTranslation('home');
+  const bridge = getOptionalWindowBridge();
 
   return (
     <DropdownMenuContent align="start" className="w-[200px]">
@@ -65,7 +67,7 @@ export function PlusMenuItems({
         )}
       </DropdownMenuItem>
 
-      {window.accomplish?.pickFolder && onSelectFolder && (
+      {bridge?.pickFolder && onSelectFolder && (
         <DropdownMenuItem onSelect={onSelectFolder}>
           <FolderOpen className="h-4 w-4 mr-2 shrink-0" />
           {t('plusMenu.selectFolder')}

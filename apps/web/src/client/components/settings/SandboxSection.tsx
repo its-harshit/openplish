@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type { SandboxConfig } from '@somehow_ai/agent-core';
 
 interface SandboxSectionProps {
@@ -10,7 +10,7 @@ export function SandboxSection({ visible }: SandboxSectionProps) {
   const [sandboxEnabled, setSandboxEnabled] = useState(false);
   const [sandboxConfig, setSandboxConfig] = useState<SandboxConfig | null>(null);
   const [loading, setLoading] = useState(true);
-  const accomplish = getAccomplish();
+  const accomplish = getSomehow();
 
   useEffect(() => {
     if (!visible) {
@@ -68,12 +68,12 @@ export function SandboxSection({ visible }: SandboxSectionProps) {
             aria-pressed={sandboxEnabled}
             data-testid="settings-sandbox-toggle"
             onClick={handleToggle}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-accomplish ${
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-somehow ${
               sandboxEnabled ? 'bg-primary' : 'bg-muted'
             }`}
           >
             <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform duration-200 ease-accomplish ${
+              className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform duration-200 ease-somehow ${
                 sandboxEnabled ? 'translate-x-6' : 'translate-x-1'
               }`}
             />

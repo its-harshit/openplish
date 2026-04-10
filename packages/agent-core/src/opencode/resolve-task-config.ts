@@ -16,7 +16,7 @@ import type { BrowserConfig, LocalMcpServerConfigEntry } from './generator-mcp.j
 import { isTokenExpired, refreshAccessToken } from '../connectors/oauth-tokens.js';
 import { getKnowledgeNotesForPrompt } from '../storage/repositories/knowledgeNotes.js';
 import { buildProviderConfigs } from './config-builder.js';
-import type { AccomplishRuntime, StorageDeps } from './accomplish-runtime.js';
+import type { SomehowRuntime, StorageDeps } from './somehow-runtime.js';
 
 export interface ResolveTaskConfigOptions {
   /** Storage API for reading connectors, cloud browser, sandbox, etc. */
@@ -35,10 +35,10 @@ export interface ResolveTaskConfigOptions {
   /** Optional Azure Foundry token for Entra ID auth */
   azureFoundryToken?: string;
 
-  /** Accomplish AI gateway (daemon injects real runtime; desktop may omit) */
-  accomplishRuntime?: AccomplishRuntime;
-  /** Key-value deps for Accomplish AI identity (daemon secure storage) */
-  accomplishStorageDeps?: StorageDeps;
+  /** SomeHow AI gateway (daemon injects real runtime; desktop may omit) */
+  somehowRuntime?: SomehowRuntime;
+  /** Key-value deps for SomeHow AI identity (daemon secure storage) */
+  somehowStorageDeps?: StorageDeps;
 
   /** Permission and question API ports */
   permissionApiPort?: number;
@@ -96,8 +96,8 @@ export async function resolveTaskConfig(
     bundledNodeBinPath,
     getApiKey,
     azureFoundryToken,
-    accomplishRuntime,
-    accomplishStorageDeps,
+    somehowRuntime,
+    somehowStorageDeps,
     permissionApiPort,
     questionApiPort,
     authToken,
@@ -112,8 +112,8 @@ export async function resolveTaskConfig(
   const { providerConfigs, enabledProviders, modelOverride } = await buildProviderConfigs({
     getApiKey,
     azureFoundryToken,
-    accomplishRuntime,
-    accomplishStorageDeps,
+    somehowRuntime,
+    somehowStorageDeps,
   });
 
   // 2. Inject store:false for OpenAI to prevent 403 errors with project-scoped keys

@@ -61,7 +61,7 @@
     "fireworks": "Fireworks AI",
     "groq": "Groq",
     "somehow-ai": "SomeHow AI",
-    "accomplishAi": {
+    "somehowAi": {
       "description": "Use the built-in model powered by SomeHow - no API key required.\nIncludes 200 free credits per month to get you started.",
       "disconnect": "Disconnect",
       "exhaustedMessage": "Credits exhausted. They will reset on {{date}}.",

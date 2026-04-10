@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type { ConnectedProvider, CopilotOAuthCredentials } from '@somehow_ai/agent-core';
 import { COPILOT_MODELS } from '@somehow_ai/agent-core/common';
 import { createLogger } from '@/lib/logger';
@@ -48,7 +48,7 @@ export function useCopilotConnection({
       return;
     }
 
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     accomplish
       .getCopilotOAuthStatus()
       .then((status) => {
@@ -68,7 +68,7 @@ export function useCopilotConnection({
     let pollStarted = false;
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
 
       // loginGithubCopilot now returns immediately with the user code;
       // polling continues in the background on the main process side.
@@ -127,7 +127,7 @@ export function useCopilotConnection({
 
   const handleDisconnect = async () => {
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       await accomplish.logoutGithubCopilot();
     } catch (err) {
       logger.error('Failed to logout from Copilot:', err);

@@ -10,7 +10,7 @@ import {
   installCrashHandlers,
   noopRuntime,
   type PidLockHandle,
-  type AccomplishRuntime,
+  type SomehowRuntime,
   PERMISSION_API_PORT,
   QUESTION_API_PORT,
   THOUGHT_STREAM_PORT,
@@ -43,10 +43,10 @@ async function main(): Promise<void> {
   installCrashHandlers();
 
   // ── Load SomeHow gateway runtime (noop in OSS, real impl in commercial) ─
-  let accomplishRuntime: AccomplishRuntime = noopRuntime;
+  let somehowRuntime: SomehowRuntime = noopRuntime;
   try {
     const mod = await import('@accomplish/llm-gateway-client');
-    accomplishRuntime = mod.createRuntime();
+    somehowRuntime = mod.createRuntime();
   } catch (err: unknown) {
     const isTargetPackageMissing =
       err &&
@@ -120,7 +120,7 @@ async function main(): Promise<void> {
     isPackaged,
     resourcesPath,
     appPath,
-    accomplishRuntime,
+    somehowRuntime,
   });
   const healthService = new HealthService();
   const permissionService = new PermissionService(authToken);
@@ -165,7 +165,7 @@ async function main(): Promise<void> {
     healthService,
     storageService,
     schedulerService,
-    accomplishRuntime,
+    somehowRuntime,
     whatsappService,
   };
   registerRpcMethods(routeServices);

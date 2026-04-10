@@ -6,6 +6,7 @@ import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu
 import { PlusMenuItems } from './PlusMenuItems';
 import { CreateSkillModal } from '@/components/skills/CreateSkillModal';
 import { createLogger } from '@/lib/logger';
+import { getOptionalWindowBridge } from '@/lib/somehow';
 
 const logger = createLogger('PlusMenu');
 
@@ -36,27 +37,26 @@ export function PlusMenu({
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
-    if (open && window.accomplish) {
-      window.accomplish
-        .getEnabledSkills()
+    const w = getOptionalWindowBridge();
+    if (open && w) {
+      w.getEnabledSkills()
         .then((skills) => setSkills(skills.filter((s) => !s.isHidden)))
         .catch((err) => logger.error('Failed to load skills:', err));
 
-      window.accomplish
-        .getConnectors()
+      w.getConnectors()
         .then(setConnectors)
         .catch((err) => logger.error('Failed to load connectors:', err));
     }
   }, [open]);
 
   const handleRefresh = async () => {
-    const accomplish = window.accomplish;
-    if (!accomplish || isRefreshing) return;
+    const w = getOptionalWindowBridge();
+    if (!w || isRefreshing) return;
     setIsRefreshing(true);
     try {
       const [, updatedSkills] = await Promise.all([
         new Promise((resolve) => setTimeout(resolve, 600)),
-        accomplish.resyncSkills().then(() => accomplish.getEnabledSkills()),
+        w.resyncSkills().then(() => w.getEnabledSkills()),
       ]);
       setSkills(updatedSkills.filter((s) => !s.isHidden));
     } catch (err) {
@@ -82,9 +82,10 @@ export function PlusMenu({
   };
 
   const handleToggleConnector = useCallback(async (id: string, enabled: boolean) => {
-    if (!window.accomplish) return;
+    const w = getOptionalWindowBridge();
+    if (!w) return;
     try {
-      await window.accomplish.setConnectorEnabled(id, enabled);
+      await w.setConnectorEnabled(id, enabled);
       setConnectors((prev) => prev.map((c) => (c.id === id ? { ...c, isEnabled: enabled } : c)));
     } catch (err) {
       logger.error('Failed to toggle connector:', err);
@@ -98,12 +99,12 @@ export function PlusMenu({
 
   const handleSelectFolder = useCallback(async () => {
     setOpen(false);
-    const accomplish = window.accomplish;
-    if (!accomplish?.pickFolder) {
+    const w = getOptionalWindowBridge();
+    if (!w?.pickFolder) {
       return;
     }
     try {
-      const folderPath = await accomplish.pickFolder();
+      const folderPath = await w.pickFolder();
       if (folderPath) {
         onSelectFolder?.(folderPath);
       }

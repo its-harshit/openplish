@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type { ConnectedProvider, CustomCredentials } from '@somehow_ai/agent-core';
 import { ProviderFormHeader } from '../shared';
 import { settingsVariants, settingsTransitions } from '@/lib/animations';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { CustomProviderConnectedSection } from './CustomProviderConnectedSection';
 import { CustomProviderInputs } from './CustomProviderInputs';
 
@@ -59,7 +59,7 @@ export function CustomProviderForm({
     setError(null);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const trimmedKey = apiKey.trim() || undefined;
 
       // Test connection to the endpoint

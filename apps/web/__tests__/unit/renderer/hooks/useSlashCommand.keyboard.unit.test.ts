@@ -7,13 +7,19 @@ import {
 } from '../__helpers__/slashCommandTestUtils';
 import type { UseSlashCommandReturn } from '@/hooks/useSlashCommand';
 
-const mockGetEnabledSkills = vi.fn().mockResolvedValue(mockSkillsWithHidden);
-
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => ({
-    getEnabledSkills: mockGetEnabledSkills,
-  }),
+const { mockGetEnabledSkills } = vi.hoisted(() => ({
+  mockGetEnabledSkills: vi.fn(),
 }));
+
+vi.mock('@/lib/somehow', () => {
+  const api = { getEnabledSkills: mockGetEnabledSkills };
+  return {
+    getSomehow: () => api,
+    useSomehow: () => api,
+    getOptionalWindowBridge: () =>
+      typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+  };
+});
 
 vi.mock('@/lib/logger', () => ({
   createLogger: () => ({ error: vi.fn(), warn: vi.fn(), info: vi.fn(), debug: vi.fn() }),

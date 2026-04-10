@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useTaskStore } from '@/stores/taskStore';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { staggerContainer } from '@/lib/animations';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -22,7 +22,7 @@ export default function Sidebar() {
   const [showSettings, setShowSettings] = useState(false);
   const [settingsInitialTab, setSettingsInitialTab] = useState<SettingsTabId>('providers');
   const { tasks, loadTasks, updateTaskStatus, addTaskUpdate, openLauncher } = useTaskStore();
-  const accomplish = getAccomplish();
+  const accomplish = getSomehow();
   const { t } = useTranslation('sidebar');
 
   useEffect(() => {

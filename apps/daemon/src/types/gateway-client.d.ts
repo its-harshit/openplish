@@ -6,6 +6,6 @@
  * provides its own types when installed in Free builds.
  */
 declare module '@accomplish/llm-gateway-client' {
-  import type { AccomplishRuntime } from '@somehow_ai/agent-core';
-  export function createRuntime(): AccomplishRuntime;
+  import type { SomehowRuntime } from '@somehow_ai/agent-core';
+  export function createRuntime(): SomehowRuntime;
 }

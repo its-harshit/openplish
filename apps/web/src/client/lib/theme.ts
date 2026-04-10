@@ -1,4 +1,4 @@
-import { getAccomplish } from './accomplish';
+import { getSomehow } from './somehow';
 import { type ThemePreference, THEME_KEY, resolveTheme, applyClass } from './theme-core';
 
 let mediaQuery: MediaQueryList | null = null;
@@ -40,7 +40,7 @@ export function applyTheme(preference: string): void {
 }
 
 export function initTheme(): void {
-  const accomplish = getAccomplish();
+  const accomplish = getSomehow();
 
   accomplish.getTheme().then((preference) => {
     applyTheme(preference);

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useTaskStore } from '@/stores/taskStore';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { TaskLauncherContent } from './TaskLauncherContent';
 import { hasAnyReadyProvider } from '@somehow_ai/agent-core/common';
 
@@ -13,7 +13,7 @@ export function TaskLauncher() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const { isLauncherOpen, launcherInitialPrompt, closeLauncher, tasks, startTask } = useTaskStore();
-  const accomplish = getAccomplish();
+  const accomplish = getSomehow();
   const [openedAt, setOpenedAt] = useState(Date.now);
 
   // Filter tasks by search query (title only)
@@ -141,7 +141,6 @@ export function TaskLauncher() {
               selectedIndex={selectedIndex}
               filteredTasks={filteredTasks}
               onSelect={handleSelect}
-              onClose={closeLauncher}
               onKeyDown={handleKeyDown}
             />
           </DialogPrimitive.Portal>

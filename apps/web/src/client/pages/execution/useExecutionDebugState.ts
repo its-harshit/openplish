@@ -5,7 +5,7 @@ import type { DebugLogEntry } from '../../components/execution/DebugPanel';
 const logger = createLogger('Execution');
 
 interface UseExecutionDebugStateOptions {
-  accomplish: ReturnType<typeof import('../../lib/accomplish').getAccomplish>;
+  bridge: ReturnType<typeof import('../../lib/somehow').getSomehow>;
   startupStageTaskId: string | null | undefined;
   startupStage: { startTime: number; stage: string; message?: string } | null | undefined;
   id: string | undefined;
@@ -14,7 +14,7 @@ interface UseExecutionDebugStateOptions {
 
 /** Manages debug mode, bug report state, and elapsed time for the execution page. */
 export function useExecutionDebugState({
-  accomplish,
+  bridge,
   startupStageTaskId,
   startupStage,
   id,
@@ -28,13 +28,13 @@ export function useExecutionDebugState({
   const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
-    accomplish
+    bridge
       .getDebugMode()
       .then(setDebugModeEnabled)
       .catch((err: unknown) => {
         logger.error('Failed to get debug mode:', err);
       });
-    const unsub = accomplish.onDebugModeChange?.(({ enabled }: { enabled: boolean }) => {
+    const unsub = bridge.onDebugModeChange?.(({ enabled }: { enabled: boolean }) => {
       setDebugModeEnabled(enabled);
     });
     return () => {

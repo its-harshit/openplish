@@ -14,12 +14,12 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { useAccomplish } from '@/lib/accomplish';
+import { useSomehow } from '@/lib/somehow';
 
 type CloseDecision = 'keep-daemon' | 'stop-daemon';
 
 export function CloseConfirmDialog() {
-  const accomplish = useAccomplish();
+  const accomplish = useSomehow();
   const [open, setOpen] = useState(false);
   const [decision, setDecision] = useState<CloseDecision>('keep-daemon');
 

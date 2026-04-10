@@ -8,9 +8,9 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-22c55e?style=flat-square" alt="MIT License" /></a>
-  <a href="https://github.com/somehow-ai/somehow/stargazers"><img src="https://img.shields.io/github/stars/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="GitHub Stars" /></a>
-  <a href="https://github.com/somehow-ai/somehow/issues"><img src="https://img.shields.io/github/issues/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="GitHub Issues" /></a>
-  <a href="https://github.com/somehow-ai/somehow/commits"><img src="https://img.shields.io/github/last-commit/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="Last Commit" /></a>
+  <a href="https://github.com/somehow-ai/somehow/stargazers"><img src="https://img.shields.io/github/stars/somehow-ai/somehow?style=flat-square&color=22c55e" alt="GitHub Stars" /></a>
+  <a href="https://github.com/somehow-ai/somehow/issues"><img src="https://img.shields.io/github/issues/somehow-ai/somehow?style=flat-square&color=22c55e" alt="GitHub Issues" /></a>
+  <a href="https://github.com/somehow-ai/somehow/commits"><img src="https://img.shields.io/github/last-commit/somehow-ai/somehow?style=flat-square&color=22c55e" alt="Last Commit" /></a>
   <a href="https://github.com/somehow-ai/somehow/releases"><img src="https://img.shields.io/badge/Download-GitHub_Releases-0ea5e9?style=flat-square" alt="Download from GitHub Releases" /></a>
   <a href="https://discord.gg/kg5Nekpm"><img src="https://img.shields.io/badge/Discord-Join-5865F2?style=flat-square&logo=discord&logoColor=white" alt="Discord" /></a>
 </p>

@@ -1,9 +1,9 @@
 import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type { KnowledgeNote, KnowledgeNoteType } from '@somehow_ai/agent-core';
 
-type AccomplishInstance = ReturnType<typeof getAccomplish>;
+type SomehowBridge = ReturnType<typeof getSomehow>;
 
 export interface UseKnowledgeNotesReturn {
   notes: KnowledgeNote[];
@@ -27,7 +27,7 @@ export interface UseKnowledgeNotesReturn {
 }
 
 export function useKnowledgeNotes(
-  accomplish: AccomplishInstance,
+  bridge: SomehowBridge,
   workspaceId: string,
 ): UseKnowledgeNotesReturn {
   const { t } = useTranslation('settings');
@@ -53,7 +53,7 @@ export function useKnowledgeNotes(
   const loadNotes = useCallback(async () => {
     const requestId = ++activeRequestRef.current;
     try {
-      const loaded = await accomplish.listKnowledgeNotes(workspaceId);
+      const loaded = await bridge.listKnowledgeNotes(workspaceId);
       if (requestId === activeRequestRef.current && workspaceIdRef.current === workspaceId) {
         setError(null);
         setNotes(loaded);
@@ -63,14 +63,14 @@ export function useKnowledgeNotes(
         setError(err instanceof Error ? err.message : String(err));
       }
     }
-  }, [accomplish, workspaceId]);
+  }, [bridge, workspaceId]);
 
   // Initial load on mount / workspaceId change. Uses the same activeRequestRef
   // guard so a cleanup (workspace switch) abandons any in-flight request from
   // either this effect or a concurrent mutation-triggered loadNotes call.
   useEffect(() => {
     const requestId = ++activeRequestRef.current;
-    accomplish
+    bridge
       .listKnowledgeNotes(workspaceId)
       .then((loaded) => {
         if (requestId === activeRequestRef.current && workspaceIdRef.current === workspaceId) {
@@ -86,14 +86,14 @@ export function useKnowledgeNotes(
     return () => {
       activeRequestRef.current++;
     };
-  }, [accomplish, workspaceId]);
+  }, [bridge, workspaceId]);
 
   const handleAdd = useCallback(async () => {
     if (!newContent.trim()) {
       return;
     }
     try {
-      await accomplish.createKnowledgeNote({
+      await bridge.createKnowledgeNote({
         workspaceId,
         type: newType,
         content: newContent.trim(),
@@ -111,7 +111,7 @@ export function useKnowledgeNotes(
         setError(err instanceof Error ? err.message : String(err));
       }
     }
-  }, [accomplish, workspaceId, newType, newContent, loadNotes]);
+  }, [bridge, workspaceId, newType, newContent, loadNotes]);
 
   const handleEdit = useCallback(
     async (id: string) => {
@@ -119,7 +119,7 @@ export function useKnowledgeNotes(
         return;
       }
       try {
-        const updated = await accomplish.updateKnowledgeNote(id, workspaceId, {
+        const updated = await bridge.updateKnowledgeNote(id, workspaceId, {
           type: editType,
           content: editContent.trim(),
         });
@@ -139,13 +139,13 @@ export function useKnowledgeNotes(
         }
       }
     },
-    [accomplish, workspaceId, editType, editContent, loadNotes, t],
+    [bridge, workspaceId, editType, editContent, loadNotes, t],
   );
 
   const handleDelete = useCallback(
     async (id: string) => {
       try {
-        const deleted = await accomplish.deleteKnowledgeNote(id, workspaceId);
+        const deleted = await bridge.deleteKnowledgeNote(id, workspaceId);
         if (workspaceIdRef.current !== workspaceId) {
           return;
         }
@@ -161,7 +161,7 @@ export function useKnowledgeNotes(
         }
       }
     },
-    [accomplish, workspaceId, loadNotes, t],
+    [bridge, workspaceId, loadNotes, t],
   );
 
   const startEdit = useCallback((note: KnowledgeNote) => {

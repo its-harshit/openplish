@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus, Info } from '@phosphor-icons/react';
-import { useAccomplish } from '@/lib/accomplish';
+import { useSomehow } from '@/lib/somehow';
 import { useWorkspaceStore } from '@/stores/workspaceStore';
 import type { ScheduledTask } from '@somehow_ai/agent-core/common';
 import { ScheduleCard } from './ScheduleCard';
@@ -9,7 +9,7 @@ import { AddScheduleDialog } from './AddScheduleDialog';
 
 export function SchedulerPanel() {
   const { t } = useTranslation('settings');
-  const accomplish = useAccomplish();
+  const accomplish = useSomehow();
   const { activeWorkspaceId } = useWorkspaceStore();
 
   const [schedules, setSchedules] = useState<ScheduledTask[]>([]);

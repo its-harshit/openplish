@@ -226,9 +226,9 @@ export interface ProviderSettingsAPI {
   /** Get IDs of all connected providers */
   getConnectedProviderIds(): ProviderId[];
   /** Get cached built-in free-tier credit usage (last known from gateway) */
-  getAccomplishAiCredits(): CreditUsage | null;
+  getSomehowAiCredits(): CreditUsage | null;
   /** Cache built-in free-tier credit usage */
-  saveAccomplishAiCredits(usage: CreditUsage): void;
+  saveSomehowAiCredits(usage: CreditUsage): void;
 }
 
 /** API for encrypted credential storage (AES-256-GCM) */

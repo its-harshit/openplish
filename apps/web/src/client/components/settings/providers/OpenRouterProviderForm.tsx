@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type { ConnectedProvider, OpenRouterCredentials } from '@somehow_ai/agent-core/common';
 import { PROVIDER_META } from '@somehow_ai/agent-core/common';
 import { ConnectButton, ProviderFormHeader, FormError } from '../shared';
@@ -45,7 +45,7 @@ export function OpenRouterProviderForm({
     setError(null);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
 
       // Validate key
       const validation = await accomplish.validateApiKeyForProvider('openrouter', apiKey.trim());

@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import type { LocalMcpServer } from '@somehow_ai/agent-core';
 import { useLocalMcpServers } from './useLocalMcpServers';
+import { getOptionalWindowBridge } from '@/lib/somehow';
 
 function LocalMcpRow({
   server,
@@ -90,7 +91,7 @@ export function LocalMcpServersSection() {
     toggleEnabled,
   } = useLocalMcpServers();
 
-  if (!window.accomplish?.getLocalMcpServers) {
+  if (!getOptionalWindowBridge()?.getLocalMcpServers) {
     return null;
   }
 

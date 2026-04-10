@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 
 interface PoliciesLockSectionProps {
   lockConfigured: boolean;
@@ -12,7 +12,7 @@ interface PoliciesLockSectionProps {
 
 export function PoliciesLockSection({ lockConfigured, onChanged }: PoliciesLockSectionProps) {
   const { t } = useTranslation('settings');
-  const accomplish = getAccomplish();
+  const accomplish = getSomehow();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);

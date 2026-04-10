@@ -6,10 +6,11 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router';
 import type { Task, TaskStatus, TaskMessage, PermissionRequest } from '@somehow_ai/agent-core';
 import { OAuthProviderId, PROMPT_DEFAULT_MAX_LENGTH } from '@somehow_ai/agent-core/common';
+import { SOMEHOW_BASELINE_MOCKS } from '../somehow-mock-baseline';
 
 // Create mock functions
 const mockLoadTaskById = vi.fn();
@@ -62,6 +63,7 @@ function createMockMessage(
 
 // Mock accomplish API
 const mockAccomplish = {
+  ...SOMEHOW_BASELINE_MOCKS,
   onTaskUpdate: mockOnTaskUpdate.mockReturnValue(() => {}),
   onTaskUpdateBatch: mockOnTaskUpdateBatch.mockReturnValue(() => {}),
   onPermissionRequest: mockOnPermissionRequest.mockReturnValue(() => {}),
@@ -119,8 +121,11 @@ const mockAccomplish = {
 };
 
 // Mock the accomplish module
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => mockAccomplish,
+vi.mock('@/lib/somehow', () => ({
+  getSomehow: () => mockAccomplish,
+  useSomehow: () => mockAccomplish,
+  getOptionalWindowBridge: () =>
+    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
 }));
 
 // Mock store state holder
@@ -222,8 +227,8 @@ vi.mock('@/components/ui/streaming-text', () => ({
   }) => <>{children(text)}</>,
 }));
 
-// Mock Accomplish icon
-vi.mock('/assets/accomplish-icon.png', () => ({ default: 'accomplish-icon.png' }));
+// Mock SomeHow branding asset (if Execution tree imports it)
+vi.mock('/assets/branding/app-icon-hs.png', () => ({ default: 'somehow-app-icon.png' }));
 
 // Import after mocks
 import ExecutionPage from '@/pages/Execution';
@@ -542,7 +547,7 @@ describe('Execution Page Integration', () => {
       });
     });
 
-    it('should call sendFollowUp with continue when Continue button is clicked', async () => {
+    it('should call respondToPermission with customText when question permission Submit is clicked', async () => {
       mockStoreState.currentTask = createMockTask('task-123', 'Task', 'waiting_permission');
       mockStoreState.permissionRequests = {
         'task-123': {
@@ -556,11 +561,27 @@ describe('Execution Page Integration', () => {
 
       renderWithRouter('task-123');
 
-      const continueButton = screen.getByRole('button', { name: /continue task/i });
-      fireEvent.click(continueButton);
+      await act(async () => {
+        fireEvent.change(screen.getByLabelText('Custom response'), {
+          target: { value: 'continue' },
+        });
+      });
+      await waitFor(() => {
+        expect(screen.getByTestId('permission-allow-button')).not.toBeDisabled();
+      });
+      const continueButton = screen.getByTestId('permission-allow-button');
+      await act(async () => {
+        fireEvent.click(continueButton);
+      });
 
       await waitFor(() => {
-        expect(mockSendFollowUp).toHaveBeenCalledWith('continue', []);
+        expect(mockRespondToPermission).toHaveBeenCalledWith({
+          requestId: 'perm-1',
+          taskId: 'task-123',
+          decision: 'allow',
+          selectedOptions: [],
+          customText: 'continue',
+        });
       });
     });
 
@@ -1085,8 +1106,8 @@ describe('Execution Page Integration', () => {
 
       renderWithRouter('task-123');
 
-      // Assert - cancelled tasks render a badge span, not a heading
-      expect(screen.getByText(/cancelled/i)).toBeInTheDocument();
+      const badge = screen.getByTestId('execution-status-badge');
+      expect(badge).toHaveTextContent(/cancelled/i);
     });
 
     it('should show Continue button for interrupted task with session and messages', () => {
@@ -1182,13 +1203,21 @@ describe('Execution Page Integration', () => {
         },
       };
       mockStoreState.currentTask = task;
-      mockAccomplish.getSlackMcpOauthStatus
-        .mockResolvedValueOnce({ connected: false, pendingAuthorization: false })
-        .mockResolvedValueOnce({ connected: true, pendingAuthorization: false });
+      let slackStatusCalls = 0;
+      mockAccomplish.getSlackMcpOauthStatus.mockImplementation(async () => {
+        slackStatusCalls += 1;
+        // Call 1: useExecutionEffects prefetch; call 2: handlePauseAction first check — both disconnected so login runs.
+        if (slackStatusCalls <= 2) {
+          return { connected: false, pendingAuthorization: false };
+        }
+        return { connected: true, pendingAuthorization: false };
+      });
 
       renderWithRouter('task-123');
 
-      fireEvent.click(screen.getByRole('button', { name: 'Authenticate Slack' }));
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Authenticate Slack' }));
+      });
 
       await waitFor(() => {
         expect(mockAccomplish.loginSlackMcp).toHaveBeenCalled();

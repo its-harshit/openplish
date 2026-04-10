@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type { ConnectedProvider, AzureFoundryCredentials } from '@somehow_ai/agent-core/common';
 import { ProviderFormHeader } from '../shared';
 import { AzureFoundryConnectedSection } from './AzureFoundryConnectedSection';
@@ -49,7 +49,7 @@ export function AzureFoundryProviderForm({
     setError(null);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
 
       // Validate connection
       const validation = await accomplish.testAzureFoundryConnection({

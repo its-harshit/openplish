@@ -11,6 +11,7 @@ import { MemoryRouter } from 'react-router';
 import { PROMPT_DEFAULT_MAX_LENGTH } from '@somehow_ai/agent-core/common';
 import { TaskInputBar } from '@/components/landing/TaskInputBar';
 import { PlusMenu } from '@/components/landing/PlusMenu';
+import { SOMEHOW_BASELINE_MOCKS } from '../somehow-mock-baseline';
 
 // Helper to render with Router context (required for PlusMenu -> CreateSkillModal -> useNavigate)
 const renderWithRouter = (ui: React.ReactElement) => {
@@ -19,6 +20,7 @@ const renderWithRouter = (ui: React.ReactElement) => {
 
 // Mock accomplish API
 const mockAccomplish = {
+  ...SOMEHOW_BASELINE_MOCKS,
   logEvent: vi.fn().mockResolvedValue(undefined),
   getSelectedModel: vi.fn().mockResolvedValue({ provider: 'anthropic', id: 'claude-3-opus' }),
   getOllamaConfig: vi.fn().mockResolvedValue(null),
@@ -48,8 +50,11 @@ const mockAccomplish = {
 };
 
 // Mock the accomplish module
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => mockAccomplish,
+vi.mock('@/lib/somehow', () => ({
+  getSomehow: () => mockAccomplish,
+  useSomehow: () => mockAccomplish,
+  getOptionalWindowBridge: () =>
+    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
 }));
 
 // Mock Radix Tooltip to render content directly (portals don't work in jsdom)

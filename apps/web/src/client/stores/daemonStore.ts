@@ -7,6 +7,7 @@
  */
 
 import { create } from 'zustand';
+import { getOptionalWindowBridge } from '../lib/somehow';
 
 export type DaemonStatus =
   | 'connected'
@@ -46,29 +47,29 @@ export const useDaemonStore = create<DaemonState>((set) => ({
 // Registered at module level so they fire regardless of which component is mounted.
 
 function registerDaemonSubscriptions(): void {
-  if (typeof window === 'undefined' || !window.accomplish) {
+  const bridge = getOptionalWindowBridge();
+  if (!bridge) {
     return;
   }
 
-  const accomplish = window.accomplish;
   const { setStatus } = useDaemonStore.getState();
 
-  accomplish.onDaemonDisconnected(() => {
+  bridge.onDaemonDisconnected(() => {
     useDaemonStore.getState().setStatus('disconnected');
   });
 
-  accomplish.onDaemonReconnected(() => {
+  bridge.onDaemonReconnected(() => {
     useDaemonStore.getState().setStatus('connected');
   });
 
-  if (accomplish.onDaemonReconnectFailed) {
-    accomplish.onDaemonReconnectFailed(() => {
+  if (bridge.onDaemonReconnectFailed) {
+    bridge.onDaemonReconnectFailed(() => {
       useDaemonStore.getState().setStatus('reconnect-failed');
     });
   }
 
   // Initial status check
-  accomplish
+  bridge
     .daemonPing()
     .then((result) => {
       if (result.status === 'ok') {

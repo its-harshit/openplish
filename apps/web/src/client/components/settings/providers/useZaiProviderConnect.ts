@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type { ConnectedProvider, ZaiCredentials, ZaiRegion } from '@somehow_ai/agent-core/common';
 import { DEFAULT_PROVIDERS } from '@somehow_ai/agent-core/common';
 import { createLogger } from '@/lib/logger';
@@ -59,7 +59,7 @@ export function useZaiProviderConnect({
       return;
     }
 
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     const storedRegion = storedCredentials?.region || 'international';
     accomplish
       .fetchProviderModels('zai', { zaiRegion: storedRegion })
@@ -88,7 +88,7 @@ export function useZaiProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const validation = await accomplish.validateApiKeyForProvider('zai', apiKey.trim(), {
         region,
       });

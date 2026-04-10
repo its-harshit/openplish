@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type { ConnectedProvider, VertexProviderCredentials } from '@somehow_ai/agent-core';
 import { isCuratedVertexModel } from './vertex-model-utils';
 import type {
@@ -28,7 +28,7 @@ export function useVertexProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
 
       const credentials =
         authTab === 'serviceAccount'

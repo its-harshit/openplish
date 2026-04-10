@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { LocalMcpServer } from '@somehow_ai/agent-core';
 import { createLogger } from '@/lib/logger';
+import { getOptionalWindowBridge } from '@/lib/somehow';
 
 const logger = createLogger('LocalMcpServers');
 
@@ -17,12 +18,13 @@ export function useLocalMcpServers() {
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    if (!window.accomplish?.getLocalMcpServers) {
+    const w = getOptionalWindowBridge();
+    if (!w?.getLocalMcpServers) {
       setLoading(false);
       return;
     }
     try {
-      const list = await window.accomplish.getLocalMcpServers();
+      const list = await w.getLocalMcpServers();
       setServers(list);
     } catch (err) {
       logger.error('Failed to list local MCP servers', err);
@@ -36,7 +38,8 @@ export function useLocalMcpServers() {
   }, [load]);
 
   const handleAdd = useCallback(async () => {
-    if (!window.accomplish?.addLocalMcpServer) {
+    const w = getOptionalWindowBridge();
+    if (!w?.addLocalMcpServer) {
       return;
     }
     setAdding(true);
@@ -44,7 +47,7 @@ export function useLocalMcpServers() {
     try {
       const env = environmentJson.trim() === '' ? undefined : environmentJson;
       const cwdVal = cwd.trim() === '' ? undefined : cwd;
-      await window.accomplish.addLocalMcpServer(name.trim(), commandJson.trim(), env, cwdVal);
+      await w.addLocalMcpServer(name.trim(), commandJson.trim(), env, cwdVal);
       setName('');
       setCommandJson('["npx", "-y", "@example/mcp"]');
       setEnvironmentJson('');
@@ -61,11 +64,12 @@ export function useLocalMcpServers() {
 
   const deleteServer = useCallback(
     async (id: string) => {
-      if (!window.accomplish?.deleteLocalMcpServer) {
+      const w = getOptionalWindowBridge();
+      if (!w?.deleteLocalMcpServer) {
         return;
       }
       try {
-        await window.accomplish.deleteLocalMcpServer(id);
+        await w.deleteLocalMcpServer(id);
         await load();
       } catch (err) {
         logger.error('Failed to delete local MCP server', err);
@@ -76,11 +80,12 @@ export function useLocalMcpServers() {
 
   const toggleEnabled = useCallback(
     async (id: string, enabled: boolean) => {
-      if (!window.accomplish?.setLocalMcpServerEnabled) {
+      const w = getOptionalWindowBridge();
+      if (!w?.setLocalMcpServerEnabled) {
         return;
       }
       try {
-        await window.accomplish.setLocalMcpServerEnabled(id, enabled);
+        await w.setLocalMcpServerEnabled(id, enabled);
         await load();
       } catch (err) {
         logger.error('Failed to toggle local MCP server', err);

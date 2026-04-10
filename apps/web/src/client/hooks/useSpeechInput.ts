@@ -4,7 +4,7 @@
  */
 
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { getAccomplish } from '../lib/accomplish';
+import { getSomehow } from '../lib/somehow';
 import { SpeechRecognitionError, UseSpeechInputOptions, UseSpeechInputState } from './speech-types';
 import { useSpeechRecorder } from './useSpeechRecorder';
 
@@ -25,7 +25,7 @@ export function useSpeechInput(options: UseSpeechInputOptions = {}): UseSpeechIn
     maxDuration = 120000,
   } = options;
 
-  const accomplish = getAccomplish();
+  const accomplish = getSomehow();
   const lastAudioDataRef = useRef<ArrayBuffer | null>(null);
   const isPushToTalkRef = useRef(false);
   const isStartingRef = useRef(false);
@@ -59,7 +59,7 @@ export function useSpeechInput(options: UseSpeechInputOptions = {}): UseSpeechIn
     let mounted = true;
     configCheckIdRef.current++;
     const capturedId = configCheckIdRef.current;
-    getAccomplish()
+    getSomehow()
       .speechIsConfigured()
       .then((configured) => {
         if (mounted && capturedId === configCheckIdRef.current) {
@@ -84,7 +84,7 @@ export function useSpeechInput(options: UseSpeechInputOptions = {}): UseSpeechIn
       // Revalidate in the background to confirm the server-side state
       configCheckIdRef.current++;
       const capturedId = configCheckIdRef.current;
-      getAccomplish()
+      getSomehow()
         .speechIsConfigured()
         .then((configured) => {
           if (mounted && capturedId === configCheckIdRef.current) {

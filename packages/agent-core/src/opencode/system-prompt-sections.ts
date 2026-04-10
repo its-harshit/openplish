@@ -1,5 +1,5 @@
 /**
- * Helper sections for the Accomplish agent system prompt.
+ * Helper sections for the SomeHow agent system prompt.
  * Split out from system-prompt.ts to keep each file under 200 lines.
  * Heavy behavior blocks live in system-prompt-behaviors.ts.
  */

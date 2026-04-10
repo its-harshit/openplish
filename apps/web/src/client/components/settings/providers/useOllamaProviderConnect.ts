@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type {
   ConnectedProvider,
   OllamaCredentials,
@@ -60,7 +60,7 @@ export function useOllamaProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const result = await accomplish.testOllamaConnection(serverUrl);
 
       if (!result.success) {
@@ -110,7 +110,7 @@ export function useOllamaProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const currentUrl =
         (baseProvider.credentials as OllamaCredentials)?.serverUrl || 'http://localhost:11434';
       const result = await accomplish.testOllamaConnection(currentUrl);

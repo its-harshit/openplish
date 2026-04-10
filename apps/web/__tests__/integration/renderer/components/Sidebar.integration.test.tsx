@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import type { Task, TaskStatus } from '@somehow_ai/agent-core';
+import { SOMEHOW_BASELINE_MOCKS } from '../somehow-mock-baseline';
 
 // Create mock functions outside of mock factory
 const mockLoadTasks = vi.fn();
@@ -35,6 +36,7 @@ function createMockTask(
 
 // Mock accomplish API
 const mockAccomplish = {
+  ...SOMEHOW_BASELINE_MOCKS,
   listTasks: mockListTasks.mockResolvedValue([]),
   onTaskStatusChange: mockOnTaskStatusChange.mockReturnValue(() => {}),
   onTaskUpdate: mockOnTaskUpdate.mockReturnValue(() => {}),
@@ -68,8 +70,11 @@ const mockAccomplish = {
 };
 
 // Mock the accomplish module
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => mockAccomplish,
+vi.mock('@/lib/somehow', () => ({
+  getSomehow: () => mockAccomplish,
+  useSomehow: () => mockAccomplish,
+  getOptionalWindowBridge: () =>
+    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
 }));
 
 // Create a store state holder for testing
@@ -213,7 +218,7 @@ describe('Sidebar Integration', () => {
       );
 
       // Assert
-      const logo = screen.getByRole('img', { name: /accomplish/i });
+      const logo = screen.getByRole('img', { name: /SomeHow/i });
       expect(logo).toBeInTheDocument();
     });
 
@@ -318,9 +323,9 @@ describe('Sidebar Integration', () => {
         </MemoryRouter>,
       );
 
-      // Assert - Check for green status dot
+      // Assert - Check for success status dot (semantic token from STATUS_COLORS)
       const taskItem = screen.getByText('Completed task').closest('[role="button"]');
-      const dot = taskItem?.querySelector('.bg-green-500');
+      const dot = taskItem?.querySelector('.bg-success');
       expect(dot).toBeInTheDocument();
     });
   });
@@ -379,7 +384,7 @@ describe('Sidebar Integration', () => {
 
       // Assert
       const taskItem = screen.getByText('Active task').closest('[role="button"]');
-      expect(taskItem?.className).toContain('bg-accent');
+      expect(taskItem?.className).toContain('bg-card');
     });
 
     it('should not highlight inactive conversations', () => {
@@ -396,13 +401,11 @@ describe('Sidebar Integration', () => {
         </MemoryRouter>,
       );
 
-      // Assert - Second task should not be highlighted with the active class
-      // The component uses 'bg-accent' class for active state, while hover state uses 'hover:bg-accent'
+      // Assert - Second task should not use the active row treatment (bg-card + ring on current route)
       const secondTaskItem = screen.getByText('Second task').closest('[role="button"]');
       const classNames = (secondTaskItem?.className || '').split(' ');
-      // Filter to find only exact 'bg-accent' class, not 'hover:bg-accent'
-      const hasBgAccent = classNames.some((c) => c === 'bg-accent');
-      expect(hasBgAccent).toBe(false);
+      const hasActiveRowBg = classNames.some((c) => c === 'bg-card');
+      expect(hasActiveRowBg).toBe(false);
     });
   });
 

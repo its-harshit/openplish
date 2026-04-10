@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import type { McpConnector } from '@somehow_ai/agent-core/common';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('useConnectors');
@@ -20,7 +20,7 @@ export function useConnectors() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchConnectors = useCallback(async () => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     try {
       const [connectorsResult, slackStatusResult] = await Promise.allSettled([
         accomplish.getConnectors(),
@@ -53,14 +53,14 @@ export function useConnectors() {
   }, [fetchConnectors]);
 
   const addConnector = useCallback(async (name: string, url: string) => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     const connector = await accomplish.addConnector(name, url);
     setConnectors((prev) => [connector, ...prev]);
     return connector;
   }, []);
 
   const deleteConnector = useCallback(async (id: string) => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     await accomplish.deleteConnector(id);
     setConnectors((prev) => prev.filter((c) => c.id !== id));
   }, []);
@@ -70,7 +70,7 @@ export function useConnectors() {
       const connector = connectors.find((c) => c.id === id);
       if (!connector) return;
 
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       await accomplish.setConnectorEnabled(id, !connector.isEnabled);
       setConnectors((prev) =>
         prev.map((c) => (c.id === id ? { ...c, isEnabled: !c.isEnabled } : c)),
@@ -85,7 +85,7 @@ export function useConnectors() {
     );
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       return await accomplish.startConnectorOAuth(connectorId);
     } catch (err) {
       setConnectors((prev) =>
@@ -96,7 +96,7 @@ export function useConnectors() {
   }, []);
 
   const completeOAuth = useCallback(async (state: string, code: string) => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     const updated = await accomplish.completeConnectorOAuth(state, code);
     if (updated) {
       setConnectors((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
@@ -105,7 +105,7 @@ export function useConnectors() {
   }, []);
 
   const disconnect = useCallback(async (connectorId: string) => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     await accomplish.disconnectConnector(connectorId);
     setConnectors((prev) =>
       prev.map((c) => (c.id === connectorId ? { ...c, status: 'disconnected' as const } : c)),
@@ -113,7 +113,7 @@ export function useConnectors() {
   }, []);
 
   const authenticateSlack = useCallback(async () => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
 
     setSlackAuth(() => ({
       connected: false,
@@ -141,7 +141,7 @@ export function useConnectors() {
   }, [slackAuth.pendingAuthorization]);
 
   const disconnectSlack = useCallback(async () => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     await accomplish.logoutSlackMcp();
     setSlackAuth({ connected: false, pendingAuthorization: false });
   }, []);

@@ -5,7 +5,7 @@
  * - isRunningInElectron() detection
  * - getShellVersion() retrieval
  * - getShellPlatform() retrieval
- * - getAccomplish() and useAccomplish() API access
+ * - getSomehow() and useSomehow() API access
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
@@ -31,7 +31,7 @@ describe('SomeHow shell API', () => {
         accomplishShell: { isElectron: true },
       };
 
-      const { isRunningInElectron } = await import('@/lib/accomplish');
+      const { isRunningInElectron } = await import('@/lib/somehow');
       expect(isRunningInElectron()).toBe(true);
     });
 
@@ -40,7 +40,7 @@ describe('SomeHow shell API', () => {
         accomplishShell: { isElectron: false },
       };
 
-      const { isRunningInElectron } = await import('@/lib/accomplish');
+      const { isRunningInElectron } = await import('@/lib/somehow');
       expect(isRunningInElectron()).toBe(false);
     });
 
@@ -56,7 +56,7 @@ describe('SomeHow shell API', () => {
       for (const scenario of unavailableScenarios) {
         vi.resetModules();
         (globalThis as unknown as { window: Record<string, unknown> }).window = scenario;
-        const { isRunningInElectron } = await import('@/lib/accomplish');
+        const { isRunningInElectron } = await import('@/lib/somehow');
         expect(isRunningInElectron()).toBe(false);
       }
     });
@@ -67,7 +67,7 @@ describe('SomeHow shell API', () => {
         accomplishShell: { isElectron: 1 },
       };
 
-      const { isRunningInElectron } = await import('@/lib/accomplish');
+      const { isRunningInElectron } = await import('@/lib/somehow');
       expect(isRunningInElectron()).toBe(false);
     });
   });
@@ -78,7 +78,7 @@ describe('SomeHow shell API', () => {
         accomplishShell: { version: '1.2.3' },
       };
 
-      const { getShellVersion } = await import('@/lib/accomplish');
+      const { getShellVersion } = await import('@/lib/somehow');
       expect(getShellVersion()).toBe('1.2.3');
     });
 
@@ -92,7 +92,7 @@ describe('SomeHow shell API', () => {
       for (const scenario of unavailableScenarios) {
         vi.resetModules();
         (globalThis as unknown as { window: Record<string, unknown> }).window = scenario;
-        const { getShellVersion } = await import('@/lib/accomplish');
+        const { getShellVersion } = await import('@/lib/somehow');
         expect(getShellVersion()).toBeNull();
       }
     });
@@ -105,7 +105,7 @@ describe('SomeHow shell API', () => {
         (globalThis as unknown as { window: { accomplishShell: { version: string } } }).window = {
           accomplishShell: { version },
         };
-        const { getShellVersion } = await import('@/lib/accomplish');
+        const { getShellVersion } = await import('@/lib/somehow');
         expect(getShellVersion()).toBe(version);
       }
     });
@@ -120,7 +120,7 @@ describe('SomeHow shell API', () => {
         (globalThis as unknown as { window: { accomplishShell: { platform: string } } }).window = {
           accomplishShell: { platform },
         };
-        const { getShellPlatform } = await import('@/lib/accomplish');
+        const { getShellPlatform } = await import('@/lib/somehow');
         expect(getShellPlatform()).toBe(platform);
       }
     });
@@ -135,13 +135,13 @@ describe('SomeHow shell API', () => {
       for (const scenario of unavailableScenarios) {
         vi.resetModules();
         (globalThis as unknown as { window: Record<string, unknown> }).window = scenario;
-        const { getShellPlatform } = await import('@/lib/accomplish');
+        const { getShellPlatform } = await import('@/lib/somehow');
         expect(getShellPlatform()).toBeNull();
       }
     });
   });
 
-  describe('getAccomplish', () => {
+  describe('getSomehow', () => {
     it('should return accomplish API when available', async () => {
       const mockApi = {
         getVersion: vi.fn(),
@@ -154,9 +154,9 @@ describe('SomeHow shell API', () => {
         accomplish: mockApi,
       };
 
-      const { getAccomplish } = await import('@/lib/accomplish');
-      const result = getAccomplish();
-      // getAccomplish returns a wrapper object with spread methods + Bedrock wrappers
+      const { getSomehow } = await import('@/lib/somehow');
+      const result = getSomehow();
+      // getSomehow returns a wrapper object with spread methods + Bedrock wrappers
       expect(result.getVersion).toBeDefined();
       expect(result.startTask).toBeDefined();
       expect(result.validateBedrockCredentials).toBeDefined();
@@ -170,23 +170,21 @@ describe('SomeHow shell API', () => {
       for (const scenario of unavailableScenarios) {
         vi.resetModules();
         (globalThis as unknown as { window: Record<string, unknown> }).window = scenario;
-        const { getAccomplish } = await import('@/lib/accomplish');
-        expect(() => getAccomplish()).toThrow(
-          'SomeHow API not available - not running in Electron',
-        );
+        const { getSomehow } = await import('@/lib/somehow');
+        expect(() => getSomehow()).toThrow('SomeHow API not available - not running in Electron');
       }
     });
   });
 
-  describe('useAccomplish', () => {
+  describe('useSomehow', () => {
     it('should return accomplish API when available', async () => {
       const mockApi = { getVersion: vi.fn(), startTask: vi.fn() };
       (globalThis as unknown as { window: { accomplish: typeof mockApi } }).window = {
         accomplish: mockApi,
       };
 
-      const { useAccomplish } = await import('@/lib/accomplish');
-      expect(useAccomplish()).toBe(mockApi);
+      const { useSomehow } = await import('@/lib/somehow');
+      expect(useSomehow()).toBe(mockApi);
     });
 
     it('should throw when accomplish API is not available', async () => {
@@ -194,8 +192,8 @@ describe('SomeHow shell API', () => {
         accomplish: undefined,
       };
 
-      const { useAccomplish } = await import('@/lib/accomplish');
-      expect(() => useAccomplish()).toThrow('SomeHow API not available - not running in Electron');
+      const { useSomehow } = await import('@/lib/somehow');
+      expect(() => useSomehow()).toThrow('SomeHow API not available - not running in Electron');
     });
   });
 
@@ -211,7 +209,7 @@ describe('SomeHow shell API', () => {
       };
 
       const { isRunningInElectron, getShellVersion, getShellPlatform } =
-        await import('@/lib/accomplish');
+        await import('@/lib/somehow');
 
       expect(isRunningInElectron()).toBe(true);
       expect(getShellVersion()).toBe('1.0.0');
@@ -225,7 +223,7 @@ describe('SomeHow shell API', () => {
       };
 
       const { isRunningInElectron, getShellVersion, getShellPlatform } =
-        await import('@/lib/accomplish');
+        await import('@/lib/somehow');
 
       expect(isRunningInElectron()).toBe(true);
       expect(getShellVersion()).toBe('1.0.0');

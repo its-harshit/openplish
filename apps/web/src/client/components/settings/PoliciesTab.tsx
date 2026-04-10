@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type { FileOperationPolicyMode } from '@somehow_ai/agent-core';
 import { PoliciesLockSection } from './policies/PoliciesLockSection';
 
@@ -32,12 +32,12 @@ export function PoliciesTab() {
   const [success, setSuccess] = useState<string | null>(null);
   const [policyPassword, setPolicyPassword] = useState('');
 
-  // getAccomplish() returns a new object each call — do not put it in hook deps or useEffect will loop.
+  // getSomehow() returns a new object each call — do not put it in hook deps or useEffect will loop.
   const refresh = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const s = await getAccomplish().policyGetState();
+      const s = await getSomehow().policyGetState();
       setMode(s.mode);
       setEffective(s.effective);
       setLockConfigured(s.lockConfigured);
@@ -57,7 +57,7 @@ export function PoliciesTab() {
     setError(null);
     setSuccess(null);
     try {
-      await getAccomplish().policySetMode({
+      await getSomehow().policySetMode({
         mode,
         currentPassword: lockConfigured ? policyPassword : undefined,
       });

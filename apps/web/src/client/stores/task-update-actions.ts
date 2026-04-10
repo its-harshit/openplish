@@ -1,5 +1,5 @@
 import type { TaskStatus, TaskUpdateEvent, TaskMessage } from '@somehow_ai/agent-core';
-import { getAccomplish } from '../lib/accomplish';
+import { getSomehow } from '../lib/somehow';
 import type { TaskState } from './taskStore';
 
 type SetFn = (partial: Partial<TaskState> | ((state: TaskState) => Partial<TaskState>)) => void;
@@ -9,7 +9,7 @@ type GetFn = () => TaskState;
 export function createTaskUpdateActions(set: SetFn, _get: GetFn) {
   return {
     addTaskUpdate: (event: TaskUpdateEvent) => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       void accomplish.logEvent({
         level: 'debug',
         message: 'UI task update received',
@@ -96,7 +96,7 @@ export function createTaskUpdateActions(set: SetFn, _get: GetFn) {
     },
 
     addTaskUpdateBatch: (event: { taskId: string; messages: TaskMessage[] }) => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       void accomplish.logEvent({
         level: 'debug',
         message: 'UI task batch update received',

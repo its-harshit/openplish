@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useAccomplish } from '@/lib/accomplish';
+import { useSomehow } from '@/lib/somehow';
 import { createLogger } from '@/lib/logger';
 import type { SandboxConfig } from '@somehow_ai/agent-core';
 
@@ -45,7 +45,7 @@ export function useSandboxPanel(): UseSandboxPanelResult {
   const hostsRef = useRef<HTMLTextAreaElement>(null);
   const pathsRef = useRef<HTMLTextAreaElement>(null);
   const configRef = useRef<SandboxConfig>(DEFAULT_CONFIG);
-  const accomplish = useAccomplish();
+  const accomplish = useSomehow();
 
   useEffect(() => {
     configRef.current = config;

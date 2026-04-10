@@ -76,8 +76,8 @@ import {
   getActiveProviderModel,
   hasReadyProvider,
   getConnectedProviderIds,
-  getAccomplishAiCredits,
-  saveAccomplishAiCredits,
+  getSomehowAiCredits,
+  saveSomehowAiCredits,
 } from '../storage/repositories/providerSettings.js';
 import {
   getAllConnectors,
@@ -211,8 +211,8 @@ export function createStorage(options: StorageOptions = {}): StorageAPI {
     getActiveProviderModel: () => getActiveProviderModel(),
     hasReadyProvider: () => hasReadyProvider(),
     getConnectedProviderIds: () => getConnectedProviderIds(),
-    getAccomplishAiCredits: () => getAccomplishAiCredits(),
-    saveAccomplishAiCredits: (usage) => saveAccomplishAiCredits(usage),
+    getSomehowAiCredits: () => getSomehowAiCredits(),
+    saveSomehowAiCredits: (usage) => saveSomehowAiCredits(usage),
 
     // Connectors
     getAllConnectors: () => getAllConnectors(),

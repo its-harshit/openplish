@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useOutlet, useLocation } from 'react-router';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { isRunningInElectron, getAccomplish } from './lib/accomplish';
+import { isRunningInElectron, getSomehow } from './lib/somehow';
 import { logger } from './lib/logger';
 import { springs, variants } from './lib/animations';
 import type { ProviderId } from '@somehow_ai/agent-core/common';
@@ -115,7 +115,7 @@ export function App() {
       }
 
       try {
-        const accomplish = getAccomplish();
+        const accomplish = getSomehow();
         await accomplish.setOnboardingComplete(true);
         setStatus('ready');
       } catch (error) {

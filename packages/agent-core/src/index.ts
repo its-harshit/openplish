@@ -1,7 +1,7 @@
 // =============================================================================
-// @accomplish/core - Public API (v0.4.0)
+// @somehow_ai/agent-core — Public API (v0.4.0)
 // =============================================================================
-// This file explicitly exports the public API for the @accomplish/core package.
+// This file explicitly exports the public API for the @somehow_ai/agent-core package.
 // All exports are explicit named exports to ensure API stability and clarity.
 // =============================================================================
 
@@ -161,13 +161,13 @@ export type { PartitionAssistantTextResult } from './opencode/message-processor.
 
 export { getAzureEntraToken } from './opencode/proxies/index.js';
 
-// Accomplish AI runtime adapter
-export { noopRuntime } from './opencode/accomplish-runtime.js';
+// SomeHow AI runtime adapter
+export { noopRuntime } from './opencode/somehow-runtime.js';
 export type {
-  AccomplishRuntime,
-  AccomplishConnectResult,
+  SomehowRuntime,
+  SomehowConnectResult,
   StorageDeps,
-} from './opencode/accomplish-runtime.js';
+} from './opencode/somehow-runtime.js';
 
 // -----------------------------------------------------------------------------
 // Storage Module (from ./storage/)
@@ -319,7 +319,7 @@ export type { GetApiKeyFn } from './services/summarizer.js';
 // Use createSkillsManager factory from ./factories/skills-manager.js instead
 
 // -----------------------------------------------------------------------------
-// Shared Module (from ./common/) - Merged from @accomplish/shared
+// Shared Module (from ./common/) — merged historical shared types
 // -----------------------------------------------------------------------------
 
 // Task types
@@ -393,7 +393,7 @@ export type {
   AzureFoundryCredentials,
   OAuthCredentials,
   CopilotOAuthCredentials,
-  AccomplishAiCredentials,
+  SomehowAiCredentials,
   CustomCredentials,
   NimCredentials,
   ProviderCredentials,

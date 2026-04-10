@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { applyTheme as applyLibTheme } from '@/lib/theme';
 
 type ThemePreference = 'system' | 'light' | 'dark';
@@ -42,7 +42,7 @@ export function useTheme() {
 
   // Sync from Electron backend on mount and subscribe to host-driven changes
   useEffect(() => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     accomplish
       .getTheme()
       .then((theme) => {
@@ -93,7 +93,7 @@ export function useTheme() {
     setPreference(newPreference);
     setIsDark(resolveIsDark(newPreference));
     applyLibTheme(newPreference);
-    getAccomplish()
+    getSomehow()
       .setTheme(newPreference)
       .catch(() => {
         // ignore

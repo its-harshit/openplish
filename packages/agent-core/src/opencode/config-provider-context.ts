@@ -1,6 +1,6 @@
 import type { ProviderSettings } from '../common/types/providerSettings.js';
 import type { ProviderConfig } from './config-generator.js';
-import type { StorageDeps, AccomplishRuntime } from './accomplish-runtime.js';
+import type { StorageDeps, SomehowRuntime } from './somehow-runtime.js';
 
 /**
  * Shared context passed to each per-provider config builder.
@@ -11,10 +11,10 @@ export interface ProviderBuildContext {
   azureFoundryToken?: string;
   /** Active provider/model pair from storage. */
   activeModel: { provider: string; model: string; baseUrl?: string } | null | undefined;
-  /** Accomplish AI runtime adapter (noop in OSS, real impl in commercial). */
-  accomplishRuntime?: AccomplishRuntime;
-  /** Accomplish AI identity storage deps (injected from daemon secure storage). */
-  accomplishStorageDeps?: StorageDeps;
+  /** SomeHow AI runtime adapter (noop in OSS, real impl in commercial). */
+  somehowRuntime?: SomehowRuntime;
+  /** SomeHow AI identity storage deps (injected from daemon secure storage). */
+  somehowStorageDeps?: StorageDeps;
 }
 
 /**

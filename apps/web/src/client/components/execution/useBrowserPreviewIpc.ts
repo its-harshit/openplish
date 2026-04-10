@@ -9,6 +9,7 @@
  */
 
 import { useEffect } from 'react';
+import { getOptionalWindowBridge } from '@/lib/somehow';
 import type { ViewStatus } from './StatusBadge';
 
 interface UseBrowserPreviewIpcOptions {
@@ -40,7 +41,7 @@ export function useBrowserPreviewIpc({
 }: UseBrowserPreviewIpcOptions): void {
   // Register IPC listeners — re-run when any handler reference changes (e.g. pageName change).
   useEffect(() => {
-    const api = window.accomplish;
+    const api = getOptionalWindowBridge();
     if (!api) {
       return;
     }
@@ -67,7 +68,7 @@ export function useBrowserPreviewIpc({
   // Stop the browser preview only when taskId changes or the component unmounts,
   // not when the IPC listener callbacks are rebound (e.g. on pageName change).
   useEffect(() => {
-    const api = window.accomplish;
+    const api = getOptionalWindowBridge();
     return () => {
       api?.stopBrowserPreview?.(taskId).catch(() => {});
     };

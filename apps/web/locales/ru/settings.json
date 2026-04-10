@@ -61,7 +61,7 @@
     "groq": "Groq",
     "huggingface-local": "HuggingFace Local",
     "somehow-ai": "SomeHow AI",
-    "accomplishAi": {
+    "somehowAi": {
       "description": "Используйте встроенную модель на базе SomeHow — API-ключ не требуется.\nВключает 200 бесплатных кредитов в месяц.",
       "disconnect": "Отключить",
       "exhaustedMessage": "Кредиты исчерпаны. Они будут сброшены {{date}}.",

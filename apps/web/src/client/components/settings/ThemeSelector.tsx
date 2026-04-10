@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Sun, Moon, Desktop, CaretDown } from '@phosphor-icons/react';
 import { applyTheme } from '@/lib/theme';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,7 +42,7 @@ export function ThemeSelector() {
   const requestSeqRef = useRef(0);
 
   useEffect(() => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
 
     // Load the authoritative theme value from the backend and sync both the
     // selector state and the DOM (applyTheme writes localStorage + applies class).
@@ -85,7 +85,7 @@ export function ThemeSelector() {
       setCurrent(value);
       applyTheme(value);
 
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       try {
         await accomplish.setTheme(value);
       } catch {

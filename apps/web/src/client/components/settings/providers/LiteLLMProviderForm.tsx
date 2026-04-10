@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 import type { ConnectedProvider, LiteLLMCredentials } from '@somehow_ai/agent-core/common';
 import { ProviderFormHeader } from '../shared';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { LiteLLMDisconnectedForm, LiteLLMConnectedSection } from './LiteLLMFormSections';
 
 import litellmLogo from '/assets/ai-logos/litellm.svg';
@@ -36,7 +36,7 @@ export function LiteLLMProviderForm({
     setError(null);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const trimmedKey = apiKey.trim() || undefined;
 
       const result = await accomplish.testLiteLLMConnection(serverUrl, trimmedKey);

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type { ConnectedProvider, CreditUsage } from '@somehow_ai/agent-core/common';
 import { DEFAULT_PROVIDERS } from '@somehow_ai/agent-core/common';
 import { ProviderFormHeader } from '../shared';
@@ -56,11 +56,11 @@ function ConnectionRetryNotice() {
         </span>
         <div className="space-y-0.5">
           <p className="text-xs font-medium text-foreground/80">
-            {t('providers.accomplishAi.connectionIssue', 'Having trouble connecting')}
+            {t('providers.somehowAi.connectionIssue', 'Having trouble connecting')}
           </p>
           <p className="text-[11px] leading-snug text-muted-foreground">
             {t(
-              'providers.accomplishAi.retryingInBackground',
+              'providers.somehowAi.retryingInBackground',
               'Retrying in the background — this will resolve when your connection is restored.',
             )}
           </p>
@@ -88,11 +88,11 @@ function UsageRetryNotice() {
         </span>
         <div className="space-y-0.5">
           <p className="text-xs font-medium text-foreground/80">
-            {t('providers.accomplishAi.usageIssue', 'Unable to refresh credits')}
+            {t('providers.somehowAi.usageIssue', 'Unable to refresh credits')}
           </p>
           <p className="text-[11px] leading-snug text-muted-foreground">
             {t(
-              'providers.accomplishAi.usageRetryingInBackground',
+              'providers.somehowAi.usageRetryingInBackground',
               'Retrying in the background. Sending with SomeHow should still work.',
             )}
           </p>
@@ -148,9 +148,9 @@ function UsagePanel({ usage }: { usage: CreditUsage }) {
       {isExhausted ? (
         <p className="text-xs text-destructive">
           {resetsDate
-            ? t('providers.accomplishAi.exhaustedMessage', { date: resetsDate })
+            ? t('providers.somehowAi.exhaustedMessage', { date: resetsDate })
             : t(
-                'providers.accomplishAi.exhaustedMessageSoon',
+                'providers.somehowAi.exhaustedMessageSoon',
                 'Credits exhausted. They will reset soon.',
               )}
         </p>
@@ -165,7 +165,7 @@ function UsagePanel({ usage }: { usage: CreditUsage }) {
 
 // ─── Main form ────────────────────────────────────────────────────────────────
 
-interface AccomplishAiProviderFormProps {
+interface SomehowAiProviderFormProps {
   connectedProvider?: ConnectedProvider;
   onConnect: (provider: ConnectedProvider) => void;
   onUpdateProvider?: (provider: ConnectedProvider) => void;
@@ -174,12 +174,12 @@ interface AccomplishAiProviderFormProps {
   showModelError: boolean;
 }
 
-export function AccomplishAiProviderForm({
+export function SomehowAiProviderForm({
   connectedProvider,
   onConnect,
   onUpdateProvider,
   onDisconnect,
-}: AccomplishAiProviderFormProps) {
+}: SomehowAiProviderFormProps) {
   const { t } = useTranslation('settings');
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [usageError, setUsageError] = useState<string | null>(null);
@@ -221,8 +221,8 @@ export function AccomplishAiProviderForm({
 
     const tryConnect = async () => {
       try {
-        const accomplish = getAccomplish();
-        const data = await accomplish.accomplishAiEnsureReady();
+        const accomplish = getSomehow();
+        const data = await accomplish.somehowAiEnsureReady();
         if (cancelled) return;
         if (!data.deviceFingerprint) {
           throw new Error('Missing deviceFingerprint in somehow-ai ready response');
@@ -272,8 +272,8 @@ export function AccomplishAiProviderForm({
     if (connectedProvider?.connectionStatus !== 'connected') return;
     let cancelled = false;
     setUsageLoading(true);
-    getAccomplish()
-      .accomplishAiGetUsage()
+    getSomehow()
+      .somehowAiGetUsage()
       .then((data) => {
         if (!cancelled) {
           setUsage(data);
@@ -296,7 +296,7 @@ export function AccomplishAiProviderForm({
   // Subscribe to live usage updates
   useEffect(() => {
     if (connectedProvider?.connectionStatus !== 'connected') return;
-    const unsubscribe = getAccomplish().onAccomplishAiUsageUpdate?.((liveUsage) => {
+    const unsubscribe = getSomehow().onSomehowAiUsageUpdate?.((liveUsage) => {
       setUsage(liveUsage);
     });
     return () => {
@@ -310,7 +310,7 @@ export function AccomplishAiProviderForm({
 
     const poll = async () => {
       try {
-        const data = await getAccomplish().accomplishAiGetUsage();
+        const data = await getSomehow().somehowAiGetUsage();
         setUsage(data);
         setUsageLoading(false);
         setUsageError(null);
@@ -333,7 +333,7 @@ export function AccomplishAiProviderForm({
       <div className="space-y-3">
         <p className="text-sm text-muted-foreground whitespace-pre-line">
           {t(
-            'providers.accomplishAi.description',
+            'providers.somehowAi.description',
             'Use the built-in model powered by SomeHow - no API key required.\nIncludes 200 free credits per month to get you started.',
           )}
         </p>
@@ -363,7 +363,7 @@ export function AccomplishAiProviderForm({
           <button
             onClick={async () => {
               try {
-                await getAccomplish().accomplishAiDisconnect();
+                await getSomehow().somehowAiDisconnect();
               } catch {
                 // best-effort
               }
@@ -371,7 +371,7 @@ export function AccomplishAiProviderForm({
             }}
             className="mt-2 text-xs text-muted-foreground hover:text-destructive transition-colors"
           >
-            {t('providers.accomplishAi.disconnect', 'Disconnect')}
+            {t('providers.somehowAi.disconnect', 'Disconnect')}
           </button>
         )}
       </div>

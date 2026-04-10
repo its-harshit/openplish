@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ProviderId, ConnectedProvider, OAuthCredentials } from '@somehow_ai/agent-core';
 import { DEFAULT_PROVIDERS } from '@somehow_ai/agent-core/common';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('useOAuthSignIn');
@@ -61,7 +61,7 @@ export function useOAuthSignIn({
     const providerConfig = DEFAULT_PROVIDERS.find((p) => p.id === providerId);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const result = await accomplish.loginOpenAiWithChatGpt();
 
       if (abortController.signal.aborted || attemptId !== signInAttemptRef.current) {

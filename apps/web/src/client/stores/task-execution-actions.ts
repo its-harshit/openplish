@@ -5,7 +5,7 @@ import {
   type TaskStatus,
   type FileAttachmentInfo,
 } from '@somehow_ai/agent-core/common';
-import { getAccomplish } from '../lib/accomplish';
+import { getSomehow } from '../lib/somehow';
 import type { TaskState } from './taskStore';
 import { hasTaskStateToken } from './task-state-helpers';
 import { createTaskPermissionActions } from './task-permission-actions';
@@ -19,7 +19,7 @@ type GetFn = () => TaskState;
 export function createTaskExecutionActions(set: SetFn, get: GetFn) {
   return {
     startTask: async (config: TaskConfig): Promise<Task | null> => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const taskStateToken = get()._taskStateToken;
       set({ isLoading: true, error: null });
       try {
@@ -63,7 +63,7 @@ export function createTaskExecutionActions(set: SetFn, get: GetFn) {
     },
 
     sendFollowUp: async (message: string, attachments?: FileAttachmentInfo[]): Promise<boolean> => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const { currentTask, startTask } = get();
       const taskStateToken = get()._taskStateToken;
       if (!currentTask) {

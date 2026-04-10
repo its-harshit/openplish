@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import type { Skill } from '@somehow_ai/agent-core';
 import { createLogger } from '@/lib/logger';
+import { getOptionalWindowBridge } from '@/lib/somehow';
 import {
   type FilterType,
   getFilterCounts,
@@ -64,13 +65,13 @@ export function useSkillsPanel(refreshTrigger?: number): UseSkillsPanelResult {
   useEffect(() => {
     let isCurrent = true;
 
-    if (!window.accomplish) {
+    const w = getOptionalWindowBridge();
+    if (!w) {
       logger.error('SomeHow API not available');
       setLoading(false);
       return;
     }
-    window.accomplish
-      .getSkills()
+    w.getSkills()
       .then((nextSkills) => {
         if (isCurrent) {
           setSkills(nextSkills);
@@ -91,11 +92,12 @@ export function useSkillsPanel(refreshTrigger?: number): UseSkillsPanelResult {
   const handleToggle = useCallback(
     async (id: string) => {
       const skill = skills.find((s) => s.id === id);
-      if (!skill || !window.accomplish) {
+      const w = getOptionalWindowBridge();
+      if (!skill || !w) {
         return;
       }
       try {
-        await window.accomplish.setSkillEnabled(id, !skill.isEnabled);
+        await w.setSkillEnabled(id, !skill.isEnabled);
         setSkills((prev) => prev.map((s) => (s.id === id ? { ...s, isEnabled: !s.isEnabled } : s)));
       } catch (err) {
         logger.error('Failed to toggle skill:', err);
@@ -107,7 +109,8 @@ export function useSkillsPanel(refreshTrigger?: number): UseSkillsPanelResult {
   const handleDelete = useCallback(
     async (id: string) => {
       const skill = skills.find((s) => s.id === id);
-      if (!skill || !window.accomplish) {
+      const w = getOptionalWindowBridge();
+      if (!skill || !w) {
         return;
       }
       if (skill.source === 'official') {
@@ -115,7 +118,7 @@ export function useSkillsPanel(refreshTrigger?: number): UseSkillsPanelResult {
         return;
       }
       try {
-        await window.accomplish.deleteSkill(id);
+        await w.deleteSkill(id);
         setSkills((prev) => prev.filter((s) => s.id !== id));
       } catch (err) {
         logger.error('Failed to delete skill:', err);
@@ -125,22 +128,24 @@ export function useSkillsPanel(refreshTrigger?: number): UseSkillsPanelResult {
   );
 
   const handleEdit = useCallback(async (filePath: string) => {
-    if (!window.accomplish) {
+    const w = getOptionalWindowBridge();
+    if (!w) {
       return;
     }
     try {
-      await window.accomplish.openSkillInEditor(filePath);
+      await w.openSkillInEditor(filePath);
     } catch (err) {
       logger.error('Failed to open skill in editor:', err);
     }
   }, []);
 
   const handleShowInFolder = useCallback(async (filePath: string) => {
-    if (!window.accomplish) {
+    const w = getOptionalWindowBridge();
+    if (!w) {
       return;
     }
     try {
-      await window.accomplish.showSkillInFolder(filePath);
+      await w.showSkillInFolder(filePath);
     } catch (err) {
       logger.error('Failed to show skill in folder:', err);
     }
@@ -151,13 +156,14 @@ export function useSkillsPanel(refreshTrigger?: number): UseSkillsPanelResult {
   }, []);
 
   const handleResync = useCallback(async () => {
-    if (!window.accomplish || isResyncing) {
+    const w = getOptionalWindowBridge();
+    if (!w || isResyncing) {
       return;
     }
     setIsResyncing(true);
     try {
       const [updatedSkills] = await Promise.all([
-        window.accomplish.resyncSkills(),
+        w.resyncSkills(),
         new Promise((resolve) => setTimeout(resolve, 600)),
       ]);
       setSkills(updatedSkills);

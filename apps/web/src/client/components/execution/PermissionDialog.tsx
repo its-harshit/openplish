@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { AlertTriangle, AlertCircle, File, Brain, Monitor } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { PermissionRequest } from '@somehow_ai/agent-core/common';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import {
   isDeleteOperation,
   getDisplayFilePaths,
@@ -30,7 +30,7 @@ export function PermissionDialog({ permissionRequest, onRespond }: PermissionDia
     let cancelled = false;
     const load = async () => {
       try {
-        const caps = await getAccomplish().getBuildCapabilities();
+        const caps = await getSomehow().getBuildCapabilities();
         if (!cancelled) {
           setFileOpPolicy(caps.fileOperationPolicy ?? 'create_copy_only');
         }

@@ -8,6 +8,7 @@ import '@testing-library/jest-dom/vitest';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import settingsEn from '../../../../locales/en/settings.json';
+import { SOMEHOW_BASELINE_MOCKS } from '../somehow-mock-baseline';
 
 function translateSettingsKey(key: string, options?: Record<string, unknown>): string {
   const value = key.split('.').reduce<unknown>((current, segment) => {
@@ -27,6 +28,7 @@ function translateSettingsKey(key: string, options?: Record<string, unknown>): s
 }
 
 const mockAccomplish = {
+  ...SOMEHOW_BASELINE_MOCKS,
   getOllamaConfig: vi.fn().mockResolvedValue(null),
   isE2EMode: vi.fn().mockResolvedValue(false),
   getProviderSettings: vi.fn().mockResolvedValue({
@@ -46,8 +48,10 @@ const mockAccomplish = {
   setConnectedProvider: vi.fn().mockResolvedValue(undefined),
   removeConnectedProvider: vi.fn().mockResolvedValue(undefined),
   setProviderDebugMode: vi.fn().mockResolvedValue(undefined),
+  validateApiKeyForProvider: vi.fn().mockResolvedValue({ valid: true }),
   validateBedrockCredentials: vi.fn().mockResolvedValue({ valid: true }),
   saveBedrockCredentials: vi.fn().mockResolvedValue(undefined),
+  updateProviderModel: vi.fn().mockResolvedValue(undefined),
   getConnectors: vi.fn().mockResolvedValue([]),
   addConnector: vi.fn().mockResolvedValue(undefined),
   deleteConnector: vi.fn().mockResolvedValue(undefined),
@@ -77,8 +81,11 @@ const mockAccomplish = {
 };
 
 // Mock the accomplish module
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => mockAccomplish,
+vi.mock('@/lib/somehow', () => ({
+  getSomehow: () => mockAccomplish,
+  useSomehow: () => mockAccomplish,
+  getOptionalWindowBridge: () =>
+    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
 }));
 
 vi.mock('react-i18next', () => ({
@@ -275,7 +282,7 @@ describe('SettingsDialog Integration', () => {
         expect(screen.getByRole('dialog')).toBeInTheDocument();
         // Verify anthropic card has green background (is active)
         const anthropicCard = screen.getByTestId('provider-card-anthropic');
-        expect(anthropicCard.className).toContain('bg-[#e9f7e7]');
+        expect(anthropicCard.className).toContain('bg-provider-bg-active');
       });
 
       // Verify the initial state: anthropic is active
@@ -288,6 +295,9 @@ describe('SettingsDialog Integration', () => {
     it('should render the Slack authentication card', async () => {
       render(<SettingsDialog {...defaultProps} />);
 
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: 'Connectors' })).toBeInTheDocument();
+      });
       fireEvent.click(screen.getByRole('button', { name: 'Connectors' }));
 
       await waitFor(() => {
@@ -305,6 +315,9 @@ describe('SettingsDialog Integration', () => {
 
       render(<SettingsDialog {...defaultProps} />);
 
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: 'Connectors' })).toBeInTheDocument();
+      });
       fireEvent.click(screen.getByRole('button', { name: 'Connectors' }));
 
       await waitFor(() => {

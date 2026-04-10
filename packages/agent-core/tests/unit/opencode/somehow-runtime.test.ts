@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { noopRuntime } from '../../../src/opencode/accomplish-runtime.js';
+import { noopRuntime } from '../../../src/opencode/somehow-runtime.js';
 
 const dummyDeps = {
   readKey: () => null,

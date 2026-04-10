@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type { ProviderId, ProviderSettings } from '@somehow_ai/agent-core/common';
 import { PROVIDER_META } from '@somehow_ai/agent-core/common';
 import { ProviderCard } from './ProviderCard';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 
 // Provider order matching Figma design (4 columns per row)
 const PROVIDER_ORDER: ProviderId[] = [
@@ -56,7 +56,7 @@ export function ProviderGrid({
   // Check build capabilities on mount to determine if somehow-ai should be shown
   useEffect(() => {
     let cancelled = false;
-    getAccomplish()
+    getSomehow()
       .getBuildCapabilities()
       .then((caps) => {
         if (!cancelled) setHasFreeMode(caps.hasFreeMode);

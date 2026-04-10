@@ -6,7 +6,7 @@
  * IPC subscriptions are delegated to useWhatsAppSubscriptions.
  */
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { useWhatsAppSubscriptions } from './useWhatsAppSubscriptions';
 
 const VALID_STATUSES = new Set([
@@ -40,7 +40,7 @@ export interface WhatsAppCardActions {
 }
 
 export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
-  const accomplish = useMemo(() => getAccomplish(), []);
+  const accomplish = useMemo(() => getSomehow(), []);
 
   const [config, setConfig] = useState<WhatsAppCardState['config']>(null);
   const [loading, setLoading] = useState(true);

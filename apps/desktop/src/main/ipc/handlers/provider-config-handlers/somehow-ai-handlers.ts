@@ -7,12 +7,12 @@
  */
 
 import type { IpcMainInvokeEvent } from 'electron';
-import type { CreditUsage, AccomplishAiCredentials } from '@somehow_ai/agent-core';
+import type { CreditUsage, SomehowAiCredentials } from '@somehow_ai/agent-core';
 import { getStorage } from '../../../store/storage';
 import { getDaemonClient } from '../../../daemon-bootstrap';
 import { getLogCollector } from '../../../logging';
 
-type AccomplishConnectRpcResult = { deviceFingerprint: string; usage: CreditUsage | null };
+type SomehowConnectRpcResult = { deviceFingerprint: string; usage: CreditUsage | null };
 
 type HandleFn = <Args extends unknown[], ReturnType = unknown>(
   channel: string,
@@ -39,9 +39,9 @@ function log(level: 'INFO' | 'WARN' | 'ERROR', msg: string) {
   }
 }
 
-export function registerAccomplishAiHandlers(handle: HandleFn): void {
+export function registerSomehowAiHandlers(handle: HandleFn): void {
   handle('somehow-ai:connect', async () => {
-    let result: AccomplishConnectRpcResult;
+    let result: SomehowConnectRpcResult;
     try {
       const client = getDaemonClient();
       result = await client.call('somehow-ai.connect');
@@ -50,7 +50,7 @@ export function registerAccomplishAiHandlers(handle: HandleFn): void {
     }
 
     const storage = getStorage();
-    const credentials: AccomplishAiCredentials = {
+    const credentials: SomehowAiCredentials = {
       type: 'somehow-ai',
       deviceFingerprint: result.deviceFingerprint,
     };
@@ -65,7 +65,7 @@ export function registerAccomplishAiHandlers(handle: HandleFn): void {
 
     // Cache credits if available
     if (result.usage) {
-      storage.saveAccomplishAiCredits(result.usage);
+      storage.saveSomehowAiCredits(result.usage);
     }
 
     log('INFO', `Connected with fingerprint ${result.deviceFingerprint.substring(0, 8)}...`);
@@ -81,12 +81,12 @@ export function registerAccomplishAiHandlers(handle: HandleFn): void {
     const existing = storage.getConnectedProvider('somehow-ai');
     if (existing?.connectionStatus === 'connected') {
       return {
-        deviceFingerprint: (existing.credentials as AccomplishAiCredentials).deviceFingerprint,
+        deviceFingerprint: (existing.credentials as SomehowAiCredentials).deviceFingerprint,
       };
     }
 
     // Not connected yet — connect without stealing active model
-    let result: AccomplishConnectRpcResult;
+    let result: SomehowConnectRpcResult;
     try {
       const client = getDaemonClient();
       result = await client.call('somehow-ai.connect');
@@ -94,7 +94,7 @@ export function registerAccomplishAiHandlers(handle: HandleFn): void {
       normalizeRuntimeError(err);
     }
 
-    const credentials: AccomplishAiCredentials = {
+    const credentials: SomehowAiCredentials = {
       type: 'somehow-ai',
       deviceFingerprint: result.deviceFingerprint,
     };
@@ -113,7 +113,7 @@ export function registerAccomplishAiHandlers(handle: HandleFn): void {
     }
 
     if (result.usage) {
-      storage.saveAccomplishAiCredits(result.usage);
+      storage.saveSomehowAiCredits(result.usage);
     }
 
     return { deviceFingerprint: result.deviceFingerprint };
@@ -169,23 +169,23 @@ export function registerAccomplishAiHandlers(handle: HandleFn): void {
       const live = await fetchLiveUsage();
       // If proxy hasn't connected yet (all zeros), fall back to cache
       if (live.totalCredits === 0) {
-        return storage.getAccomplishAiCredits() ?? live;
+        return storage.getSomehowAiCredits() ?? live;
       }
-      storage.saveAccomplishAiCredits(live);
+      storage.saveSomehowAiCredits(live);
       return live;
     } catch {
       // First failure — try reconnecting (daemon may have restarted, identity cache empty)
       const retried = await reconnectAndRetry();
       if (retried) {
         if (retried.totalCredits > 0) {
-          storage.saveAccomplishAiCredits(retried);
+          storage.saveSomehowAiCredits(retried);
         }
         return retried;
       }
 
       // All attempts failed — return cached
       return (
-        storage.getAccomplishAiCredits() ?? {
+        storage.getSomehowAiCredits() ?? {
           spentCredits: 0,
           remainingCredits: 0,
           totalCredits: 0,

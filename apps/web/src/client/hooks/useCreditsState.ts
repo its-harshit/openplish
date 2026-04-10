@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { getAccomplish } from '../lib/accomplish';
+import { getSomehow } from '../lib/somehow';
 import { isProviderReady, type ProviderId } from '@somehow_ai/agent-core/common';
 import type { CreditUsage } from '@somehow_ai/agent-core/common';
 
@@ -20,7 +20,7 @@ export function getCreditStatusColor(usage: CreditUsage): string {
 }
 
 export function useCreditsState() {
-  const accomplish = useMemo(() => getAccomplish(), []);
+  const accomplish = useMemo(() => getSomehow(), []);
 
   const [usage, setUsage] = useState<CreditUsage | null>(null);
   const [isCreditsBlocked, setIsCreditsBlocked] = useState(false);
@@ -81,7 +81,7 @@ export function useCreditsState() {
         setShowQuotaInline(false);
         return false;
       }
-      const liveUsage = await accomplish.accomplishAiGetUsage();
+      const liveUsage = await accomplish.somehowAiGetUsage();
       return applyLiveUsage(settings, liveUsage);
     } catch {
       setHasAlternativeReadyProvider(false);
@@ -102,7 +102,7 @@ export function useCreditsState() {
     (async () => {
       try {
         const [usageData, settings] = await Promise.all([
-          accomplish.accomplishAiGetUsage?.(),
+          accomplish.somehowAiGetUsage?.(),
           accomplish.getProviderSettings(),
         ]);
         if (cancelled || !usageData) return;
@@ -118,7 +118,7 @@ export function useCreditsState() {
 
   // Subscribe to live usage updates
   useEffect(() => {
-    const unsubscribe = accomplish.onAccomplishAiUsageUpdate?.((liveUsage) => {
+    const unsubscribe = accomplish.onSomehowAiUsageUpdate?.((liveUsage) => {
       void (async () => {
         try {
           const settings = await accomplish.getProviderSettings();

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/input';
 import { Microphone, CheckCircle, WarningCircle, SpinnerGap } from '@phosphor-icons/react';
-import { getAccomplish } from '../../lib/accomplish';
+import { getSomehow } from '../../lib/somehow';
 import { getModifierKeyLabel } from '../../lib/platform';
 
 const modifierKey = getModifierKeyLabel();
@@ -14,7 +14,7 @@ interface SpeechSettingsFormProps {
 
 export function SpeechSettingsForm({ onSave, onChange }: SpeechSettingsFormProps) {
   const { t } = useTranslation('settings');
-  const accomplish = getAccomplish();
+  const accomplish = getSomehow();
 
   const [apiKey, setApiKey] = useState('');
   const [isConfigured, setIsConfigured] = useState(false);

@@ -86,8 +86,11 @@ const mockAccomplish = {
 };
 
 // Mock the accomplish module
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => mockAccomplish,
+vi.mock('@/lib/somehow', () => ({
+  getSomehow: () => mockAccomplish,
+  useSomehow: () => mockAccomplish,
+  getOptionalWindowBridge: () =>
+    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
 }));
 
 // Mock window.accomplish for global subscriptions
@@ -106,8 +109,11 @@ vi.stubGlobal('window', {
   accomplish: {
     onTaskProgress: mockOnTaskProgress,
     onTaskUpdate: mockOnTaskUpdate,
-    onTodoUpdate: vi.fn(),
-    onTaskSummary: vi.fn(),
+    onTodoUpdate: vi.fn(() => () => {}),
+    onTaskSummary: vi.fn(() => () => {}),
+    onDaemonReconnected: vi.fn(() => () => {}),
+    onWorkspaceChanged: vi.fn(() => () => {}),
+    onAuthError: vi.fn(() => () => {}),
   },
 });
 

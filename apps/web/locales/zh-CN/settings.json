@@ -61,7 +61,7 @@
     "groq": "Groq",
     "huggingface-local": "HuggingFace Local",
     "somehow-ai": "SomeHow AI",
-    "accomplishAi": {
+    "somehowAi": {
       "description": "使用 SomeHow 提供的内置模型 - 无需 API 密钥。\n每月包含 200 个免费额度。",
       "disconnect": "断开连接",
       "exhaustedMessage": "额度已用完。将于 {{date}} 重置。",

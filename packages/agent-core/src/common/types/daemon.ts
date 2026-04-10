@@ -254,7 +254,7 @@ export interface DaemonMethodMap {
   'daemon.shutdown': { params: undefined; result: void };
   'health.check': { params: undefined; result: HealthCheckResult };
 
-  // Accomplish AI free tier
+  // SomeHow AI free tier
   'somehow-ai.connect': {
     params: undefined;
     result: { deviceFingerprint: string; usage: CreditUsage | null };
@@ -285,7 +285,7 @@ export interface DaemonNotificationMap {
   'task.thought': ThoughtEvent;
   'task.checkpoint': CheckpointEvent;
 
-  // Accomplish AI credit usage updates (emitted by proxy on each gateway response)
+  // SomeHow AI credit usage updates (emitted by proxy on each gateway response)
   'somehow-ai.usage-update': CreditUsage;
   // WhatsApp notifications
   'whatsapp.qr': { qr: string };

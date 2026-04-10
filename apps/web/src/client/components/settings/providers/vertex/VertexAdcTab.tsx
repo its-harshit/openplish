@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { SearchableSelect } from '@/components/ui/searchable-select';
 import { VERTEX_LOCATIONS } from './locations';
 
@@ -24,7 +24,7 @@ export function VertexAdcTab({
 
   useEffect(() => {
     let cancelled = false;
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
 
     Promise.all([accomplish.listVertexProjects(), accomplish.detectVertexProject()])
       .then(([listResult, detectResult]) => {

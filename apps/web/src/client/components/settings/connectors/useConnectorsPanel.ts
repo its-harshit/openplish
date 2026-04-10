@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnectors } from './useConnectors';
 import { createLogger } from '@/lib/logger';
+import { getOptionalWindowBridge } from '@/lib/somehow';
 
 const logger = createLogger('ConnectorsPanel');
 
@@ -28,7 +29,8 @@ export function useConnectorsPanel() {
   const [oauthError, setOauthError] = useState<string | null>(null);
 
   useEffect(() => {
-    const unsubscribe = window.accomplish?.onMcpAuthCallback?.((callbackUrl: string) => {
+    const w = getOptionalWindowBridge();
+    const unsubscribe = w?.onMcpAuthCallback?.((callbackUrl: string) => {
       try {
         const parsed = new URL(callbackUrl);
         const code = parsed.searchParams.get('code');

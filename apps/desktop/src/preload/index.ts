@@ -22,7 +22,7 @@ import type {
 import type { CloudBrowserConfig } from '@somehow_ai/agent-core/common';
 
 // Expose the accomplish API to the renderer
-const accomplishAPI = {
+const somehowAPI = {
   // Utility for safely extracting native paths from DOM File objects in drop events
   getFilePath: (file: File): string => webUtils.getPathForFile(file),
   // App info
@@ -856,13 +856,13 @@ const accomplishAPI = {
   isAutoStartEnabled: (): Promise<boolean> => ipcRenderer.invoke('daemon:is-auto-start-enabled'),
 
   // ── SomeHow built-in free tier (somehow-ai provider) ─────────────────
-  accomplishAiConnect: (): Promise<unknown> => ipcRenderer.invoke('somehow-ai:connect'),
-  accomplishAiEnsureReady: (): Promise<unknown> => ipcRenderer.invoke('somehow-ai:ensure-ready'),
-  accomplishAiDisconnect: (): Promise<void> => ipcRenderer.invoke('somehow-ai:disconnect'),
-  accomplishAiGetUsage: (): Promise<unknown> => ipcRenderer.invoke('somehow-ai:get-usage'),
-  accomplishAiGetStatus: (): Promise<{ connected: boolean }> =>
+  somehowAiConnect: (): Promise<unknown> => ipcRenderer.invoke('somehow-ai:connect'),
+  somehowAiEnsureReady: (): Promise<unknown> => ipcRenderer.invoke('somehow-ai:ensure-ready'),
+  somehowAiDisconnect: (): Promise<void> => ipcRenderer.invoke('somehow-ai:disconnect'),
+  somehowAiGetUsage: (): Promise<unknown> => ipcRenderer.invoke('somehow-ai:get-usage'),
+  somehowAiGetStatus: (): Promise<{ connected: boolean }> =>
     ipcRenderer.invoke('somehow-ai:get-status'),
-  onAccomplishAiUsageUpdate: (callback: (usage: unknown) => void) => {
+  onSomehowAiUsageUpdate: (callback: (usage: unknown) => void) => {
     const listener = (_: unknown, usage: unknown) => callback(usage);
     ipcRenderer.on('somehow-ai:usage-updated', listener);
     return () => ipcRenderer.removeListener('somehow-ai:usage-updated', listener);
@@ -910,8 +910,8 @@ const accomplishAPI = {
 };
 
 // Expose the API to the renderer (preferred + legacy names)
-contextBridge.exposeInMainWorld('somehow', accomplishAPI);
-contextBridge.exposeInMainWorld('accomplish', accomplishAPI);
+contextBridge.exposeInMainWorld('somehow', somehowAPI);
+contextBridge.exposeInMainWorld('accomplish', somehowAPI);
 
 // Also expose shell info for compatibility checks
 const packageVersion = process.env.npm_package_version;
@@ -927,4 +927,4 @@ contextBridge.exposeInMainWorld('somehowShell', shellInfo);
 contextBridge.exposeInMainWorld('accomplishShell', shellInfo);
 
 // Type declarations
-export type AccomplishAPI = typeof accomplishAPI;
+export type SomehowAPI = typeof somehowAPI;

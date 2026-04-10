@@ -14,7 +14,7 @@ import {
   CustomProviderForm,
   NimProviderForm,
   CopilotProviderForm,
-  AccomplishAiProviderForm,
+  SomehowAiProviderForm,
 } from './providers';
 import { ZaiProviderForm } from './providers/ZaiProviderForm';
 
@@ -69,7 +69,7 @@ export function ProviderFormSelector({
   // Handle built-in somehow-ai separately (device fingerprint flow, no API key)
   if (providerId === 'somehow-ai') {
     return (
-      <AccomplishAiProviderForm
+      <SomehowAiProviderForm
         connectedProvider={connectedProvider}
         onConnect={onConnect}
         onUpdateProvider={onUpdateProvider}

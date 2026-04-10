@@ -9,7 +9,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Warning } from '@phosphor-icons/react';
-import { useAccomplish } from '@/lib/accomplish';
+import { useSomehow } from '@/lib/somehow';
 import { useDaemonStore } from '@/stores/daemonStore';
 import { Button } from '@/components/ui/button';
 
@@ -79,7 +79,7 @@ function getStatusDotClass(displayStatus: string): string {
 const DAEMON_TRANSITIONAL_STATES = new Set(['starting', 'stopping', 'reconnecting']);
 
 export function DaemonSection() {
-  const accomplish = useAccomplish();
+  const accomplish = useSomehow();
   const { t } = useTranslation('settings');
 
   // Read status from global store — single source of truth

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { Skill } from '@somehow_ai/agent-core';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { createLogger } from '@/lib/logger';
 import { filterSkills, findSlashContext, INITIAL_SLASH_STATE } from './useSlashCommandFilter';
 import type {
@@ -30,7 +30,7 @@ export function useSlashCommand({
 
   const loadSkills = useCallback(async () => {
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const skills = await accomplish.getEnabledSkills();
       const visible = skills.filter((s) => !s.isHidden);
       skillsCacheRef.current = visible;

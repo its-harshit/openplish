@@ -1,5 +1,5 @@
 import type { StoredFavorite } from '@somehow_ai/agent-core';
-import { getAccomplish } from '../lib/accomplish';
+import { getSomehow } from '../lib/somehow';
 import { createLogger } from '../lib/logger';
 import type { TaskState } from './taskStore';
 import {
@@ -21,7 +21,7 @@ type GetFn = () => TaskState;
 export function createTaskHistoryActions(set: SetFn, get: GetFn) {
   return {
     loadTasks: async () => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const taskStateToken = get()._taskStateToken;
       const tasks = await accomplish.listTasks();
       if (!hasTaskStateToken(get(), taskStateToken)) {
@@ -31,7 +31,7 @@ export function createTaskHistoryActions(set: SetFn, get: GetFn) {
     },
 
     loadTaskById: async (taskId: string) => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const currentState = get();
       const taskStateToken = currentState._taskStateToken;
       const requestTrackedTask = hasTrackedTask(currentState, taskId);
@@ -47,7 +47,7 @@ export function createTaskHistoryActions(set: SetFn, get: GetFn) {
     },
 
     deleteTask: async (taskId: string) => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       await accomplish.deleteTask(taskId);
       set((state) => ({
         tasks: state.tasks.filter((t) => t.id !== taskId),
@@ -56,7 +56,7 @@ export function createTaskHistoryActions(set: SetFn, get: GetFn) {
     },
 
     clearHistory: async () => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       await accomplish.clearTaskHistory();
       set((state) => ({ tasks: [], ...clearAllTaskScopedState(state) }));
     },
@@ -65,7 +65,7 @@ export function createTaskHistoryActions(set: SetFn, get: GetFn) {
       if (get().favoritesLoaded) {
         return;
       }
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const token = ++_loadFavoritesToken;
       try {
         const favorites = await accomplish.listFavorites();
@@ -78,7 +78,7 @@ export function createTaskHistoryActions(set: SetFn, get: GetFn) {
     },
 
     addFavorite: async (taskId: string) => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       ++_loadFavoritesToken;
       const { tasks, currentTask, favorites } = get();
       if (favorites.some((f) => f.taskId === taskId)) {
@@ -108,7 +108,7 @@ export function createTaskHistoryActions(set: SetFn, get: GetFn) {
       const removed = favorites.find((f) => f.taskId === taskId);
       set({ favorites: favorites.filter((f) => f.taskId !== taskId) });
       try {
-        const accomplish = getAccomplish();
+        const accomplish = getSomehow();
         await accomplish.removeFavorite(taskId);
       } catch {
         if (removed) {

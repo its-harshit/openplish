@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { PROMPT_DEFAULT_MAX_LENGTH } from '@somehow_ai/agent-core/common';
 import { useTaskStore } from '../../stores/taskStore';
-import { getAccomplish } from '../../lib/accomplish';
+import { getSomehow } from '../../lib/somehow';
 import { useSpeechInput } from '../../hooks/useSpeechInput';
 import { useSlashCommand } from '../../hooks/useSlashCommand';
 import { useExecutionAttachments } from './useExecutionAttachments';
@@ -15,7 +15,7 @@ import { useExecutionDebugState } from './useExecutionDebugState';
 export function useExecutionCore() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const accomplish = getAccomplish();
+  const bridge = getSomehow();
   const { t } = useTranslation('execution');
   const { t: tCommon } = useTranslation('common');
 
@@ -60,14 +60,14 @@ export function useExecutionCore() {
   const scroll = useExecutionScroll();
 
   const debug = useExecutionDebugState({
-    accomplish,
+    bridge,
     startupStageTaskId,
     startupStage,
     id,
     currentTool,
   });
 
-  const attachmentState = useExecutionAttachments(accomplish);
+  const attachmentState = useExecutionAttachments(bridge);
 
   const speechInput = useSpeechInput({
     onTranscriptionComplete: (text) => {
@@ -91,7 +91,7 @@ export function useExecutionCore() {
 
   useExecutionEvents({
     id,
-    accomplish,
+    bridge,
     addTaskUpdate,
     addTaskUpdateBatch,
     updateTaskStatus,
@@ -134,7 +134,7 @@ export function useExecutionCore() {
   return {
     id,
     navigate,
-    accomplish,
+    bridge,
     t,
     tCommon,
     followUpInputRef,

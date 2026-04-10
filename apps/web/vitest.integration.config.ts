@@ -8,15 +8,28 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src/client'),
-      '@somehow_ai/agent-core/common': path.resolve(
-        __dirname,
-        '../../packages/agent-core/src/common',
-      ),
-      '@somehow_ai/agent-core': path.resolve(__dirname, '../../packages/agent-core/src'),
-      '@locales': path.resolve(__dirname, 'locales'),
-    },
+    alias: [
+      {
+        find: /^\/assets\/(.+)$/,
+        replacement: path.resolve(__dirname, 'public/assets/$1'),
+      },
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, 'src/client'),
+      },
+      {
+        find: '@somehow_ai/agent-core/common',
+        replacement: path.resolve(__dirname, '../../packages/agent-core/src/common'),
+      },
+      {
+        find: '@somehow_ai/agent-core',
+        replacement: path.resolve(__dirname, '../../packages/agent-core/src'),
+      },
+      {
+        find: '@locales',
+        replacement: path.resolve(__dirname, 'locales'),
+      },
+    ],
   },
   test: {
     name: 'integration',

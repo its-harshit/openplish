@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type { ConnectedProvider } from '@somehow_ai/agent-core/common';
 import type { HuggingFaceLocalCredentials } from '@somehow_ai/agent-core/common';
 
@@ -44,7 +44,7 @@ export function useHuggingFaceProviderConnect({
   const [cachedModels, setCachedModels] = useState<SuggestedModel[]>([]);
 
   useEffect(() => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     accomplish
       .listHuggingFaceModels()
       .then(({ cached, suggested }) => {
@@ -62,7 +62,7 @@ export function useHuggingFaceProviderConnect({
   }, []);
 
   useEffect(() => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     const unsub = accomplish.onHuggingFaceDownloadProgress((progress) => {
       if (progress.status === 'downloading') {
         setDownloadProgress(progress.progress);
@@ -91,7 +91,7 @@ export function useHuggingFaceProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
 
       const downloadResult = await accomplish.downloadHuggingFaceModel(selectedModelId);
       if (!downloadResult.success) {
@@ -140,7 +140,7 @@ export function useHuggingFaceProviderConnect({
 
   const handleDisconnect = async () => {
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       await accomplish.stopHuggingFaceServer();
     } catch {
       // Ignore errors during disconnect

@@ -1,5 +1,5 @@
 import type { TaskStatus } from '@somehow_ai/agent-core';
-import { getAccomplish } from '../lib/accomplish';
+import { getSomehow } from '../lib/somehow';
 import type { TaskState } from './taskStore';
 import { hasTaskStateToken } from './task-state-helpers';
 
@@ -13,7 +13,7 @@ type GetFn = () => TaskState;
 export function createTaskLifecycleActions(set: SetFn, get: GetFn) {
   return {
     cancelTask: async () => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const { currentTask } = get();
       if (currentTask) {
         const taskStateToken = get()._taskStateToken;
@@ -55,7 +55,7 @@ export function createTaskLifecycleActions(set: SetFn, get: GetFn) {
     },
 
     interruptTask: async () => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const { currentTask } = get();
       if (currentTask && currentTask.status === 'running') {
         const taskStateToken = get()._taskStateToken;

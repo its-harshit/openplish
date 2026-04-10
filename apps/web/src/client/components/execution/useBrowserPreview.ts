@@ -16,6 +16,7 @@
  */
 
 import { useEffect, useRef, useCallback, useReducer } from 'react';
+import { getOptionalWindowBridge } from '@/lib/somehow';
 import type { ViewStatus } from './StatusBadge';
 import { useBrowserPreviewIpc } from './useBrowserPreviewIpc';
 import { previewReducer, initialPreviewState, isViewStatus } from './browserPreviewState';
@@ -85,7 +86,7 @@ export function useBrowserPreview({
       return;
     }
 
-    const api = window.accomplish;
+    const api = getOptionalWindowBridge();
     if (!api?.startBrowserPreview) {
       return;
     }

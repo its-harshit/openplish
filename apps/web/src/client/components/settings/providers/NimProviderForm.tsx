@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 import type { ConnectedProvider, NimCredentials } from '@somehow_ai/agent-core/common';
 import { ProviderFormHeader } from '../shared';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { DisconnectedNimForm, ConnectedNimDetails, NIM_DEFAULT_BASE_URL } from './NimFormSections';
 
 import nimLogo from '/assets/ai-logos/nim.svg';
@@ -36,7 +36,7 @@ export function NimProviderForm({
     setError(null);
 
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const trimmedKey = apiKey.trim();
 
       if (!trimmedKey) {

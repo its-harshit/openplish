@@ -76,6 +76,16 @@ g.window.accomplish = {
   onTaskUpdate: vi.fn().mockReturnValue(() => {}),
   onTaskSummary: vi.fn().mockReturnValue(() => {}),
   onTodoUpdate: vi.fn().mockReturnValue(() => {}),
+  onDaemonReconnected: vi.fn().mockReturnValue(() => {}),
+  onDaemonDisconnected: vi.fn().mockReturnValue(() => {}),
+  onDaemonReconnectFailed: vi.fn().mockReturnValue(() => {}),
+  daemonPing: vi.fn().mockResolvedValue({ status: 'ok' }),
+  onWorkspaceChanged: vi.fn().mockReturnValue(() => {}),
+  onAuthError: vi.fn().mockReturnValue(() => {}),
+  listWorkspaces: vi.fn().mockResolvedValue([]),
+  getActiveWorkspaceId: vi.fn().mockResolvedValue(null),
+  getEnabledSkills: vi.fn().mockResolvedValue([]),
+  getBuildCapabilities: vi.fn().mockResolvedValue({ hasFreeMode: true }),
 };
 
 export {};

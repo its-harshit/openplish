@@ -1,7 +1,7 @@
 // apps/desktop/src/renderer/components/settings/hooks/useProviderSettings.ts
 
 import { useState, useEffect, useCallback } from 'react';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import type {
   ProviderSettings,
   ProviderId,
@@ -15,7 +15,7 @@ export function useProviderSettings() {
 
   const fetchSettings = useCallback(async () => {
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const data = (await accomplish.getProviderSettings()) as ProviderSettings;
       setSettings(data);
       setError(null);
@@ -31,14 +31,14 @@ export function useProviderSettings() {
   }, [fetchSettings]);
 
   const setActiveProvider = useCallback(async (providerId: ProviderId | null) => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     await accomplish.setActiveProvider(providerId);
     setSettings((prev) => (prev ? { ...prev, activeProviderId: providerId } : null));
   }, []);
 
   const connectProvider = useCallback(
     async (providerId: ProviderId, provider: ConnectedProvider) => {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       await accomplish.setConnectedProvider(providerId, provider);
       setSettings((prev) => {
         if (!prev) return null;
@@ -55,7 +55,7 @@ export function useProviderSettings() {
   );
 
   const disconnectProvider = useCallback(async (providerId: ProviderId) => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     await accomplish.removeConnectedProvider(providerId);
     setSettings((prev) => {
       if (!prev) return null;
@@ -69,7 +69,7 @@ export function useProviderSettings() {
   }, []);
 
   const updateModel = useCallback(async (providerId: ProviderId, modelId: string | null) => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     await accomplish.updateProviderModel(providerId, modelId);
     setSettings((prev) => {
       if (!prev) return null;
@@ -86,7 +86,7 @@ export function useProviderSettings() {
   }, []);
 
   const setDebugMode = useCallback(async (enabled: boolean) => {
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     await accomplish.setProviderDebugMode(enabled);
     setSettings((prev) => (prev ? { ...prev, debugMode: enabled } : null));
   }, []);

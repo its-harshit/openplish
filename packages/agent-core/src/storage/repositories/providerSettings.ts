@@ -198,7 +198,7 @@ export function getConnectedProviderIds(): ProviderId[] {
 
 // ─── Built-in free-tier AI credit cache ─────────────────────────────────────
 
-export function getAccomplishAiCredits(): CreditUsage | null {
+export function getSomehowAiCredits(): CreditUsage | null {
   const db = getDatabase();
   const row = db.prepare('SELECT credits_json FROM somehow_ai_credits WHERE id = 1').get() as
     | { credits_json: string }
@@ -211,14 +211,14 @@ export function getAccomplishAiCredits(): CreditUsage | null {
   }
 }
 
-export function saveAccomplishAiCredits(usage: CreditUsage): void {
+export function saveSomehowAiCredits(usage: CreditUsage): void {
   const db = getDatabase();
   db.prepare('INSERT OR REPLACE INTO somehow_ai_credits (id, credits_json) VALUES (1, ?)').run(
     JSON.stringify(usage),
   );
 }
 
-export function clearAccomplishAiCredits(): void {
+export function clearSomehowAiCredits(): void {
   const db = getDatabase();
   db.prepare('DELETE FROM somehow_ai_credits WHERE id = 1').run();
 }

@@ -44,7 +44,7 @@ import type {
 } from '@somehow_ai/agent-core/common';
 
 // Define the API interface
-interface AccomplishAPI {
+interface SomehowAPI {
   // App info
   getVersion(): Promise<string>;
   getPlatform(): Promise<string>;
@@ -625,23 +625,23 @@ interface AccomplishAPI {
   setLocalMcpServerEnabled(id: string, enabled: boolean): Promise<void>;
 
   // Built-in free tier (provider id: somehow-ai)
-  accomplishAiConnect(): Promise<{
+  somehowAiConnect(): Promise<{
     deviceFingerprint: string;
     spentCredits: number;
     remainingCredits: number;
     totalCredits: number;
     resetsAt: string;
   }>;
-  accomplishAiEnsureReady(): Promise<{ deviceFingerprint: string }>;
-  accomplishAiDisconnect(): Promise<void>;
-  accomplishAiGetUsage(): Promise<{
+  somehowAiEnsureReady(): Promise<{ deviceFingerprint: string }>;
+  somehowAiDisconnect(): Promise<void>;
+  somehowAiGetUsage(): Promise<{
     spentCredits: number;
     remainingCredits: number;
     totalCredits: number;
     resetsAt: string;
   }>;
-  accomplishAiGetStatus(): Promise<{ connected: boolean }>;
-  onAccomplishAiUsageUpdate(
+  somehowAiGetStatus(): Promise<{ connected: boolean }>;
+  onSomehowAiUsageUpdate(
     callback: (usage: {
       spentCredits: number;
       remainingCredits: number;
@@ -679,7 +679,7 @@ interface AccomplishAPI {
   }>;
 }
 
-interface AccomplishShell {
+interface SomehowShell {
   version: string;
   platform: string;
   isElectron: true;
@@ -688,26 +688,37 @@ interface AccomplishShell {
 // Extend Window interface
 declare global {
   interface Window {
-    somehow?: AccomplishAPI;
-    accomplish?: AccomplishAPI;
-    somehowShell?: AccomplishShell;
-    accomplishShell?: AccomplishShell;
+    somehow?: SomehowAPI;
+    accomplish?: SomehowAPI;
+    somehowShell?: SomehowShell;
+    accomplishShell?: SomehowShell;
   }
 }
 
-function getElectronBridge(): AccomplishAPI | undefined {
+function getElectronBridge(): SomehowAPI | undefined {
   return window.somehow ?? window.accomplish;
 }
 
-function getElectronShell(): AccomplishShell | undefined {
+function getElectronShell(): SomehowShell | undefined {
   return window.somehowShell ?? window.accomplishShell;
+}
+
+/**
+ * Preferred `window.somehow` with legacy `window.accomplish` fallback.
+ * For module-level code that must not call {@link getSomehow} (which throws when absent).
+ */
+export function getOptionalWindowBridge(): SomehowAPI | undefined {
+  if (typeof window === 'undefined') {
+    return undefined;
+  }
+  return window.somehow ?? window.accomplish;
 }
 
 /**
  * Returns the Electron shell API (`window.somehow`, or legacy `window.accomplish`).
  * Throws if not running in Electron.
  */
-export function getAccomplish() {
+export function getSomehow() {
   const bridge = getElectronBridge();
   if (!bridge) {
     throw new Error('SomeHow API not available - not running in Electron');
@@ -792,9 +803,9 @@ export function getShellPlatform(): string | null {
 }
 
 /**
- * React hook to use the accomplish API
+ * React hook to use the SomeHow Electron bridge API
  */
-export function useAccomplish(): AccomplishAPI {
+export function useSomehow(): SomehowAPI {
   const api = getElectronBridge();
   if (!api) {
     throw new Error('SomeHow API not available - not running in Electron');

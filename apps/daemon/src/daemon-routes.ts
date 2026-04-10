@@ -12,7 +12,7 @@ import {
   validate,
   logger,
 } from '@somehow_ai/agent-core';
-import type { AccomplishRuntime, StorageDeps } from '@somehow_ai/agent-core';
+import type { SomehowRuntime, StorageDeps } from '@somehow_ai/agent-core';
 import { z } from 'zod';
 import { homedir } from 'node:os';
 import type { TaskService } from './task-service.js';
@@ -60,7 +60,7 @@ export interface RouteServices {
   healthService: HealthService;
   storageService: StorageService;
   schedulerService: SchedulerService;
-  accomplishRuntime: AccomplishRuntime;
+  somehowRuntime: SomehowRuntime;
   whatsappService: WhatsAppDaemonService;
 }
 
@@ -74,7 +74,7 @@ export function registerRpcMethods(services: RouteServices): void {
     permissionService,
     healthService,
     schedulerService,
-    accomplishRuntime,
+    somehowRuntime,
     whatsappService,
   } = services;
   const storage = services.storageService.getStorage();
@@ -249,7 +249,7 @@ export function registerRpcMethods(services: RouteServices): void {
 
   // ── SomeHow built-in free tier ───────────────────────────────────────────
   // StorageDeps constructed from daemon's own secure storage — no callbacks over RPC.
-  const accomplishStorageDeps: StorageDeps = {
+  const somehowStorageDeps: StorageDeps = {
     readKey: (key) => storage.get(key),
     writeKey: (key, value) => storage.set(key, value),
     readGaClientId: () => null, // GA client ID not available in daemon
@@ -258,7 +258,7 @@ export function registerRpcMethods(services: RouteServices): void {
   rpc.registerMethod(
     'somehow-ai.connect',
     safeHandler(async () => {
-      const result = await accomplishRuntime.connect(accomplishStorageDeps);
+      const result = await somehowRuntime.connect(somehowStorageDeps);
       return { deviceFingerprint: result.deviceFingerprint, usage: result.usage };
     }),
   );
@@ -266,20 +266,20 @@ export function registerRpcMethods(services: RouteServices): void {
   rpc.registerMethod(
     'somehow-ai.get-usage',
     safeHandler(async () => {
-      return accomplishRuntime.getUsage();
+      return somehowRuntime.getUsage();
     }),
   );
 
   rpc.registerMethod(
     'somehow-ai.disconnect',
     safeHandler(async () => {
-      accomplishRuntime.disconnect();
+      somehowRuntime.disconnect();
       return Promise.resolve();
     }),
   );
 
   // Bridge proxy usage updates to daemon notifications → forwarded to renderer via IPC
-  accomplishRuntime.onUsageUpdate((usage) => {
+  somehowRuntime.onUsageUpdate((usage) => {
     rpc.notify('somehow-ai.usage-update', usage);
   });
 

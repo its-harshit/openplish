@@ -84,7 +84,7 @@ export type {
   ConnectedProvider,
   ProviderSettings,
   HuggingFaceLocalCredentials,
-  AccomplishAiCredentials,
+  SomehowAiCredentials,
 } from './common/types/providerSettings.js';
 
 // Gateway types

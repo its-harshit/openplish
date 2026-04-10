@@ -1,5 +1,6 @@
 import { STARTUP_STAGES, type TaskUpdateEvent, type TodoItem } from '@somehow_ai/agent-core/common';
 import { createLogger } from '../lib/logger';
+import { getOptionalWindowBridge } from '../lib/somehow';
 import { hasTrackedTask } from './task-state-helpers';
 
 const logger = createLogger('TaskStore');
@@ -14,11 +15,12 @@ interface SetupProgressEvent {
 
 /** Registers all global IPC subscriptions for the task store. Called once on module load. */
 export function registerTaskSubscriptions(getStore: () => import('./taskStore').TaskState) {
-  if (typeof window === 'undefined' || !window.accomplish) {
+  const bridge = getOptionalWindowBridge();
+  if (!bridge) {
     return;
   }
 
-  window.accomplish.onTaskProgress((progress: unknown) => {
+  bridge.onTaskProgress((progress: unknown) => {
     const event = progress as SetupProgressEvent;
     const state = getStore();
 
@@ -57,7 +59,7 @@ export function registerTaskSubscriptions(getStore: () => import('./taskStore').
     }
   });
 
-  window.accomplish.onTaskUpdate((event: unknown) => {
+  bridge.onTaskUpdate((event: unknown) => {
     const updateEvent = event as TaskUpdateEvent;
     if (updateEvent.type === 'complete' || updateEvent.type === 'error') {
       const state = getStore();
@@ -72,25 +74,25 @@ export function registerTaskSubscriptions(getStore: () => import('./taskStore').
     }
   });
 
-  window.accomplish.onTaskSummary?.((data: { taskId: string; summary: string }) => {
+  bridge.onTaskSummary?.((data: { taskId: string; summary: string }) => {
     const state = getStore();
     state.setTaskSummary(data.taskId, data.summary);
     // Refresh sidebar to show new task with its summary title
     void state.loadTasks();
   });
 
-  window.accomplish.onTodoUpdate?.((data: { taskId: string; todos: TodoItem[] }) => {
+  bridge.onTodoUpdate?.((data: { taskId: string; todos: TodoItem[] }) => {
     const state = getStore();
     if (state.currentTask?.id === data.taskId) {
       state.setTodos(data.taskId, data.todos);
     }
   });
 
-  window.accomplish.onAuthError?.((data: { providerId: string; message: string }) => {
+  bridge.onAuthError?.((data: { providerId: string; message: string }) => {
     getStore().setAuthError(data);
   });
 
-  window.accomplish.onDaemonReconnected(() => {
+  bridge.onDaemonReconnected(() => {
     const state = getStore();
     void state.loadTasks();
     if (state.currentTask?.id) {
@@ -98,7 +100,7 @@ export function registerTaskSubscriptions(getStore: () => import('./taskStore').
     }
   });
 
-  window.accomplish.onWorkspaceChanged?.(async () => {
+  bridge.onWorkspaceChanged?.(async () => {
     const state = getStore();
     state.reset();
     try {

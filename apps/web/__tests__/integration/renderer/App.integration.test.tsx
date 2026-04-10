@@ -17,6 +17,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider, Navigate } from 'react-router';
+import { SOMEHOW_BASELINE_MOCKS } from './somehow-mock-baseline';
 
 // Create mock functions for accomplish API
 const mockSetOnboardingComplete = vi.fn();
@@ -28,6 +29,7 @@ const mockGetTask = vi.fn();
 
 // Mock accomplish API
 const mockAccomplish = {
+  ...SOMEHOW_BASELINE_MOCKS,
   setOnboardingComplete: mockSetOnboardingComplete,
   logEvent: mockLogEvent.mockResolvedValue(undefined),
   listTasks: mockListTasks.mockResolvedValue([]),
@@ -60,9 +62,12 @@ const mockAccomplish = {
 };
 
 // Mock the accomplish module - always return true for isRunningInElectron for most tests
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => mockAccomplish,
+vi.mock('@/lib/somehow', () => ({
+  getSomehow: () => mockAccomplish,
+  useSomehow: () => mockAccomplish,
   isRunningInElectron: () => true,
+  getOptionalWindowBridge: () =>
+    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
 }));
 
 // Mock framer-motion to simplify testing animations

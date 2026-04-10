@@ -22,7 +22,7 @@ import {
   type EnvironmentConfig,
   type CliResolverConfig,
   type ProviderId,
-  type AccomplishRuntime,
+  type SomehowRuntime,
 } from '@somehow_ai/agent-core';
 
 export interface TaskConfigBuilderOptions {
@@ -31,7 +31,7 @@ export interface TaskConfigBuilderOptions {
   isPackaged: boolean;
   resourcesPath: string;
   appPath: string;
-  accomplishRuntime?: AccomplishRuntime;
+  somehowRuntime?: SomehowRuntime;
 }
 
 export function getCliCommand(opts: TaskConfigBuilderOptions): { command: string; args: string[] } {
@@ -166,8 +166,8 @@ export async function onBeforeStart(
     authToken: process.env.SOMEHOW_DAEMON_AUTH_TOKEN,
     skillRootPaths: [bundledSkillsPath, userSkillsPath],
     skills: storage.getEnabledSkills(),
-    accomplishRuntime: opts.accomplishRuntime,
-    accomplishStorageDeps: {
+    somehowRuntime: opts.somehowRuntime,
+    somehowStorageDeps: {
       readKey: (key) => storage.get(key),
       writeKey: (key, value) => storage.set(key, value),
       readGaClientId: () => null,

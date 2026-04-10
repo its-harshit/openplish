@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { useTaskStore } from '@/stores/taskStore';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { createLogger } from '@/lib/logger';
 import { hasAnyReadyProvider } from '@somehow_ai/agent-core/common';
 import { USE_CASE_KEYS, FAVORITES_PREVIEW_COUNT } from './homeConstants';
@@ -32,7 +32,7 @@ export function useHomePage() {
   const addTaskUpdate = useTaskStore((state) => state.addTaskUpdate);
   const setPermissionRequest = useTaskStore((state) => state.setPermissionRequest);
 
-  const accomplish = useMemo(() => getAccomplish(), []);
+  const bridge = useMemo(() => getSomehow(), []);
 
   const useCaseExamples = useMemo(
     () =>
@@ -53,17 +53,17 @@ export function useHomePage() {
   }, [location.pathname, loadFavorites]);
 
   useEffect(() => {
-    const unsubscribeTask = accomplish.onTaskUpdate((event) => {
+    const unsubscribeTask = bridge.onTaskUpdate((event) => {
       addTaskUpdate(event);
     });
-    const unsubscribePermission = accomplish.onPermissionRequest((request) => {
+    const unsubscribePermission = bridge.onPermissionRequest((request) => {
       setPermissionRequest(request);
     });
     return () => {
       unsubscribeTask();
       unsubscribePermission();
     };
-  }, [addTaskUpdate, setPermissionRequest, accomplish]);
+  }, [addTaskUpdate, setPermissionRequest, bridge]);
 
   const {
     attachments,
@@ -127,9 +127,9 @@ export function useHomePage() {
       return;
     }
     try {
-      const isE2EMode = await accomplish.isE2EMode();
+      const isE2EMode = await bridge.isE2EMode();
       if (!isE2EMode) {
-        const settings = await accomplish.getProviderSettings();
+        const settings = await bridge.getProviderSettings();
         if (!hasAnyReadyProvider(settings)) {
           setResumeAfterSettingsSave(true);
           setSettingsInitialTab('providers');
@@ -145,7 +145,7 @@ export function useHomePage() {
     isLoading,
     prompt,
     attachments,
-    accomplish,
+    bridge,
     executeTask,
     interruptTask,
     setResumeAfterSettingsSave,

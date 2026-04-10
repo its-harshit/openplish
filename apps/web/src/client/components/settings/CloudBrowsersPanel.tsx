@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useAccomplish } from '@/lib/accomplish';
+import { useSomehow } from '@/lib/somehow';
 import type {
   CloudBrowserConfig,
   CloudBrowserProvider,
@@ -49,7 +49,7 @@ export function CloudBrowsersPanel() {
   const [expandedProvider, setExpandedProvider] = useState<CloudBrowserProvider | null>(null);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
-  const accomplish = useAccomplish();
+  const accomplish = useSomehow();
 
   useEffect(() => {
     accomplish

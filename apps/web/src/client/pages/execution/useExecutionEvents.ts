@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import type { TaskUpdateEvent } from '@somehow_ai/agent-core/common';
 import type { DebugLogEntry } from '../../components/execution/DebugPanel';
-import { getAccomplish } from '../../lib/accomplish';
+import { getSomehow } from '../../lib/somehow';
 
-type Accomplish = ReturnType<typeof getAccomplish>;
+type SomehowBridge = ReturnType<typeof getSomehow>;
 
 interface UseExecutionEventsOptions {
   id: string | undefined;
-  accomplish: Accomplish;
+  bridge: SomehowBridge;
   addTaskUpdate: (event: TaskUpdateEvent) => void;
   addTaskUpdateBatch: (event: {
     taskId: string;
@@ -29,7 +29,7 @@ interface UseExecutionEventsOptions {
 export function useExecutionEvents(opts: UseExecutionEventsOptions) {
   const {
     id,
-    accomplish,
+    bridge,
     addTaskUpdate,
     addTaskUpdateBatch,
     updateTaskStatus,
@@ -47,14 +47,14 @@ export function useExecutionEvents(opts: UseExecutionEventsOptions) {
       setDebugLogs([]);
       setCurrentTool(null);
       setCurrentToolInput(null);
-      accomplish.getTodosForTask(id).then((todos) => {
+      bridge.getTodosForTask(id).then((todos) => {
         import('../../stores/taskStore').then(({ useTaskStore }) => {
           useTaskStore.getState().setTodos(id, todos);
         });
       });
     }
 
-    const unsubscribeTask = accomplish.onTaskUpdate((event) => {
+    const unsubscribeTask = bridge.onTaskUpdate((event) => {
       addTaskUpdate(event);
       if (event.taskId === id && event.type === 'message' && event.message?.type === 'tool') {
         const toolName =
@@ -77,7 +77,7 @@ export function useExecutionEvents(opts: UseExecutionEventsOptions) {
       }
     });
 
-    const unsubscribeTaskBatch = accomplish.onTaskUpdateBatch?.((event) => {
+    const unsubscribeTaskBatch = bridge.onTaskUpdateBatch?.((event) => {
       if (event.messages?.length) {
         addTaskUpdateBatch(event);
         if (event.taskId === id) {
@@ -99,17 +99,17 @@ export function useExecutionEvents(opts: UseExecutionEventsOptions) {
       }
     });
 
-    const unsubscribePermission = accomplish.onPermissionRequest((request) => {
+    const unsubscribePermission = bridge.onPermissionRequest((request) => {
       setPermissionRequest(request);
     });
 
-    const unsubscribeStatusChange = accomplish.onTaskStatusChange?.((data) => {
+    const unsubscribeStatusChange = bridge.onTaskStatusChange?.((data) => {
       if (data.taskId === id) {
         updateTaskStatus(data.taskId, data.status);
       }
     });
 
-    const unsubscribeDebugLog = accomplish.onDebugLog((log) => {
+    const unsubscribeDebugLog = bridge.onDebugLog((log) => {
       const entry = log as DebugLogEntry;
       if (entry.taskId === id) {
         setDebugLogs((prev) => [...prev, entry]);
@@ -121,13 +121,13 @@ export function useExecutionEvents(opts: UseExecutionEventsOptions) {
     // status dot already show "Reconnecting..." to the user.
     // On reconnect: re-fetch task to get authoritative state from daemon DB.
     // On reconnect-failed: only then mark running task as failed.
-    const unsubscribeDaemonReconnected = accomplish.onDaemonReconnected(() => {
+    const unsubscribeDaemonReconnected = bridge.onDaemonReconnected(() => {
       if (id) {
         loadTaskById(id);
       }
     });
 
-    const unsubscribeDaemonReconnectFailed = accomplish.onDaemonReconnectFailed?.(() => {
+    const unsubscribeDaemonReconnectFailed = bridge.onDaemonReconnectFailed?.(() => {
       if (id) {
         import('../../stores/taskStore').then(({ useTaskStore }) => {
           const state = useTaskStore.getState();

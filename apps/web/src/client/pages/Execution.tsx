@@ -19,14 +19,14 @@ import { CreditExhaustedChatBanner } from '../components/execution/CreditExhaust
 import { useCreditsState } from '../hooks/useCreditsState';
 
 /** Detects built-in free-tier (somehow-ai) credit exhaustion errors specifically. */
-function isAccomplishCreditExhaustedError(message?: string): boolean {
+function isSomehowCreditExhaustedError(message?: string): boolean {
   if (!message) return false;
   const lower = message.toLowerCase();
   // Only match built-in free-tier-specific error codes, not generic provider billing errors
   return (
     lower.includes('credits_exhausted') ||
     lower.includes('monthly_credit_limit_reached') ||
-    (lower.includes('accomplish') && lower.includes('free credits'))
+    (lower.includes('somehow') && lower.includes('free credits'))
   );
 }
 
@@ -212,7 +212,7 @@ export default function ExecutionPage() {
         {/* Credit exhaustion banner — shown when task fails due to quota or live credits exhausted */}
         {(creditsState.isCreditsBlocked ||
           (s.currentTask?.status === 'failed' &&
-            isAccomplishCreditExhaustedError(s.currentTask?.result?.error))) && (
+            isSomehowCreditExhaustedError(s.currentTask?.result?.error))) && (
           <CreditExhaustedChatBanner
             variant="exhausted"
             resetDate={creditsState.usage?.resetsAt ?? ''}

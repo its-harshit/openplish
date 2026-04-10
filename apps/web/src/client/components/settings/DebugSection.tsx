@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('DebugSection');
@@ -15,7 +15,7 @@ export function DebugSection({ debugMode, onDebugToggle }: DebugSectionProps) {
   const [exportStatus, setExportStatus] = useState<'idle' | 'exporting' | 'success' | 'error'>(
     'idle',
   );
-  const accomplish = getAccomplish();
+  const accomplish = getSomehow();
 
   const handleExportLogs = useCallback(async () => {
     setExportStatus('exporting');
@@ -51,12 +51,12 @@ export function DebugSection({ debugMode, onDebugToggle }: DebugSectionProps) {
           <button
             data-testid="settings-debug-toggle"
             onClick={onDebugToggle}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-accomplish ${
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-somehow ${
               debugMode ? 'bg-primary' : 'bg-muted'
             }`}
           >
             <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform duration-200 ease-accomplish ${
+              className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform duration-200 ease-somehow ${
                 debugMode ? 'translate-x-6' : 'translate-x-1'
               }`}
             />

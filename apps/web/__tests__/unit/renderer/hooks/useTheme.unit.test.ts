@@ -9,18 +9,31 @@ vi.mock('@/lib/theme', () => ({
   cleanupTheme: vi.fn(),
 }));
 
-// Mock getAccomplish
-const mockGetTheme = vi.fn(() => Promise.resolve('system'));
-const mockSetTheme = vi.fn(() => Promise.resolve());
-const mockOnThemeChange = vi.fn(() => () => {});
+// Mock getSomehow / useSomehow (hoisted for vi.mock factory)
+const { mockGetTheme, mockSetTheme, mockOnThemeChange } = vi.hoisted(() => {
+  const mockGetThemeInner = vi.fn(() => Promise.resolve('system'));
+  const mockSetThemeInner = vi.fn(() => Promise.resolve());
+  const mockOnThemeChangeInner = vi.fn(() => () => {});
+  return {
+    mockGetTheme: mockGetThemeInner,
+    mockSetTheme: mockSetThemeInner,
+    mockOnThemeChange: mockOnThemeChangeInner,
+  };
+});
 
-vi.mock('@/lib/accomplish', () => ({
-  getAccomplish: () => ({
+vi.mock('@/lib/somehow', () => {
+  const api = {
     getTheme: mockGetTheme,
     setTheme: mockSetTheme,
     onThemeChange: mockOnThemeChange,
-  }),
-}));
+  };
+  return {
+    getSomehow: () => api,
+    useSomehow: () => api,
+    getOptionalWindowBridge: () =>
+      typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+  };
+});
 
 // localStorage mock
 const localStorageMock = (() => {

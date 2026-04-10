@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { hasAnyReadyProvider } from '@somehow_ai/agent-core/common';
 import { createLogger } from '@/lib/logger';
 
@@ -32,7 +32,7 @@ export function useHomePageSettings({
   const [settingsInitialTab, setSettingsInitialTab] = useState<SettingsTab>('providers');
   const [resumeAfterSettingsSave, setResumeAfterSettingsSave] = useState(false);
 
-  const accomplish = getAccomplish();
+  const bridge = getSomehow();
 
   const handleSettingsDialogChange = useCallback((open: boolean) => {
     setShowSettingsDialog(open);
@@ -63,7 +63,7 @@ export function useHomePageSettings({
       return;
     }
     try {
-      const settings = await accomplish.getProviderSettings();
+      const settings = await bridge.getProviderSettings();
       if (!hasAnyReadyProvider(settings)) {
         setSettingsInitialTab('providers');
         setShowSettingsDialog(true);
@@ -75,7 +75,7 @@ export function useHomePageSettings({
     } catch (err) {
       logger.error('Failed to resume task after settings save:', err);
     }
-  }, [resumeAfterSettingsSave, accomplish, onResume]);
+  }, [resumeAfterSettingsSave, bridge, onResume]);
 
   return {
     showSettingsDialog,

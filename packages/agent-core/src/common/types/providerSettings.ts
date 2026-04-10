@@ -317,7 +317,7 @@ export interface CopilotOAuthCredentials {
   type: 'copilot-oauth';
 }
 
-export interface AccomplishAiCredentials {
+export interface SomehowAiCredentials {
   type: 'somehow-ai';
   deviceFingerprint: string;
 }
@@ -335,7 +335,7 @@ export type ProviderCredentials =
   | OAuthCredentials
   | HuggingFaceLocalCredentials
   | CopilotOAuthCredentials
-  | AccomplishAiCredentials
+  | SomehowAiCredentials
   | CustomCredentials
   | NimCredentials;
 

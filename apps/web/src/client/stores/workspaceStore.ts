@@ -7,7 +7,7 @@ import type {
   WorkspaceCreateInput,
   WorkspaceUpdateInput,
 } from '@somehow_ai/agent-core/common';
-import { getAccomplish } from '../lib/accomplish';
+import { getSomehow, getOptionalWindowBridge } from '../lib/somehow';
 
 interface WorkspaceState {
   workspaces: Workspace[];
@@ -32,7 +32,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   loadWorkspaces: async () => {
     set({ isLoading: true });
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const [workspaces, activeId] = await Promise.all([
         accomplish.listWorkspaces(),
         accomplish.getActiveWorkspaceId(),
@@ -50,7 +50,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
     }
     set({ isSwitching: true });
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const result = await accomplish.switchWorkspace(id);
       if (result.success) {
         set({ activeWorkspaceId: id, isSwitching: false });
@@ -66,7 +66,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
   createWorkspace: async (input: WorkspaceCreateInput) => {
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const workspace = await accomplish.createWorkspace(input);
       set((state) => ({
         workspaces: [...state.workspaces, workspace],
@@ -80,7 +80,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
   updateWorkspace: async (id: string, input: WorkspaceUpdateInput) => {
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const updated = await accomplish.updateWorkspace(id, input);
       if (updated) {
         set((state) => ({
@@ -96,7 +96,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
   deleteWorkspace: async (id: string) => {
     try {
-      const accomplish = getAccomplish();
+      const accomplish = getSomehow();
       const deleted = await accomplish.deleteWorkspace(id);
       if (deleted) {
         set((state) => ({
@@ -118,9 +118,10 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 // Subscribe to workspace events
 let unsubscribeWorkspaceChanged: (() => void) | undefined;
 
-if (typeof window !== 'undefined' && window.accomplish) {
+const windowBridge = getOptionalWindowBridge();
+if (windowBridge) {
   unsubscribeWorkspaceChanged?.();
-  const unsub = window.accomplish.onWorkspaceChanged?.((data: { workspaceId: string }) => {
+  const unsub = windowBridge.onWorkspaceChanged?.((data: { workspaceId: string }) => {
     useWorkspaceStore.getState().setActiveWorkspaceId(data.workspaceId);
   });
   if (unsub) {

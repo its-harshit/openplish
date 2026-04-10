@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { createLogger } from '@/lib/logger';
+import { getOptionalWindowBridge } from '@/lib/somehow';
 
 const logger = createLogger('AddSkillDropdown');
 
@@ -32,19 +33,20 @@ export function useAddSkill(): UseAddSkillResult {
   const [uploadError, setUploadError] = useState<string | null>(null);
 
   const handleUploadSkill = async (onSkillAdded?: () => void) => {
-    if (isLoadingRef.current || !window.accomplish) {
+    const w = getOptionalWindowBridge();
+    if (isLoadingRef.current || !w) {
       return;
     }
     try {
       isLoadingRef.current = true;
       setIsLoading(true);
       setUploadError(null);
-      const folderPath = await window.accomplish.pickSkillFolder();
+      const folderPath = await w.pickSkillFolder();
       if (!folderPath) {
         setIsLoading(false);
         return;
       }
-      await window.accomplish.addSkillFromFolder(folderPath);
+      await w.addSkillFromFolder(folderPath);
       onSkillAdded?.();
     } catch (err) {
       logger.error('Failed to upload skill:', err);
@@ -63,14 +65,15 @@ export function useAddSkill(): UseAddSkillResult {
 
   const handleImportFromGitHub = async (onSkillAdded?: () => void) => {
     const normalizedGitHubUrl = gitHubUrl.trim();
-    if (isLoadingRef.current || !normalizedGitHubUrl || !window.accomplish) {
+    const w = getOptionalWindowBridge();
+    if (isLoadingRef.current || !normalizedGitHubUrl || !w) {
       return;
     }
     try {
       isLoadingRef.current = true;
       setIsLoading(true);
       setError(null);
-      await window.accomplish.addSkillFromGitHub(normalizedGitHubUrl);
+      await w.addSkillFromGitHub(normalizedGitHubUrl);
       setGitHubUrl('');
       setIsGitHubDialogOpen(false);
       onSkillAdded?.();

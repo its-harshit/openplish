@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { ProviderId, ConnectedProvider } from '@somehow_ai/agent-core';
 import { DEFAULT_PROVIDERS } from '@somehow_ai/agent-core/common';
-import { getAccomplish } from '@/lib/accomplish';
+import { getSomehow } from '@/lib/somehow';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('useProviderModels');
@@ -36,7 +36,7 @@ export function useProviderModels({
     if (!providerConfig?.modelsEndpoint) return;
 
     const controller = new AbortController();
-    const accomplish = getAccomplish();
+    const accomplish = getSomehow();
     accomplish
       .fetchProviderModels(providerId, {
         baseUrl: isOpenAI ? openAiBaseUrl.trim() || undefined : connectedProviderBaseUrl,
