@@ -1,5 +1,5 @@
 import * as pty from 'node-pty';
-import { waitForPortRelease, stripAnsi } from '@accomplish_ai/agent-core';
+import { waitForPortRelease, stripAnsi } from '@somehow_ai/agent-core';
 import { getLogCollector } from '../logging';
 import {
   type LoginResult,

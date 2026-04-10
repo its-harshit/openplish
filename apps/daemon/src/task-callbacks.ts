@@ -13,7 +13,7 @@ import {
   type TaskStatus,
   type StorageAPI,
   type TaskManagerAPI,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 
 export function createTaskCallbacks(
   taskId: string,

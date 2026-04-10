@@ -11,6 +11,6 @@
     "playwright": "npm:rebrowser-playwright@^1.52.0"
   },
   "devDependencies": {
-    "@accomplish/desktop": "file:../../../apps/desktop"
+    "@somehow/desktop": "file:../../../apps/desktop"
   }
 }

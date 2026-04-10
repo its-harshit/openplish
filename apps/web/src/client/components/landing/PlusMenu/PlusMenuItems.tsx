@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Paperclip, FolderOpen } from '@phosphor-icons/react';
-import type { Skill, McpConnector } from '@accomplish_ai/agent-core/common';
+import type { Skill, McpConnector } from '@somehow_ai/agent-core/common';
 import {
   DropdownMenuContent,
   DropdownMenuSub,

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { AlertTriangle, AlertCircle, File, Brain, Monitor } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { PermissionRequest } from '@accomplish_ai/agent-core/common';
+import type { PermissionRequest } from '@somehow_ai/agent-core/common';
 import { getAccomplish } from '@/lib/accomplish';
 import {
   isDeleteOperation,

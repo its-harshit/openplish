@@ -1,5 +1,5 @@
-import type { FileOperationPolicyMode } from '@accomplish_ai/agent-core';
-import { resolveEffectiveFileOperationPolicy } from '@accomplish_ai/agent-core';
+import type { FileOperationPolicyMode } from '@somehow_ai/agent-core';
+import { resolveEffectiveFileOperationPolicy } from '@somehow_ai/agent-core';
 import { getStorage } from '../../store/storage.js';
 import type { IpcHandler } from '../types.js';
 import {

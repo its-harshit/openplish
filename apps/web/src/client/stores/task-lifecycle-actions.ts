@@ -1,4 +1,4 @@
-import type { TaskStatus } from '@accomplish_ai/agent-core';
+import type { TaskStatus } from '@somehow_ai/agent-core';
 import { getAccomplish } from '../lib/accomplish';
 import type { TaskState } from './taskStore';
 import { hasTaskStateToken } from './task-state-helpers';

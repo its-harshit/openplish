@@ -1,7 +1,7 @@
 import { app } from 'electron';
-import type { TaskManagerOptions, TaskCallbacks } from '@accomplish_ai/agent-core';
-import type { TaskConfig } from '@accomplish_ai/agent-core';
-import { DEV_BROWSER_PORT } from '@accomplish_ai/agent-core';
+import type { TaskManagerOptions, TaskCallbacks } from '@somehow_ai/agent-core';
+import type { TaskConfig } from '@somehow_ai/agent-core';
+import { DEV_BROWSER_PORT } from '@somehow_ai/agent-core';
 import {
   getAzureEntraToken,
   ensureDevBrowserServer,
@@ -10,8 +10,8 @@ import {
   getModelDisplayName,
   type BrowserServerConfig,
   type SandboxPaths,
-} from '@accomplish_ai/agent-core';
-import type { AzureFoundryCredentials } from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
+import type { AzureFoundryCredentials } from '@somehow_ai/agent-core';
 import { getStorage } from '../store/storage';
 import { getLogCollector } from '../logging';
 import { getOpenCodeCliPath, isOpenCodeBundled } from './cli-resolver';

@@ -60,7 +60,7 @@
     "fireworks": "Fireworks AI",
     "groq": "Groq",
     "huggingface-local": "HuggingFace Local",
-    "accomplish-ai": "SomeHow AI",
+    "somehow-ai": "SomeHow AI",
     "accomplishAi": {
       "description": "Используйте встроенную модель на базе SomeHow — API-ключ не требуется.\nВключает 200 бесплатных кредитов в месяц.",
       "disconnect": "Отключить",
@@ -93,7 +93,7 @@
     "fireworks": "Модели быстрого вывода",
     "groq": "Сверхбыстрые модели Llama",
     "huggingface-local": "Локальный вывод",
-    "accomplish-ai": "Бесплатный план",
+    "somehow-ai": "Бесплатный план",
     "venice": "Сервис",
     "nim": "Модели NVIDIA",
     "custom": "Пользовательский",
@@ -288,7 +288,7 @@
     "modes": {
       "inherit": {
         "label": "Наследовать из окружения",
-        "desc": "Использовать ACCOMPLISH_FILE_OPERATION_POLICY из .env или системного окружения (по умолчанию ограничено, если не задано standard/full)."
+        "desc": "Использовать SOMEHOW_FILE_OPERATION_POLICY из .env или системного окружения (по умолчанию ограничено, если не задано standard/full)."
       },
       "restricted": {
         "label": "Ограниченный (рекомендуется)",

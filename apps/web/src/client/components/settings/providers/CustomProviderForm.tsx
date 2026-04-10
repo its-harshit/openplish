@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { ConnectedProvider, CustomCredentials } from '@accomplish_ai/agent-core';
+import type { ConnectedProvider, CustomCredentials } from '@somehow_ai/agent-core';
 import { ProviderFormHeader } from '../shared';
 import { settingsVariants, settingsTransitions } from '@/lib/animations';
 import { getAccomplish } from '@/lib/accomplish';

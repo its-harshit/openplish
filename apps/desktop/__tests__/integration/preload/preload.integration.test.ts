@@ -45,9 +45,9 @@ describe('Preload Script Integration', () => {
 
     // Capture what the real preload exposes
     mockExposeInMainWorld.mockImplementation((name: string, api: unknown) => {
-      if (name === 'accomplish') {
+      if (name === 'somehow' || name === 'accomplish') {
         capturedAccomplishAPI = api as Record<string, unknown>;
-      } else if (name === 'accomplishShell') {
+      } else if (name === 'somehowShell' || name === 'accomplishShell') {
         capturedAccomplishShell = api as Record<string, unknown>;
       }
     });
@@ -62,12 +62,14 @@ describe('Preload Script Integration', () => {
   });
 
   describe('API Exposure', () => {
-    it('should expose accomplish API via contextBridge', () => {
+    it('should expose somehow and accomplish APIs via contextBridge', () => {
+      expect(mockExposeInMainWorld).toHaveBeenCalledWith('somehow', expect.any(Object));
       expect(mockExposeInMainWorld).toHaveBeenCalledWith('accomplish', expect.any(Object));
       expect(capturedAccomplishAPI).toBeDefined();
     });
 
-    it('should expose accomplishShell info via contextBridge', () => {
+    it('should expose somehowShell and accomplishShell via contextBridge', () => {
+      expect(mockExposeInMainWorld).toHaveBeenCalledWith('somehowShell', expect.any(Object));
       expect(mockExposeInMainWorld).toHaveBeenCalledWith('accomplishShell', expect.any(Object));
       expect(capturedAccomplishShell).toBeDefined();
     });

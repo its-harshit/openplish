@@ -23,7 +23,7 @@ export type ProviderId =
   | 'nim'
   | 'custom'
   | 'copilot'
-  | 'accomplish-ai';
+  | 'somehow-ai';
 
 export type ProviderCategory =
   | 'classic'
@@ -218,8 +218,8 @@ export const PROVIDER_META: Record<ProviderId, ProviderMeta> = {
     logoKey: 'github-copilot',
     helpUrl: 'https://github.com/settings/copilot',
   },
-  'accomplish-ai': {
-    id: 'accomplish-ai',
+  'somehow-ai': {
+    id: 'somehow-ai',
     name: 'SomeHow AI',
     category: 'accomplish',
     label: 'Free Tier',
@@ -318,7 +318,7 @@ export interface CopilotOAuthCredentials {
 }
 
 export interface AccomplishAiCredentials {
-  type: 'accomplish-ai';
+  type: 'somehow-ai';
   deviceFingerprint: string;
 }
 
@@ -397,7 +397,7 @@ export const DEFAULT_MODELS: Partial<Record<ProviderId, string>> = {
   venice: 'venice/llama-3.3-70b',
   nim: 'nim/meta/llama-3.1-70b-instruct',
   copilot: 'copilot/gpt-4o',
-  'accomplish-ai': 'accomplish-ai/accomplish-free',
+  'somehow-ai': 'somehow-ai/somehow-free',
 };
 
 export function getDefaultModelForProvider(providerId: ProviderId): string | null {
@@ -434,5 +434,5 @@ export const PROVIDER_ID_TO_OPENCODE: Record<ProviderId, string> = {
   nim: 'nim',
   custom: 'custom',
   copilot: 'github-copilot',
-  'accomplish-ai': 'accomplish-ai',
+  'somehow-ai': 'somehow-ai',
 };

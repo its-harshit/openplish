@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getAccomplish } from '@/lib/accomplish';
-import type { ConnectedProvider, AzureFoundryCredentials } from '@accomplish_ai/agent-core/common';
+import type { ConnectedProvider, AzureFoundryCredentials } from '@somehow_ai/agent-core/common';
 import { ProviderFormHeader } from '../shared';
 import { AzureFoundryConnectedSection } from './AzureFoundryConnectedSection';
 import { AzureFoundryDisconnectedForm } from './AzureFoundryDisconnectedForm';

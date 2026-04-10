@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { PROMPT_DEFAULT_MAX_LENGTH } from '@accomplish_ai/agent-core/common';
+import { PROMPT_DEFAULT_MAX_LENGTH } from '@somehow_ai/agent-core/common';
 import { useTaskStore } from '../../stores/taskStore';
 import { getAccomplish } from '../../lib/accomplish';
 import { useSpeechInput } from '../../hooks/useSpeechInput';

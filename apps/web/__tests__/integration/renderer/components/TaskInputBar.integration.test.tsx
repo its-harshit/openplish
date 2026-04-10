@@ -8,7 +8,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { PROMPT_DEFAULT_MAX_LENGTH } from '@accomplish_ai/agent-core/common';
+import { PROMPT_DEFAULT_MAX_LENGTH } from '@somehow_ai/agent-core/common';
 import { TaskInputBar } from '@/components/landing/TaskInputBar';
 import { PlusMenu } from '@/components/landing/PlusMenu';
 

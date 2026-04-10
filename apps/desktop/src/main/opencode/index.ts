@@ -1,5 +1,5 @@
 // Factory functions from agent-core
-export { OpenCodeCliNotFoundError, createTaskManager } from '@accomplish_ai/agent-core';
+export { OpenCodeCliNotFoundError, createTaskManager } from '@somehow_ai/agent-core';
 
 // Types from agent-core
 export type {
@@ -7,7 +7,7 @@ export type {
   TaskCallbacks,
   TaskProgressEvent,
   TaskManagerAPI,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 
 export {
   createElectronTaskManagerOptions,
@@ -27,7 +27,7 @@ export {
   generateOpenCodeConfig,
   getMcpToolsPath,
   syncApiKeysToOpenCodeAuth,
-  ACCOMPLISH_AGENT_NAME,
+  SOMEHOW_AGENT_NAME,
 } from './config-generator';
 
 export { loginOpenAiWithChatGpt } from './auth-browser';

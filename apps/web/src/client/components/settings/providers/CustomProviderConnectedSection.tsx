@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import type { ConnectedProvider, CustomCredentials } from '@accomplish_ai/agent-core';
+import type { ConnectedProvider, CustomCredentials } from '@somehow_ai/agent-core';
 import { ConnectedControls } from '../shared';
 import { settingsVariants, settingsTransitions } from '@/lib/animations';
 

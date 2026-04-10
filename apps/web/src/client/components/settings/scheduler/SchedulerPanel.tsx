@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Plus, Info } from '@phosphor-icons/react';
 import { useAccomplish } from '@/lib/accomplish';
 import { useWorkspaceStore } from '@/stores/workspaceStore';
-import type { ScheduledTask } from '@accomplish_ai/agent-core/common';
+import type { ScheduledTask } from '@somehow_ai/agent-core/common';
 import { ScheduleCard } from './ScheduleCard';
 import { AddScheduleDialog } from './AddScheduleDialog';
 

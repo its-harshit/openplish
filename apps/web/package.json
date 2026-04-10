@@ -1,8 +1,14 @@
 {
-  "name": "@accomplish/web",
+  "name": "@somehow/web",
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "description": "SomeHow web UI (Vite + React)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/somehow-ai/somehow.git",
+    "directory": "apps/web"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.client.json --noEmit && vite build",
@@ -15,7 +21,7 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "@accomplish_ai/agent-core": "workspace:*",
+    "@somehow_ai/agent-core": "workspace:*",
     "@fontsource-variable/inter": "^5.2.8",
     "@phosphor-icons/react": "^2.1.10",
     "@radix-ui/react-avatar": "^1.1.2",

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useTaskStore } from '@/stores/taskStore';
 import { getAccomplish } from '@/lib/accomplish';
 import { createLogger } from '@/lib/logger';
-import { hasAnyReadyProvider } from '@accomplish_ai/agent-core/common';
+import { hasAnyReadyProvider } from '@somehow_ai/agent-core/common';
 import { USE_CASE_KEYS, FAVORITES_PREVIEW_COUNT } from './homeConstants';
 import { usePromptAttachments } from './usePromptAttachments';
 import { useHomePageSettings } from './useHomePageSettings';

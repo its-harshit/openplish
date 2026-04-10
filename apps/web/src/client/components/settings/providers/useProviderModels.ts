@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import type { ProviderId, ConnectedProvider } from '@accomplish_ai/agent-core';
-import { DEFAULT_PROVIDERS } from '@accomplish_ai/agent-core/common';
+import type { ProviderId, ConnectedProvider } from '@somehow_ai/agent-core';
+import { DEFAULT_PROVIDERS } from '@somehow_ai/agent-core/common';
 import { getAccomplish } from '@/lib/accomplish';
 import { createLogger } from '@/lib/logger';
 

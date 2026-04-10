@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { getAccomplish } from '@/lib/accomplish';
-import type { SandboxConfig } from '@accomplish_ai/agent-core';
+import type { SandboxConfig } from '@somehow_ai/agent-core';
 
 interface SandboxSectionProps {
   visible: boolean;

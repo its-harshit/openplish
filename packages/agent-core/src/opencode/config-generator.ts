@@ -3,7 +3,7 @@ import fs from 'fs';
 import { createConsoleLogger } from '../utils/logging.js';
 import {
   getPlatformEnvironmentInstructions,
-  ACCOMPLISH_SYSTEM_PROMPT_TEMPLATE,
+  SOMEHOW_SYSTEM_PROMPT_TEMPLATE,
   getFilePermissionSection,
 } from './system-prompt.js';
 import { buildMcpServers } from './generator-mcp.js';
@@ -27,7 +27,7 @@ import { BASE_PROVIDERS, getBrowserBehaviorInstructions } from './config-generat
 
 const log = createConsoleLogger({ prefix: 'OpenCodeConfig' });
 
-export const ACCOMPLISH_AGENT_NAME = 'somehow';
+export const SOMEHOW_AGENT_NAME = 'somehow';
 
 export function generateConfig(options: ConfigGeneratorOptions): GeneratedConfig {
   const {
@@ -46,7 +46,7 @@ export function generateConfig(options: ConfigGeneratorOptions): GeneratedConfig
   } = options;
 
   const environmentInstructions = getPlatformEnvironmentInstructions(platform);
-  let systemPrompt = ACCOMPLISH_SYSTEM_PROMPT_TEMPLATE.replace(
+  let systemPrompt = SOMEHOW_SYSTEM_PROMPT_TEMPLATE.replace(
     /\{\{ENVIRONMENT_INSTRUCTIONS\}\}/g,
     environmentInstructions,
   ).replace(/\{\{FILE_PERMISSION_SECTION\}\}/g, getFilePermissionSection());
@@ -102,7 +102,7 @@ ${options.knowledgeNotes}
   if (!bundledNodeBinPath) {
     throw new Error(
       '[OpenCode Config] Missing bundled Node.js path; cannot launch MCP tools. ' +
-        'Run "pnpm -F @accomplish/desktop download:nodejs" and rebuild artifacts.',
+        'Run "pnpm -F @somehow/desktop download:nodejs" and rebuild artifacts.',
     );
   }
 
@@ -155,13 +155,13 @@ ${options.knowledgeNotes}
       skillRootPaths.length > 0 && {
         skills: { paths: skillRootPaths },
       }),
-    default_agent: ACCOMPLISH_AGENT_NAME,
+    default_agent: SOMEHOW_AGENT_NAME,
     enabled_providers: enabledProviders,
     permission: { '*': 'allow', todowrite: 'allow' },
     provider: Object.keys(providerConfig).length > 0 ? providerConfig : undefined,
     plugin: ['@tarquinen/opencode-dcp@^2.0.0'],
     agent: {
-      [ACCOMPLISH_AGENT_NAME]: {
+      [SOMEHOW_AGENT_NAME]: {
         description: 'Browser automation assistant using dev-browser',
         prompt: systemPrompt,
         mode: 'primary',

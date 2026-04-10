@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
-import type { LocalMcpServer } from '@accomplish_ai/agent-core';
+import type { LocalMcpServer } from '@somehow_ai/agent-core';
 import { useLocalMcpServers } from './useLocalMcpServers';
 
 function LocalMcpRow({

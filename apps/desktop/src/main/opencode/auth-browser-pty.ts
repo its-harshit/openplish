@@ -4,7 +4,7 @@
  */
 import * as pty from 'node-pty';
 import { app, shell } from 'electron';
-import { quoteForShell, getPlatformShell, getShellArgs } from '@accomplish_ai/agent-core';
+import { quoteForShell, getPlatformShell, getShellArgs } from '@somehow_ai/agent-core';
 import { getOpenCodeCliPath } from './electron-options';
 import { generateOpenCodeConfig } from './config-generator';
 import { isOpenCodeCliInstallError, INSTALL_ERROR_MESSAGE } from './cli-error-utils';

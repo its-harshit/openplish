@@ -43,7 +43,7 @@ export function getNodeExecutable(bundledNodeBinPath?: string): string {
   if (!bundledNodeBinPath) {
     throw new Error(
       '[Browser] Bundled Node.js path is missing. ' +
-        'Run "pnpm -F @accomplish/desktop download:nodejs" and rebuild artifacts.',
+        'Run "pnpm -F @somehow/desktop download:nodejs" and rebuild artifacts.',
     );
   }
 
@@ -55,7 +55,7 @@ export function getNodeExecutable(bundledNodeBinPath?: string): string {
 
   throw new Error(
     `[Browser] Missing bundled Node.js executable: ${nodePath}. ` +
-      'Run "pnpm -F @accomplish/desktop download:nodejs" and rebuild artifacts.',
+      'Run "pnpm -F @somehow/desktop download:nodejs" and rebuild artifacts.',
   );
 }
 
@@ -87,7 +87,7 @@ export async function installPlaywrightChromium(
     if (!fs.existsSync(devBrowserDir)) {
       const message =
         `[Browser] Missing dev-browser directory: ${devBrowserDir}. ` +
-        'Run "pnpm -F @accomplish/desktop build:mcp-tools:dev" and rebuild artifacts.';
+        'Run "pnpm -F @somehow/desktop build:mcp-tools:dev" and rebuild artifacts.';
       onProgress?.(message);
       reject(new Error(message));
       return;

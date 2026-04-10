@@ -12,7 +12,7 @@ const path = require('path');
 
 const isWindows = process.platform === 'win32';
 const nodeModulesPath = path.join(__dirname, '..', 'node_modules');
-const accomplishPath = path.join(nodeModulesPath, '@accomplish_ai');
+const somehowAiPath = path.join(nodeModulesPath, '@somehow_ai');
 
 // Save symlink targets for restoration
 const workspacePackages = ['agent-core'];
@@ -40,7 +40,7 @@ const resolvedSymlinks = {};
 try {
   // Check and remove workspace symlinks
   for (const pkg of workspacePackages) {
-    const pkgPath = path.join(accomplishPath, pkg);
+    const pkgPath = path.join(somehowAiPath, pkg);
     if (fs.existsSync(pkgPath)) {
       const stats = fs.lstatSync(pkgPath);
       if (stats.isSymbolicLink()) {
@@ -51,10 +51,10 @@ try {
     }
   }
 
-  // Remove empty @accomplish_ai directory if it exists
+  // Remove empty @somehow_ai directory if it exists
   if (Object.keys(symlinkTargets).length > 0) {
     try {
-      fs.rmdirSync(accomplishPath);
+      fs.rmdirSync(somehowAiPath);
     } catch {
       // Directory not empty or doesn't exist, ignore
     }
@@ -113,13 +113,13 @@ try {
   if (packagesToRestore.length > 0) {
     console.log('Restoring workspace symlinks');
 
-    // Recreate @accomplish_ai directory if needed
-    if (!fs.existsSync(accomplishPath)) {
-      fs.mkdirSync(accomplishPath, { recursive: true });
+    // Recreate @somehow_ai directory if needed
+    if (!fs.existsSync(somehowAiPath)) {
+      fs.mkdirSync(somehowAiPath, { recursive: true });
     }
 
     for (const pkg of packagesToRestore) {
-      const pkgPath = path.join(accomplishPath, pkg);
+      const pkgPath = path.join(somehowAiPath, pkg);
       const target = symlinkTargets[pkg];
 
       // On Windows, use junction instead of symlink (doesn't require admin privileges)

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus } from '@phosphor-icons/react';
-import type { Skill, McpConnector } from '@accomplish_ai/agent-core/common';
+import type { Skill, McpConnector } from '@somehow_ai/agent-core/common';
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { PlusMenuItems } from './PlusMenuItems';
 import { CreateSkillModal } from '@/components/skills/CreateSkillModal';

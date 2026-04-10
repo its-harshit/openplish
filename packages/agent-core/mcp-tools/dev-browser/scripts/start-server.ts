@@ -25,23 +25,15 @@ console.log(`Creating data directory: ${dataDir}`);
 mkdirSync(tmpDir, { recursive: true });
 mkdirSync(profileDir, { recursive: true });
 
-const ACCOMPLISH_HTTP_PORT = parseInt(process.env.DEV_BROWSER_PORT || '9224', 10);
-const ACCOMPLISH_CDP_PORT = parseInt(process.env.DEV_BROWSER_CDP_PORT || '9225', 10);
+const SOMEHOW_HTTP_PORT = parseInt(process.env.DEV_BROWSER_PORT || '9224', 10);
+const SOMEHOW_CDP_PORT = parseInt(process.env.DEV_BROWSER_CDP_PORT || '9225', 10);
 
-if (
-  !Number.isFinite(ACCOMPLISH_HTTP_PORT) ||
-  ACCOMPLISH_HTTP_PORT < 1 ||
-  ACCOMPLISH_HTTP_PORT > 65535
-) {
+if (!Number.isFinite(SOMEHOW_HTTP_PORT) || SOMEHOW_HTTP_PORT < 1 || SOMEHOW_HTTP_PORT > 65535) {
   throw new Error(
     `Invalid DEV_BROWSER_PORT: ${process.env.DEV_BROWSER_PORT}. Must be a number between 1 and 65535`,
   );
 }
-if (
-  !Number.isFinite(ACCOMPLISH_CDP_PORT) ||
-  ACCOMPLISH_CDP_PORT < 1 ||
-  ACCOMPLISH_CDP_PORT > 65535
-) {
+if (!Number.isFinite(SOMEHOW_CDP_PORT) || SOMEHOW_CDP_PORT < 1 || SOMEHOW_CDP_PORT > 65535) {
   throw new Error(
     `Invalid DEV_BROWSER_CDP_PORT: ${process.env.DEV_BROWSER_CDP_PORT}. Must be a number between 1 and 65535`,
   );
@@ -49,7 +41,7 @@ if (
 
 console.log('Checking for existing servers...');
 try {
-  const res = await fetch(`http://localhost:${ACCOMPLISH_HTTP_PORT}`, {
+  const res = await fetch(`http://localhost:${SOMEHOW_HTTP_PORT}`, {
     signal: AbortSignal.timeout(1000),
   });
   if (res.ok) {
@@ -59,7 +51,7 @@ try {
       console.log('Found relay server running, killing to start launch server...');
       try {
         if (process.platform === 'win32') {
-          const output = execSync(`netstat -ano | findstr :${ACCOMPLISH_HTTP_PORT}`, {
+          const output = execSync(`netstat -ano | findstr :${SOMEHOW_HTTP_PORT}`, {
             encoding: 'utf-8',
           });
           const match = output.match(/LISTENING\s+(\d+)/);
@@ -67,7 +59,7 @@ try {
             execSync(`taskkill /F /PID ${match[1]}`, { stdio: 'ignore' });
           }
         } else {
-          const pid = execSync(`lsof -ti:${ACCOMPLISH_HTTP_PORT}`, { encoding: 'utf-8' }).trim();
+          const pid = execSync(`lsof -ti:${SOMEHOW_HTTP_PORT}`, { encoding: 'utf-8' }).trim();
           if (pid) {
             execSync(`kill -9 ${pid}`);
           }
@@ -77,7 +69,7 @@ try {
         // intentionally empty
       }
     } else {
-      console.log(`Launch server already running on port ${ACCOMPLISH_HTTP_PORT}`);
+      console.log(`Launch server already running on port ${SOMEHOW_HTTP_PORT}`);
       process.exit(0);
     }
   }
@@ -87,23 +79,19 @@ try {
 
 try {
   if (process.platform === 'win32') {
-    const output = execSync(`netstat -ano | findstr :${ACCOMPLISH_CDP_PORT}`, {
+    const output = execSync(`netstat -ano | findstr :${SOMEHOW_CDP_PORT}`, {
       encoding: 'utf-8',
     });
     const match = output.match(/LISTENING\s+(\d+)/);
     if (match) {
       const pid = match[1];
-      console.log(
-        `Cleaning up stale Chrome process on CDP port ${ACCOMPLISH_CDP_PORT} (PID: ${pid})`,
-      );
+      console.log(`Cleaning up stale Chrome process on CDP port ${SOMEHOW_CDP_PORT} (PID: ${pid})`);
       execSync(`taskkill /F /PID ${pid}`, { stdio: 'ignore' });
     }
   } else {
-    const pid = execSync(`lsof -ti:${ACCOMPLISH_CDP_PORT}`, { encoding: 'utf-8' }).trim();
+    const pid = execSync(`lsof -ti:${SOMEHOW_CDP_PORT}`, { encoding: 'utf-8' }).trim();
     if (pid) {
-      console.log(
-        `Cleaning up stale Chrome process on CDP port ${ACCOMPLISH_CDP_PORT} (PID: ${pid})`,
-      );
+      console.log(`Cleaning up stale Chrome process on CDP port ${SOMEHOW_CDP_PORT} (PID: ${pid})`);
       execSync(`kill -9 ${pid}`);
     }
   }
@@ -166,8 +154,8 @@ const headless = process.env.HEADLESS === 'true';
 async function startServer(retry = false): Promise<void> {
   try {
     const server = await serve({
-      port: ACCOMPLISH_HTTP_PORT,
-      cdpPort: ACCOMPLISH_CDP_PORT,
+      port: SOMEHOW_HTTP_PORT,
+      cdpPort: SOMEHOW_CDP_PORT,
       headless,
       profileDir,
       useSystemChrome: true,

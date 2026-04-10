@@ -9,9 +9,9 @@ import {
 
 const QUESTION_API_PORT = process.env.QUESTION_API_PORT || '9227';
 const QUESTION_API_URL = `http://localhost:${QUESTION_API_PORT}/question`;
-const TASK_ID = process.env.ACCOMPLISH_TASK_ID;
+const TASK_ID = process.env.SOMEHOW_TASK_ID;
 
-const AUTH_TOKEN = process.env.ACCOMPLISH_DAEMON_AUTH_TOKEN;
+const AUTH_TOKEN = process.env.SOMEHOW_DAEMON_AUTH_TOKEN;
 
 function getHeaders(): Record<string, string> {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };

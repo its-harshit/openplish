@@ -15,11 +15,11 @@ const fs = require('fs');
 
 // Prevent infinite recursion when npm install triggers parent postinstall
 // This happens on Windows where npm walks up to find package.json
-if (process.env.ACCOMPLISH_POSTINSTALL_RUNNING) {
+if (process.env.SOMEHOW_POSTINSTALL_RUNNING) {
   console.log('> Postinstall already running, skipping nested invocation');
   process.exit(0);
 }
-process.env.ACCOMPLISH_POSTINSTALL_RUNNING = '1';
+process.env.SOMEHOW_POSTINSTALL_RUNNING = '1';
 
 const isWindows = process.platform === 'win32';
 
@@ -32,7 +32,7 @@ function runCommand(command, description) {
       shell: true,
       env: {
         ...process.env,
-        ACCOMPLISH_POSTINSTALL_RUNNING: '1',
+        SOMEHOW_POSTINSTALL_RUNNING: '1',
       },
     });
   } catch (error) {
@@ -95,7 +95,7 @@ if (isWindows) {
   runCommand('npx electron-rebuild', 'Running electron-rebuild');
 }
 
-const useBundledMcp = process.env.ACCOMPLISH_BUNDLED_MCP === '1' || process.env.CI === 'true';
+const useBundledMcp = process.env.SOMEHOW_BUNDLED_MCP === '1' || process.env.CI === 'true';
 
 // Install shared MCP tools runtime dependencies (Playwright) at mcp-tools/ root
 // MCP tools are now in packages/agent-core/mcp-tools

@@ -6,7 +6,7 @@ import type {
   Workspace,
   WorkspaceCreateInput,
   WorkspaceUpdateInput,
-} from '@accomplish_ai/agent-core/common';
+} from '@somehow_ai/agent-core/common';
 import { getAccomplish } from '../lib/accomplish';
 
 interface WorkspaceState {

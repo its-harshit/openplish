@@ -1,6 +1,6 @@
 import { execFile } from 'child_process';
-import { validateVertexCredentials, fetchVertexModels } from '@accomplish_ai/agent-core';
-import type { VertexCredentials } from '@accomplish_ai/agent-core';
+import { validateVertexCredentials, fetchVertexModels } from '@somehow_ai/agent-core';
+import type { VertexCredentials } from '@somehow_ai/agent-core';
 import { storeApiKey, getApiKey } from '../store/secureStorage';
 import { getLogCollector } from '../logging';
 import { normalizeIpcError } from '../ipc/validation';

@@ -9,7 +9,7 @@ import {
   type PermissionFileRequestData,
   type PermissionQuestionRequestData,
   type PermissionQuestionResponseData,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import { createHttpServer, type Route } from './http-server-factory.js';
 import { RateLimiter } from './rate-limiter.js';
 

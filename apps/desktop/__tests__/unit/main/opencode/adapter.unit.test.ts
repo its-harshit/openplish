@@ -27,7 +27,7 @@ import type {
   OpenCodeToolUseMessage,
   OpenCodeStepFinishMessage,
   OpenCodeErrorMessage,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 
 // Mock electron module
 const mockApp = {
@@ -106,8 +106,8 @@ vi.mock('node-pty', () => ({
 // This will be accessed by the mocked OpenCodeAdapter
 const _mockPtyInstanceRef = { current: null as MockPty | null };
 
-// Mock @accomplish_ai/agent-core - agent-core package exports used by adapter
-vi.mock('@accomplish_ai/agent-core', async () => {
+// Mock @somehow_ai/agent-core - agent-core package exports used by adapter
+vi.mock('@somehow_ai/agent-core', async () => {
   const { EventEmitter } = await import('events');
   const nodePty = await import('node-pty');
 
@@ -704,7 +704,7 @@ vi.mock('@main/opencode/config-generator', () => ({
   generateOpenCodeConfig: vi.fn(() => Promise.resolve('/mock/config/path')),
   syncApiKeysToOpenCodeAuth: vi.fn(() => Promise.resolve()),
   getMcpToolsPath: vi.fn(() => '/mock/mcp-tools'),
-  ACCOMPLISH_AGENT_NAME: 'somehow',
+  SOMEHOW_AGENT_NAME: 'somehow',
 }));
 
 // Mock electron-options - provides adapter options for desktop wrapper
@@ -773,8 +773,8 @@ describe('OpenCode Adapter Module', () => {
 
     // Re-import modules to get fresh state
     const desktopModule = await import('@main/opencode');
-    // OpenCodeAdapter is now internal to agent-core, get it from the mocked @accomplish_ai/agent-core module
-    const agentCoreModule = await import('@accomplish_ai/agent-core');
+    // OpenCodeAdapter is now internal to agent-core, get it from the mocked @somehow_ai/agent-core module
+    const agentCoreModule = await import('@somehow_ai/agent-core');
     OpenCodeAdapter = (agentCoreModule as unknown as { OpenCodeAdapter: unknown }).OpenCodeAdapter;
     isOpenCodeCliInstalled = desktopModule.isOpenCodeCliInstalled;
     getOpenCodeCliVersion = desktopModule.getOpenCodeCliVersion;

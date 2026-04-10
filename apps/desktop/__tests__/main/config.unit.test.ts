@@ -20,9 +20,9 @@ describe('config.ts', () => {
 
   describe('getDesktopConfig()', () => {
     describe('default configuration', () => {
-      it('should return default API URL when ACCOMPLISH_API_URL is not set', async () => {
+      it('should return default API URL when SOMEHOW_API_URL is not set', async () => {
         // Arrange
-        delete process.env.ACCOMPLISH_API_URL;
+        delete process.env.SOMEHOW_API_URL;
 
         // Act
         const { getDesktopConfig } = await import('../../src/main/config');
@@ -32,9 +32,9 @@ describe('config.ts', () => {
         expect(config.apiUrl).toBe('https://lite.accomplish.ai');
       });
 
-      it('should return default API URL when ACCOMPLISH_API_URL is undefined', async () => {
+      it('should return default API URL when SOMEHOW_API_URL is undefined', async () => {
         // Arrange
-        process.env.ACCOMPLISH_API_URL = undefined;
+        process.env.SOMEHOW_API_URL = undefined;
 
         // Act
         const { getDesktopConfig } = await import('../../src/main/config');
@@ -48,7 +48,7 @@ describe('config.ts', () => {
     describe('custom API URL parsing', () => {
       it('should use custom HTTPS API URL from environment', async () => {
         // Arrange
-        process.env.ACCOMPLISH_API_URL = 'https://custom.example.com';
+        process.env.SOMEHOW_API_URL = 'https://custom.example.com';
 
         // Act
         const { getDesktopConfig } = await import('../../src/main/config');
@@ -60,7 +60,7 @@ describe('config.ts', () => {
 
       it('should use custom HTTP API URL from environment', async () => {
         // Arrange
-        process.env.ACCOMPLISH_API_URL = 'http://localhost:3000';
+        process.env.SOMEHOW_API_URL = 'http://localhost:3000';
 
         // Act
         const { getDesktopConfig } = await import('../../src/main/config');
@@ -72,7 +72,7 @@ describe('config.ts', () => {
 
       it('should accept URL with path', async () => {
         // Arrange
-        process.env.ACCOMPLISH_API_URL = 'https://api.example.com/v1';
+        process.env.SOMEHOW_API_URL = 'https://api.example.com/v1';
 
         // Act
         const { getDesktopConfig } = await import('../../src/main/config');
@@ -84,7 +84,7 @@ describe('config.ts', () => {
 
       it('should accept URL with port', async () => {
         // Arrange
-        process.env.ACCOMPLISH_API_URL = 'https://api.example.com:8443';
+        process.env.SOMEHOW_API_URL = 'https://api.example.com:8443';
 
         // Act
         const { getDesktopConfig } = await import('../../src/main/config');
@@ -96,7 +96,7 @@ describe('config.ts', () => {
 
       it('should throw error for invalid URL format', async () => {
         // Arrange
-        process.env.ACCOMPLISH_API_URL = 'not-a-url';
+        process.env.SOMEHOW_API_URL = 'not-a-url';
 
         // Act & Assert
         const { getDesktopConfig } = await import('../../src/main/config');
@@ -105,7 +105,7 @@ describe('config.ts', () => {
 
       it('should throw error for URL without protocol', async () => {
         // Arrange
-        process.env.ACCOMPLISH_API_URL = 'example.com';
+        process.env.SOMEHOW_API_URL = 'example.com';
 
         // Act & Assert
         const { getDesktopConfig } = await import('../../src/main/config');
@@ -114,7 +114,7 @@ describe('config.ts', () => {
 
       it('should throw error for empty string URL (invalid url)', async () => {
         // Arrange
-        process.env.ACCOMPLISH_API_URL = '';
+        process.env.SOMEHOW_API_URL = '';
 
         // Act & Assert
         // Empty string is an invalid URL and throws an error
@@ -126,14 +126,14 @@ describe('config.ts', () => {
     describe('config caching behavior', () => {
       it('should cache config and return same result on multiple calls', async () => {
         // Arrange
-        process.env.ACCOMPLISH_API_URL = 'https://first.example.com';
+        process.env.SOMEHOW_API_URL = 'https://first.example.com';
         const { getDesktopConfig } = await import('../../src/main/config');
 
         // Act
         const config1 = getDesktopConfig();
 
         // Change env after first call
-        process.env.ACCOMPLISH_API_URL = 'https://second.example.com';
+        process.env.SOMEHOW_API_URL = 'https://second.example.com';
         const config2 = getDesktopConfig();
 
         // Assert - should return cached value
@@ -155,13 +155,13 @@ describe('config.ts', () => {
 
       it('should reset cache when module is reloaded', async () => {
         // Arrange
-        process.env.ACCOMPLISH_API_URL = 'https://first.example.com';
+        process.env.SOMEHOW_API_URL = 'https://first.example.com';
         const mod1 = await import('../../src/main/config');
         const config1 = mod1.getDesktopConfig();
 
         // Reset modules and change env
         vi.resetModules();
-        process.env.ACCOMPLISH_API_URL = 'https://second.example.com';
+        process.env.SOMEHOW_API_URL = 'https://second.example.com';
 
         // Act
         const mod2 = await import('../../src/main/config');

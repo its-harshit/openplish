@@ -26,7 +26,7 @@ export function escapeShellArg(arg: string, platform: NodeJS.Platform): string {
   if (platform === 'win32') {
     // Quote if the argument contains spaces, double-quotes, or any cmd.exe
     // metacharacter (&, |, <, >, ^, %) that would be misinterpreted when
-    // executing via cmd.exe /s /c. See: https://github.com/accomplish-ai/accomplish/issues/596
+    // executing via cmd.exe /s /c. See: https://github.com/somehow-ai/accomplish/issues/596
     if (/[ "&|<>^%]/.test(arg)) {
       const escaped = arg.replace(/"/g, '""').replace(/%/g, '^%');
       return `"${escaped}"`;
@@ -63,7 +63,7 @@ export function buildPtySpawnArgs(
     }
     // On Windows, spawn the .exe directly in node-pty without a shell wrapper.
     // Passing args as an array avoids all cmd.exe / PowerShell quoting issues.
-    // See: https://github.com/accomplish-ai/accomplish/issues/596
+    // See: https://github.com/somehow-ai/accomplish/issues/596
     return { file: command, args };
   }
 

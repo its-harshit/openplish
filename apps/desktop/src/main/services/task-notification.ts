@@ -1,5 +1,5 @@
 import { Notification, type BrowserWindow } from 'electron';
-import type { StorageAPI } from '@accomplish_ai/agent-core';
+import type { StorageAPI } from '@somehow_ai/agent-core';
 
 interface NotifyOptions {
   status: 'success' | 'error';

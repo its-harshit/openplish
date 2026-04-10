@@ -255,12 +255,12 @@ export interface DaemonMethodMap {
   'health.check': { params: undefined; result: HealthCheckResult };
 
   // Accomplish AI free tier
-  'accomplish-ai.connect': {
+  'somehow-ai.connect': {
     params: undefined;
     result: { deviceFingerprint: string; usage: CreditUsage | null };
   };
-  'accomplish-ai.get-usage': { params: undefined; result: CreditUsage };
-  'accomplish-ai.disconnect': { params: undefined; result: void };
+  'somehow-ai.get-usage': { params: undefined; result: CreditUsage };
+  'somehow-ai.disconnect': { params: undefined; result: void };
 }
 
 /** All valid daemon RPC method names. */
@@ -286,7 +286,7 @@ export interface DaemonNotificationMap {
   'task.checkpoint': CheckpointEvent;
 
   // Accomplish AI credit usage updates (emitted by proxy on each gateway response)
-  'accomplish-ai.usage-update': CreditUsage;
+  'somehow-ai.usage-update': CreditUsage;
   // WhatsApp notifications
   'whatsapp.qr': { qr: string };
   'whatsapp.status': { status: import('./messaging.js').MessagingConnectionStatus };

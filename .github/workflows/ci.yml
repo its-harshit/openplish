@@ -52,7 +52,7 @@ jobs:
         run: pnpm build
 
       - name: Run agent-core tests
-        run: pnpm -F @accomplish_ai/agent-core test
+        run: pnpm -F @somehow_ai/agent-core test
 
   # Run unit and integration tests in parallel
   unit-tests:
@@ -79,7 +79,7 @@ jobs:
         run: pnpm build
 
       - name: Run unit tests
-        run: pnpm -F @accomplish/desktop test:unit
+        run: pnpm -F @somehow/desktop test:unit
 
       - name: Upload unit test results
         if: always()
@@ -113,7 +113,7 @@ jobs:
         run: pnpm build
 
       - name: Run integration tests
-        run: pnpm -F @accomplish/desktop test:integration
+        run: pnpm -F @somehow/desktop test:integration
 
       - name: Upload integration test results
         if: always()
@@ -251,7 +251,7 @@ jobs:
           pnpm dev:clean:check
 
       - name: Run unit tests
-        run: pnpm -F @accomplish/desktop test:unit
+        run: pnpm -F @somehow/desktop test:unit
 
       - name: Run typecheck
         run: pnpm typecheck

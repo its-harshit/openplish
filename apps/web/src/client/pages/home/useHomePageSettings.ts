@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { getAccomplish } from '@/lib/accomplish';
-import { hasAnyReadyProvider } from '@accomplish_ai/agent-core/common';
+import { hasAnyReadyProvider } from '@somehow_ai/agent-core/common';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('HomePageSettings');

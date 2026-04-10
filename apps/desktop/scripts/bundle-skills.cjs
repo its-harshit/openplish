@@ -25,7 +25,7 @@ const skillsDir = path.join(
   __dirname,
   '..',
   'node_modules',
-  '@accomplish_ai',
+  '@somehow_ai',
   'agent-core',
   'mcp-tools',
 );

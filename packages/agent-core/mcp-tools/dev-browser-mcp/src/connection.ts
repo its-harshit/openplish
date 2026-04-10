@@ -74,7 +74,7 @@ export function configure(cfg: ConnectionConfig): void {
  */
 export function configureFromEnv(): ConnectionConfig {
   const cdpEndpoint = process.env.CDP_ENDPOINT;
-  const taskId = process.env.ACCOMPLISH_TASK_ID || 'default';
+  const taskId = process.env.SOMEHOW_TASK_ID || 'default';
 
   if (cdpEndpoint) {
     const headers: Record<string, string> = {};

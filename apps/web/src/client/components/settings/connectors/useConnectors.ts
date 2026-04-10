@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import type { McpConnector } from '@accomplish_ai/agent-core/common';
+import type { McpConnector } from '@somehow_ai/agent-core/common';
 import { getAccomplish } from '@/lib/accomplish';
 import { createLogger } from '@/lib/logger';
 

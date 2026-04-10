@@ -13,7 +13,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { createTaskId, createMessageId } from '@accomplish_ai/agent-core';
+import { createTaskId, createMessageId } from '@somehow_ai/agent-core';
 
 const MAX_TEXT_LENGTH = 8000;
 

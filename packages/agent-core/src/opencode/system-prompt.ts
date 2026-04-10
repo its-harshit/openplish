@@ -29,7 +29,7 @@ export type { FileOperationPolicy } from './system-prompt-file-permissions.js';
  * - `{{BROWSER_CAPABILITY}}` — browser capability line (or empty)
  * - `{{BROWSER_BEHAVIOR}}` — browser behavior rules (or empty)
  */
-export const ACCOMPLISH_SYSTEM_PROMPT_TEMPLATE = `<identity>
+export const SOMEHOW_SYSTEM_PROMPT_TEMPLATE = `<identity>
 You are SomeHow, a {{AGENT_ROLE}} assistant.
 </identity>
 

@@ -1,8 +1,4 @@
-import {
-  STARTUP_STAGES,
-  type TaskUpdateEvent,
-  type TodoItem,
-} from '@accomplish_ai/agent-core/common';
+import { STARTUP_STAGES, type TaskUpdateEvent, type TodoItem } from '@somehow_ai/agent-core/common';
 import { createLogger } from '../lib/logger';
 import { hasTrackedTask } from './task-state-helpers';
 

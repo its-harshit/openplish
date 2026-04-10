@@ -1,4 +1,4 @@
-import type { StoredFavorite } from '@accomplish_ai/agent-core';
+import type { StoredFavorite } from '@somehow_ai/agent-core';
 import { getAccomplish } from '../lib/accomplish';
 import { createLogger } from '../lib/logger';
 import type { TaskState } from './taskStore';

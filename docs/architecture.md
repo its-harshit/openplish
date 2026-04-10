@@ -1,7 +1,7 @@
 ```
 apps/desktop/            # Electron app (main/preload/renderer)
 apps/daemon/             # Background daemon process for task execution
-packages/agent-core/     # Core business logic, shared types, MCP tools (published as @accomplish_ai/agent-core)
+packages/agent-core/     # Core business logic, shared types, MCP tools (published as @somehow_ai/agent-core)
 ```
 
 - `index.ts` - Electron bootstrap, single-instance enforcement, `accomplish://` protocol handler

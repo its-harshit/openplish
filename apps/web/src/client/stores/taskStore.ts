@@ -8,8 +8,8 @@ import {
   type PermissionResponse,
   type TaskMessage,
   type TodoItem,
-} from '@accomplish_ai/agent-core/common';
-import type { StoredFavorite } from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core/common';
+import type { StoredFavorite } from '@somehow_ai/agent-core';
 import { createTaskExecutionActions } from './task-execution-actions';
 import { createTaskHistoryActions } from './task-history-actions';
 import { createTaskSetupActions } from './task-setup-actions';
@@ -65,7 +65,7 @@ export interface TaskState {
   clearStartupStage: (taskId: string) => void;
   sendFollowUp: (
     message: string,
-    attachments?: import('@accomplish_ai/agent-core/common').FileAttachmentInfo[],
+    attachments?: import('@somehow_ai/agent-core/common').FileAttachmentInfo[],
   ) => Promise<boolean>;
   cancelTask: () => Promise<void>;
   interruptTask: () => Promise<void>;

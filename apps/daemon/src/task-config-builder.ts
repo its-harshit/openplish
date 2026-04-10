@@ -23,7 +23,7 @@ import {
   type CliResolverConfig,
   type ProviderId,
   type AccomplishRuntime,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 
 export interface TaskConfigBuilderOptions {
   userDataPath: string;
@@ -140,8 +140,8 @@ export async function onBeforeStart(
     return Number.isNaN(parsed) ? undefined : parsed;
   };
 
-  const permissionApiPort = getPort('ACCOMPLISH_PERMISSION_API_PORT');
-  const questionApiPort = getPort('ACCOMPLISH_QUESTION_API_PORT');
+  const permissionApiPort = getPort('SOMEHOW_PERMISSION_API_PORT');
+  const questionApiPort = getPort('SOMEHOW_QUESTION_API_PORT');
 
   const bundledSkillsPath = opts.isPackaged
     ? path.join(opts.resourcesPath, 'bundled-skills')
@@ -163,7 +163,7 @@ export async function onBeforeStart(
     getApiKey: (provider) => storage.getApiKey(provider),
     permissionApiPort,
     questionApiPort,
-    authToken: process.env.ACCOMPLISH_DAEMON_AUTH_TOKEN,
+    authToken: process.env.SOMEHOW_DAEMON_AUTH_TOKEN,
     skillRootPaths: [bundledSkillsPath, userSkillsPath],
     skills: storage.getEnabledSkills(),
     accomplishRuntime: opts.accomplishRuntime,

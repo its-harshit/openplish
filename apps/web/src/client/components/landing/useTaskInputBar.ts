@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { createLogger } from '@/lib/logger';
-import type { FileAttachmentInfo } from '@accomplish_ai/agent-core';
-import { PROMPT_DEFAULT_MAX_LENGTH } from '@accomplish_ai/agent-core';
+import type { FileAttachmentInfo } from '@somehow_ai/agent-core';
+import { PROMPT_DEFAULT_MAX_LENGTH } from '@somehow_ai/agent-core';
 import { useSpeechInput } from '@/hooks/useSpeechInput';
 import { useTypingPlaceholder } from '@/hooks/useTypingPlaceholder';
 import { useSlashCommand } from '@/hooks/useSlashCommand';

@@ -5,10 +5,9 @@ import { EventEmitter } from 'events';
 // Mocks — must be declared before dynamic imports
 // ---------------------------------------------------------------------------
 
-vi.mock('@accomplish_ai/agent-core', async () => {
-  const actual = await vi.importActual<typeof import('@accomplish_ai/agent-core')>(
-    '@accomplish_ai/agent-core',
-  );
+vi.mock('@somehow_ai/agent-core', async () => {
+  const actual =
+    await vi.importActual<typeof import('@somehow_ai/agent-core')>('@somehow_ai/agent-core');
   return {
     ...actual,
     createTaskId: vi.fn(() => 'test-task-id'),

@@ -16,9 +16,9 @@
     "playwright": "npm:rebrowser-playwright@^1.52.0"
   },
   "devDependencies": {
-    "@accomplish/desktop": "file:../../../../apps/desktop",
     "@hono/node-server": "^1.19.7",
     "@hono/node-ws": "^1.2.0",
+    "@somehow/desktop": "file:../../../../apps/desktop",
     "@types/express": "^5.0.0",
     "express": "^4.21.0",
     "hono": "^4.11.1",

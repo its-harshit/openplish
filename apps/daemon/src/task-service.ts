@@ -13,7 +13,7 @@ import {
   type TaskMessage,
   type TaskStatus,
   type StorageAPI,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import {
   type TaskConfigBuilderOptions,
   getCliCommand,

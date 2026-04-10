@@ -1,8 +1,8 @@
 /**
  * SomeHow shell API - Interface to the Electron main process
  *
- * This module provides type-safe access to the `window.accomplish` bridge
- * exposed by the preload script via contextBridge (internal name unchanged for compatibility).
+ * This module provides type-safe access to the Electron preload bridge
+ * (`window.somehow`, with `window.accomplish` as a legacy alias).
  */
 
 import type {
@@ -36,12 +36,12 @@ import type {
   BrowserFramePayload,
   BrowserStatusPayload,
   BrowserNavigatePayload,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import type {
   CloudBrowserConfig,
   MessagingConnectionStatus,
   ScheduledTask,
-} from '@accomplish_ai/agent-core/common';
+} from '@somehow_ai/agent-core/common';
 
 // Define the API interface
 interface AccomplishAPI {
@@ -624,7 +624,7 @@ interface AccomplishAPI {
   deleteLocalMcpServer(id: string): Promise<void>;
   setLocalMcpServerEnabled(id: string, enabled: boolean): Promise<void>;
 
-  // Built-in free tier (provider id: accomplish-ai)
+  // Built-in free tier (provider id: somehow-ai)
   accomplishAiConnect(): Promise<{
     deviceFingerprint: string;
     spentCredits: number;
@@ -688,66 +688,76 @@ interface AccomplishShell {
 // Extend Window interface
 declare global {
   interface Window {
+    somehow?: AccomplishAPI;
     accomplish?: AccomplishAPI;
+    somehowShell?: AccomplishShell;
     accomplishShell?: AccomplishShell;
   }
 }
 
+function getElectronBridge(): AccomplishAPI | undefined {
+  return window.somehow ?? window.accomplish;
+}
+
+function getElectronShell(): AccomplishShell | undefined {
+  return window.somehowShell ?? window.accomplishShell;
+}
+
 /**
- * Returns the Electron shell API (`window.accomplish`).
+ * Returns the Electron shell API (`window.somehow`, or legacy `window.accomplish`).
  * Throws if not running in Electron.
  */
 export function getAccomplish() {
-  if (!window.accomplish) {
+  const bridge = getElectronBridge();
+  if (!bridge) {
     throw new Error('SomeHow API not available - not running in Electron');
   }
   return {
-    ...window.accomplish,
+    ...bridge,
 
     validateBedrockCredentials: async (
       credentials: BedrockCredentials,
     ): Promise<{ valid: boolean; error?: string }> => {
-      return window.accomplish!.validateBedrockCredentials(JSON.stringify(credentials));
+      return bridge.validateBedrockCredentials(JSON.stringify(credentials));
     },
 
     saveBedrockCredentials: async (credentials: BedrockCredentials): Promise<ApiKeyConfig> => {
-      return window.accomplish!.saveBedrockCredentials(JSON.stringify(credentials));
+      return bridge.saveBedrockCredentials(JSON.stringify(credentials));
     },
 
     getBedrockCredentials: async (): Promise<BedrockCredentials | null> => {
-      return window.accomplish!.getBedrockCredentials();
+      return bridge.getBedrockCredentials();
     },
 
-    fetchBedrockModels: (credentials: string) => window.accomplish!.fetchBedrockModels(credentials),
+    fetchBedrockModels: (credentials: string) => bridge.fetchBedrockModels(credentials),
 
     validateVertexCredentials: async (
       credentials: VertexCredentials,
     ): Promise<{ valid: boolean; error?: string }> => {
-      return window.accomplish!.validateVertexCredentials(JSON.stringify(credentials));
+      return bridge.validateVertexCredentials(JSON.stringify(credentials));
     },
 
     saveVertexCredentials: async (credentials: VertexCredentials): Promise<ApiKeyConfig> => {
-      return window.accomplish!.saveVertexCredentials(JSON.stringify(credentials));
+      return bridge.saveVertexCredentials(JSON.stringify(credentials));
     },
 
     getVertexCredentials: async (): Promise<VertexCredentials | null> => {
-      return window.accomplish!.getVertexCredentials();
+      return bridge.getVertexCredentials();
     },
 
-    fetchVertexModels: (credentials: string) => window.accomplish!.fetchVertexModels(credentials),
+    fetchVertexModels: (credentials: string) => bridge.fetchVertexModels(credentials),
 
-    detectVertexProject: () => window.accomplish!.detectVertexProject(),
+    detectVertexProject: () => bridge.detectVertexProject(),
 
-    listVertexProjects: () => window.accomplish!.listVertexProjects(),
+    listVertexProjects: () => bridge.listVertexProjects(),
 
-    listHuggingFaceModels: () => window.accomplish!.listHuggingFaceModels(),
+    listHuggingFaceModels: () => bridge.listHuggingFaceModels(),
 
-    downloadHuggingFaceModel: (modelId: string) =>
-      window.accomplish!.downloadHuggingFaceModel(modelId),
+    downloadHuggingFaceModel: (modelId: string) => bridge.downloadHuggingFaceModel(modelId),
 
-    startHuggingFaceServer: (modelId: string) => window.accomplish!.startHuggingFaceServer(modelId),
+    startHuggingFaceServer: (modelId: string) => bridge.startHuggingFaceServer(modelId),
 
-    stopHuggingFaceServer: () => window.accomplish!.stopHuggingFaceServer(),
+    stopHuggingFaceServer: () => bridge.stopHuggingFaceServer(),
 
     onHuggingFaceDownloadProgress: (
       callback: (progress: {
@@ -756,7 +766,7 @@ export function getAccomplish() {
         progress: number;
         error?: string;
       }) => void,
-    ) => window.accomplish!.onHuggingFaceDownloadProgress(callback),
+    ) => bridge.onHuggingFaceDownloadProgress(callback),
   };
 }
 
@@ -764,28 +774,28 @@ export function getAccomplish() {
  * Check if running in Electron shell
  */
 export function isRunningInElectron(): boolean {
-  return window.accomplishShell?.isElectron === true;
+  return getElectronShell()?.isElectron === true;
 }
 
 /**
  * Get shell version if available
  */
 export function getShellVersion(): string | null {
-  return window.accomplishShell?.version ?? null;
+  return getElectronShell()?.version ?? null;
 }
 
 /**
  * Get shell platform if available
  */
 export function getShellPlatform(): string | null {
-  return window.accomplishShell?.platform ?? null;
+  return getElectronShell()?.platform ?? null;
 }
 
 /**
  * React hook to use the accomplish API
  */
 export function useAccomplish(): AccomplishAPI {
-  const api = window.accomplish;
+  const api = getElectronBridge();
   if (!api) {
     throw new Error('SomeHow API not available - not running in Electron');
   }

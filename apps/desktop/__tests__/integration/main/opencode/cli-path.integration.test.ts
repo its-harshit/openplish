@@ -31,8 +31,8 @@ vi.mock('child_process', () => ({
   execSync: mockExecSync,
 }));
 
-vi.mock('@accomplish_ai/agent-core', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@accomplish_ai/agent-core')>();
+vi.mock('@somehow_ai/agent-core', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@somehow_ai/agent-core')>();
   return {
     ...actual,
     getSelectedModel: vi.fn(() => null),

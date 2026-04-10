@@ -6,9 +6,9 @@
 set -e
 
 echo "Building unpacked app for production..."
-pnpm -F @accomplish/desktop build:unpack
+pnpm -F @somehow/desktop build:unpack
 
 echo "Launching app with production configuration..."
-ACCOMPLISH_UI_URL=https://lite.accomplish.ai \
-ACCOMPLISH_API_URL=https://lite.accomplish.ai \
+SOMEHOW_UI_URL=https://lite.accomplish.ai \
+SOMEHOW_API_URL=https://lite.accomplish.ai \
 open apps/desktop/release/mac-arm64/Accomplish.app

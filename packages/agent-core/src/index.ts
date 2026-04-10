@@ -107,7 +107,7 @@ export { OpenCodeCliNotFoundError } from './internal/classes/OpenCodeAdapter.js'
 
 // Low-level OpenCode utilities for advanced integrations
 export { resolveCliPath, isCliAvailable } from './opencode/cli-resolver.js';
-export { generateConfig, ACCOMPLISH_AGENT_NAME } from './opencode/config-generator.js';
+export { generateConfig, SOMEHOW_AGENT_NAME } from './opencode/config-generator.js';
 export {
   getFilePermissionSection,
   resolveFileOperationPolicyFromEnv,

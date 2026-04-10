@@ -123,10 +123,9 @@ const agentCoreMocks = {
   OPENCODE_SLACK_MCP_CALLBACK_PATH: '/callback',
 };
 
-vi.mock('@accomplish_ai/agent-core', async () => {
-  const actual = await vi.importActual<typeof import('@accomplish_ai/agent-core')>(
-    '@accomplish_ai/agent-core',
-  );
+vi.mock('@somehow_ai/agent-core', async () => {
+  const actual =
+    await vi.importActual<typeof import('@somehow_ai/agent-core')>('@somehow_ai/agent-core');
   return {
     ...actual,
     ...agentCoreMocks,

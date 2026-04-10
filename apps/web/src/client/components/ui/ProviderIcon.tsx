@@ -3,7 +3,7 @@
  * Shows a colored icon with the provider's initial
  */
 
-import type { ProviderType } from '@accomplish_ai/agent-core/common';
+import type { ProviderType } from '@somehow_ai/agent-core/common';
 import { cn } from '@/lib/utils';
 
 interface ProviderIconProps {
@@ -36,7 +36,7 @@ const PROVIDER_COLORS: Record<string, string> = {
   fireworks: 'bg-[#EF4444]', // Red
   groq: 'bg-[#F55036]', // Red-orange
   nim: 'bg-[#76B900]', // NVIDIA green
-  'accomplish-ai': 'bg-success', // SomeHow / NPCI-aligned built-in tier
+  'somehow-ai': 'bg-success', // SomeHow / NPCI-aligned built-in tier
   vertex: 'bg-[#4285F4]',
   venice: 'bg-[#6B7280]',
   copilot: 'bg-[#6B7280]',
@@ -67,7 +67,7 @@ const PROVIDER_INITIALS: Record<string, string> = {
   fireworks: 'F',
   groq: 'G',
   nim: 'N',
-  'accomplish-ai': 'S',
+  'somehow-ai': 'S',
   vertex: 'V',
   venice: 'E',
   copilot: 'P',

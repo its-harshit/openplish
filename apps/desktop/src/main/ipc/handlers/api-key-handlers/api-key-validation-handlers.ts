@@ -1,14 +1,11 @@
 import type { IpcMainInvokeEvent } from 'electron';
-import { validateApiKey, validateAzureFoundry, sanitizeString } from '@accomplish_ai/agent-core';
-import {
-  ALLOWED_API_KEY_PROVIDERS,
-  STANDARD_VALIDATION_PROVIDERS,
-} from '@accomplish_ai/agent-core';
-import type { ZaiRegion } from '@accomplish_ai/agent-core';
+import { validateApiKey, validateAzureFoundry, sanitizeString } from '@somehow_ai/agent-core';
+import { ALLOWED_API_KEY_PROVIDERS, STANDARD_VALIDATION_PROVIDERS } from '@somehow_ai/agent-core';
+import type { ZaiRegion } from '@somehow_ai/agent-core';
 import { storeApiKey, getApiKey, deleteApiKey, hasAnyApiKey } from '../../../store/secureStorage';
 import { getStorage } from '../../../store/storage';
 import { getLogCollector } from '../../../logging';
-import { getOpenAiOauthStatus } from '@accomplish_ai/agent-core';
+import { getOpenAiOauthStatus } from '@somehow_ai/agent-core';
 import { handle, API_KEY_VALIDATION_TIMEOUT_MS } from '../utils';
 
 /**
@@ -101,7 +98,7 @@ export function registerApiKeyValidationHandlers(): void {
         }
 
         const result = await validateApiKey(
-          provider as import('@accomplish_ai/agent-core').ProviderType,
+          provider as import('@somehow_ai/agent-core').ProviderType,
           sanitizedKey,
           {
             timeout: API_KEY_VALIDATION_TIMEOUT_MS,

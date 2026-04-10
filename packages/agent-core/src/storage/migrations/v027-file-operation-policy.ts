@@ -3,7 +3,7 @@ import type { Migration } from './index.js';
 
 /**
  * Persisted file-operation policy mode so packaged installs can override env without editing files.
- * inherit = use ACCOMPLISH_FILE_OPERATION_POLICY env; standard / create_copy_only force that mode.
+ * inherit = use SOMEHOW_FILE_OPERATION_POLICY env; standard / create_copy_only force that mode.
  */
 export const migration: Migration = {
   version: 27,

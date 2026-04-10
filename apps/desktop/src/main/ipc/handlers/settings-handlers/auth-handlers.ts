@@ -1,6 +1,6 @@
 import type { IpcMainInvokeEvent } from 'electron';
-import { validateHttpUrl } from '@accomplish_ai/agent-core';
-import { getOpenAiOauthStatus, getSlackMcpOauthStatus } from '@accomplish_ai/agent-core';
+import { validateHttpUrl } from '@somehow_ai/agent-core';
+import { getOpenAiOauthStatus, getSlackMcpOauthStatus } from '@somehow_ai/agent-core';
 import { loginOpenAiWithChatGpt } from '../../../opencode/auth-browser';
 import {
   isOpenCodeCliInstallError,

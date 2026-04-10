@@ -72,7 +72,7 @@ importers:
 
   apps/daemon:
     dependencies:
-      '@accomplish_ai/agent-core':
+      '@somehow_ai/agent-core':
         specifier: workspace:*
         version: link:../../packages/agent-core
       '@whiskeysockets/baileys':
@@ -118,7 +118,7 @@ importers:
 
   apps/desktop:
     dependencies:
-      '@accomplish_ai/agent-core':
+      '@somehow_ai/agent-core':
         specifier: workspace:*
         version: link:../../packages/agent-core
       '@aws-sdk/client-bedrock':
@@ -258,7 +258,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@accomplish_ai/agent-core':
+      '@somehow_ai/agent-core':
         specifier: workspace:*
         version: link:../../packages/agent-core
       '@fontsource-variable/inter':

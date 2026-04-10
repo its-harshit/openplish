@@ -304,7 +304,7 @@ erDiagram
 ```text
 accomplish/
 ├── apps/
-│   ├── web/                        # @accomplish/web — Standalone React UI
+│   ├── web/                        # @somehow/web — Standalone React UI
 │   │   ├── src/client/
 │   │   │   ├── components/         # UI components (shadcn/ui + custom)
 │   │   │   ├── stores/             # Zustand state management
@@ -313,7 +313,7 @@ accomplish/
 │   │   │   ├── lib/                # Utilities + accomplish.ts IPC wrapper
 │   │   │   └── i18n/               # Internationalization
 │   │   └── __tests__/              # Unit + integration tests (Vitest, jsdom)
-│   ├── desktop/                    # @accomplish/desktop — Electron shell
+│   ├── desktop/                    # @somehow/desktop — Electron shell
 │   │   ├── src/main/
 │   │   │   ├── ipc/handlers/       # IPC handler implementations
 │   │   │   ├── daemon/             # Daemon bootstrap + entry
@@ -322,10 +322,10 @@ accomplish/
 │   │   ├── src/preload/            # contextBridge (security boundary)
 │   │   ├── e2e/                    # Playwright E2E tests (Docker)
 │   │   └── __tests__/              # Unit + integration tests (Vitest, node)
-│   └── daemon/                     # @accomplish/daemon — Background process (in-dev)
+│   └── daemon/                     # @somehow/daemon — Background process (in-dev)
 │       └── src/                    # Task/storage/permission services
 ├── packages/
-│   └── agent-core/                 # @accomplish_ai/agent-core — Core logic (ESM)
+│   └── agent-core/                 # @somehow_ai/agent-core — Core logic (ESM)
 │       └── src/
 │           ├── factories/          # Public API (createTaskManager, etc.)
 │           ├── internal/classes/   # Implementation (TaskManager, OpenCodeAdapter, etc.)
@@ -345,10 +345,10 @@ accomplish/
 
 ```mermaid
 graph LR
-    Web["@accomplish/web<br/>(React UI)"]
-    Desktop["@accomplish/desktop<br/>(Electron Shell)"]
-    Daemon["@accomplish/daemon<br/>(Background Process)"]
-    Core["@accomplish_ai/agent-core<br/>(Core Logic, ESM)"]
+    Web["@somehow/web<br/>(React UI)"]
+    Desktop["@somehow/desktop<br/>(Electron Shell)"]
+    Daemon["@somehow/daemon<br/>(Background Process)"]
+    Core["@somehow_ai/agent-core<br/>(Core Logic, ESM)"]
 
     Web -->|"types only<br/>(browser-safe)"| Core
     Desktop -->|"full API<br/>(Node.js)"| Core
@@ -368,7 +368,7 @@ graph LR
 - `apps/web` imports only types and browser-safe code from agent-core (Node.js-only modules excluded via Vite externals)
 - `apps/desktop` has full access to agent-core (runs in Node.js)
 - No circular dependencies between workspaces
-- Path aliases (`@/*`, `@main/*`, `@accomplish_ai/agent-core`) enforce clean import boundaries
+- Path aliases (`@/*`, `@main/*`, `@somehow_ai/agent-core`) enforce clean import boundaries
 
 #### 3.5.3 Build & CI/CD
 

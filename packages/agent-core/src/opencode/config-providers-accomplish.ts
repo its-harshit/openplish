@@ -9,7 +9,7 @@
 import { createConsoleLogger } from '../utils/logging.js';
 import type { ProviderBuildContext, ProviderBuildResult } from './config-provider-context.js';
 
-const log = createConsoleLogger({ prefix: 'AccomplishAiConfigBuilder' });
+const log = createConsoleLogger({ prefix: 'SomeHowAiConfigBuilder' });
 
 export async function buildAccomplishAiConfig(
   ctx: ProviderBuildContext,
@@ -17,18 +17,18 @@ export async function buildAccomplishAiConfig(
   if (!ctx.accomplishRuntime?.isAvailable()) {
     return { configs: [], enableToAdd: [] };
   }
-  const provider = ctx.providerSettings.connectedProviders['accomplish-ai'];
+  const provider = ctx.providerSettings.connectedProviders['somehow-ai'];
   if (provider?.connectionStatus !== 'connected') {
     return { configs: [], enableToAdd: [] };
   }
   if (!ctx.accomplishStorageDeps) {
-    log.warn('Accomplish AI connected but storage deps not available — skipping');
+    log.warn('SomeHow AI connected but storage deps not available — skipping');
     return { configs: [], enableToAdd: [] };
   }
   try {
     return await ctx.accomplishRuntime.buildProviderConfig(ctx.accomplishStorageDeps);
   } catch (err) {
-    log.error('Failed to start Accomplish AI proxy', {
+    log.error('Failed to start SomeHow AI proxy', {
       error: err instanceof Error ? err.message : String(err),
     });
     return { configs: [], enableToAdd: [] };

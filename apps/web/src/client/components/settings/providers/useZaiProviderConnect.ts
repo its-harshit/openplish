@@ -1,12 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getAccomplish } from '@/lib/accomplish';
-import type {
-  ConnectedProvider,
-  ZaiCredentials,
-  ZaiRegion,
-} from '@accomplish_ai/agent-core/common';
-import { DEFAULT_PROVIDERS } from '@accomplish_ai/agent-core/common';
+import type { ConnectedProvider, ZaiCredentials, ZaiRegion } from '@somehow_ai/agent-core/common';
+import { DEFAULT_PROVIDERS } from '@somehow_ai/agent-core/common';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('ZaiProviderForm');

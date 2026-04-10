@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { hasAnyReadyProvider, getOAuthProviderDisplayName } from '@accomplish_ai/agent-core/common';
+import { hasAnyReadyProvider, getOAuthProviderDisplayName } from '@somehow_ai/agent-core/common';
 import type { useExecutionCore } from './useExecutionCore';
 
 type CoreState = ReturnType<typeof useExecutionCore>;

@@ -225,9 +225,9 @@ export interface ProviderSettingsAPI {
   hasReadyProvider(): boolean;
   /** Get IDs of all connected providers */
   getConnectedProviderIds(): ProviderId[];
-  /** Get cached Accomplish AI credit usage (last known from gateway) */
+  /** Get cached built-in free-tier credit usage (last known from gateway) */
   getAccomplishAiCredits(): CreditUsage | null;
-  /** Cache Accomplish AI credit usage */
+  /** Cache built-in free-tier credit usage */
   saveAccomplishAiCredits(usage: CreditUsage): void;
 }
 

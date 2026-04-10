@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { getAccomplish } from '../lib/accomplish';
-import { isProviderReady, type ProviderId } from '@accomplish_ai/agent-core/common';
-import type { CreditUsage } from '@accomplish_ai/agent-core/common';
+import { isProviderReady, type ProviderId } from '@somehow_ai/agent-core/common';
+import type { CreditUsage } from '@somehow_ai/agent-core/common';
 
 export type { CreditUsage };
 
@@ -31,13 +31,12 @@ export function useCreditsState() {
 
   const applyLiveUsage = useCallback(
     (settings: ProviderSettingsSnapshot, liveUsage: CreditUsage): boolean => {
-      const connectedAccomplish = settings.connectedProviders['accomplish-ai'];
+      const connectedAccomplish = settings.connectedProviders['somehow-ai'];
       const readyAlternativeExists = (
         Object.keys(settings.connectedProviders) as ProviderId[]
       ).some(
         (providerId) =>
-          providerId !== 'accomplish-ai' &&
-          isProviderReady(settings.connectedProviders[providerId]),
+          providerId !== 'somehow-ai' && isProviderReady(settings.connectedProviders[providerId]),
       );
       setHasAlternativeReadyProvider(readyAlternativeExists);
 
@@ -50,7 +49,7 @@ export function useCreditsState() {
 
       const isExhausted = liveUsage.remainingCredits <= 0;
       const shouldBlock =
-        settings.activeProviderId === 'accomplish-ai' &&
+        settings.activeProviderId === 'somehow-ai' &&
         isProviderReady(connectedAccomplish) &&
         isExhausted;
 
@@ -68,14 +67,13 @@ export function useCreditsState() {
   const refreshCreditsState = useCallback(async (): Promise<boolean> => {
     try {
       const settings = await accomplish.getProviderSettings();
-      const connectedAccomplish = settings.connectedProviders['accomplish-ai'];
+      const connectedAccomplish = settings.connectedProviders['somehow-ai'];
       if (connectedAccomplish?.connectionStatus !== 'connected') {
         const readyAlternativeExists = (
           Object.keys(settings.connectedProviders) as ProviderId[]
         ).some(
           (providerId) =>
-            providerId !== 'accomplish-ai' &&
-            isProviderReady(settings.connectedProviders[providerId]),
+            providerId !== 'somehow-ai' && isProviderReady(settings.connectedProviders[providerId]),
         );
         setHasAlternativeReadyProvider(readyAlternativeExists);
         setUsage(null);
@@ -110,7 +108,7 @@ export function useCreditsState() {
         if (cancelled || !usageData) return;
         applyLiveUsage(settings, usageData);
       } catch {
-        // Accomplish AI not connected — no-op
+        // Built-in free tier not connected — no-op
       }
     })();
     return () => {

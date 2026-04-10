@@ -18,11 +18,11 @@ import { useExecutionPage } from './execution/useExecutionPage';
 import { CreditExhaustedChatBanner } from '../components/execution/CreditExhaustedChatBanner';
 import { useCreditsState } from '../hooks/useCreditsState';
 
-/** Detects Accomplish AI free-tier credit exhaustion errors specifically. */
+/** Detects built-in free-tier (somehow-ai) credit exhaustion errors specifically. */
 function isAccomplishCreditExhaustedError(message?: string): boolean {
   if (!message) return false;
   const lower = message.toLowerCase();
-  // Only match Accomplish-specific error codes, not generic provider billing errors
+  // Only match built-in free-tier-specific error codes, not generic provider billing errors
   return (
     lower.includes('credits_exhausted') ||
     lower.includes('monthly_credit_limit_reached') ||

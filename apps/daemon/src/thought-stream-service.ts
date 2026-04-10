@@ -4,7 +4,7 @@ import {
   type ThoughtStreamAPI,
   type ThoughtStreamEvent,
   type ThoughtStreamCheckpointEvent,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import { z } from 'zod';
 import { createHttpServer, type Route } from './http-server-factory.js';
 import { RateLimiter } from './rate-limiter.js';

@@ -1,10 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { settingsVariants, settingsTransitions } from '@/lib/animations';
-import type {
-  ConnectedProvider,
-  VertexProviderCredentials,
-} from '@accomplish_ai/agent-core/common';
+import type { ConnectedProvider, VertexProviderCredentials } from '@somehow_ai/agent-core/common';
 import { ModelSelector, ConnectedControls } from '../../shared';
 
 interface VertexConnectedSectionProps {

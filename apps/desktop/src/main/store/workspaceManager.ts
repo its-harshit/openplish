@@ -11,12 +11,8 @@ import {
   getWorkspace,
   getActiveWorkspaceId,
   setActiveWorkspaceId,
-} from '@accomplish_ai/agent-core';
-import type {
-  Workspace,
-  WorkspaceCreateInput,
-  WorkspaceUpdateInput,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
+import type { Workspace, WorkspaceCreateInput, WorkspaceUpdateInput } from '@somehow_ai/agent-core';
 import { getLogCollector } from '../logging';
 
 function log(level: 'INFO' | 'WARN' | 'ERROR', msg: string, data?: Record<string, unknown>) {

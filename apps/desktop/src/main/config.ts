@@ -14,7 +14,7 @@ export function getDesktopConfig(): DesktopConfig {
   if (cachedConfig) return cachedConfig;
 
   const parsed = desktopConfigSchema.safeParse({
-    apiUrl: process.env.ACCOMPLISH_API_URL,
+    apiUrl: process.env.SOMEHOW_API_URL,
   });
 
   if (!parsed.success) {

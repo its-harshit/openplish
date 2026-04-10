@@ -8,7 +8,7 @@ import { MessageBubble } from '../../components/execution/MessageList';
 import { ToolProgress } from '../../components/execution/ToolProgress';
 import { PermissionDialog } from '../../components/execution/PermissionDialog';
 import { TodoSidebar } from '../../components/TodoSidebar';
-import type { Task, PermissionRequest, TodoItem } from '@accomplish_ai/agent-core/common';
+import type { Task, PermissionRequest, TodoItem } from '@somehow_ai/agent-core/common';
 import type { StartupStageInfo } from './types';
 
 interface ConversationViewProps {

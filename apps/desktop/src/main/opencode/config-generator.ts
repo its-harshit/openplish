@@ -2,13 +2,13 @@ import { app } from 'electron';
 import path from 'path';
 import {
   generateConfig,
-  ACCOMPLISH_AGENT_NAME,
+  SOMEHOW_AGENT_NAME,
   resolveTaskConfig,
   syncApiKeysToOpenCodeAuth as coreSyncApiKeysToOpenCodeAuth,
   getOpenCodeAuthPath,
   PERMISSION_API_PORT,
   QUESTION_API_PORT,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import { getApiKey, getAllApiKeys } from '../store/secureStorage';
 import { getStorage } from '../store/storage';
 import { getBundledNodePaths } from '../utils/bundled-node';
@@ -27,7 +27,7 @@ function logOC(level: 'INFO' | 'WARN' | 'ERROR', msg: string, data?: Record<stri
   }
 }
 
-export { ACCOMPLISH_AGENT_NAME };
+export { SOMEHOW_AGENT_NAME };
 
 /**
  * Returns the path to MCP tools directory.
@@ -73,7 +73,7 @@ export async function generateOpenCodeConfig(azureFoundryToken?: string): Promis
   if (!bundledNodeBinPath) {
     throw new Error(
       '[OpenCode Config] Bundled Node.js path is missing. ' +
-        'Run "pnpm -F @accomplish/desktop download:nodejs" and rebuild before launching.',
+        'Run "pnpm -F @somehow/desktop download:nodejs" and rebuild before launching.',
     );
   }
 

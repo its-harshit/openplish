@@ -1,6 +1,6 @@
 import { app } from 'electron';
 import path from 'path';
-import { createSkillsManager, type SkillsManagerAPI } from '@accomplish_ai/agent-core';
+import { createSkillsManager, type SkillsManagerAPI } from '@somehow_ai/agent-core';
 import { getLogCollector } from '../logging';
 
 function getBundledSkillsPath(): string {

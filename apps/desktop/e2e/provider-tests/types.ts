@@ -5,7 +5,7 @@
  * Secrets are loaded from environment variables or a local secrets.json file.
  */
 
-import type { ProviderId } from '@accomplish_ai/agent-core/common';
+import type { ProviderId } from '@somehow_ai/agent-core/common';
 
 // ===== Auth Method =====
 

@@ -10,8 +10,8 @@ const isCheck = cliArgs.has('--check');
 const mode = isRemote ? 'remote' : isClean ? 'clean' : 'dev';
 
 const env = { ...process.env };
-if (!isRemote && !env.ACCOMPLISH_ROUTER_URL) {
-  env.ACCOMPLISH_ROUTER_URL = 'http://localhost:5173';
+if (!isRemote && !env.SOMEHOW_ROUTER_URL) {
+  env.SOMEHOW_ROUTER_URL = 'http://localhost:5173';
 }
 if (isClean) {
   env.CLEAN_START = '1';
@@ -48,7 +48,7 @@ function runNodeScript(scriptName, commandEnv) {
 }
 
 function ensureNativeModules(commandEnv) {
-  const forceRebuild = process.env.ACCOMPLISH_FORCE_ELECTRON_REBUILD === '1';
+  const forceRebuild = process.env.SOMEHOW_FORCE_ELECTRON_REBUILD === '1';
   if (!isWindows || forceRebuild) {
     runElectronRebuild(commandEnv);
     return;

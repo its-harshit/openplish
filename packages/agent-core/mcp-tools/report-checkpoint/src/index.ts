@@ -10,9 +10,9 @@ import {
 const THOUGHT_STREAM_PORT = process.env.THOUGHT_STREAM_PORT || '9228';
 const CHECKPOINT_URL = `http://127.0.0.1:${THOUGHT_STREAM_PORT}/checkpoint`;
 const THOUGHT_STREAM_TASK_ID =
-  process.env.THOUGHT_STREAM_TASK_ID || process.env.ACCOMPLISH_TASK_ID || '';
+  process.env.THOUGHT_STREAM_TASK_ID || process.env.SOMEHOW_TASK_ID || '';
 
-const AUTH_TOKEN = process.env.ACCOMPLISH_DAEMON_AUTH_TOKEN;
+const AUTH_TOKEN = process.env.SOMEHOW_DAEMON_AUTH_TOKEN;
 
 function getHeaders(): Record<string, string> {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
@@ -105,7 +105,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request): Promise<CallToo
           summary,
           nextPlanned,
           blocker,
-          agentName: process.env.ACCOMPLISH_AGENT_NAME || 'agent',
+          agentName: process.env.SOMEHOW_AGENT_NAME || 'agent',
           timestamp: Date.now(),
         }),
         signal: AbortSignal.timeout(1000),

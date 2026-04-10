@@ -5,14 +5,14 @@ import type {
   WorkspaceUpdateInput,
   KnowledgeNoteCreateInput,
   KnowledgeNoteUpdateInput,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import * as workspaceManager from '../../store/workspaceManager';
 import {
   listKnowledgeNotes,
   createKnowledgeNote,
   updateKnowledgeNote,
   deleteKnowledgeNote,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import { handle } from './utils';
 import { getDaemonClient } from '../../daemon-bootstrap';
 import { isDaemonStopped } from '../../daemon/daemon-connector';

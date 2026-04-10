@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { hasAnyReadyProvider } from '@accomplish_ai/agent-core/common';
+import { hasAnyReadyProvider } from '@somehow_ai/agent-core/common';
 import { createLogger } from '../../lib/logger';
 import type { useExecutionCore } from './useExecutionCore';
 import { useExecutionEffects } from './useExecutionEffects';

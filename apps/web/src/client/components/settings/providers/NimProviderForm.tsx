@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
-import type { ConnectedProvider, NimCredentials } from '@accomplish_ai/agent-core/common';
+import type { ConnectedProvider, NimCredentials } from '@somehow_ai/agent-core/common';
 import { ProviderFormHeader } from '../shared';
 import { getAccomplish } from '@/lib/accomplish';
 import { DisconnectedNimForm, ConnectedNimDetails, NIM_DEFAULT_BASE_URL } from './NimFormSections';

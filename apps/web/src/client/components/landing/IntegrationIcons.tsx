@@ -26,7 +26,7 @@ export const ICON_MAP: Record<string, string> = {
 
 /**
  * Resolve a domain to a local icon URL if available, checking the exact domain
- * and then walking up parent domains (e.g. "accomplish-ai.slack.com" → "slack.com").
+ * and then walking up parent domains (e.g. "somehow-ai.slack.com" → "slack.com").
  */
 export function getLocalIcon(domain: string): string | undefined {
   if (ICON_MAP[domain]) {

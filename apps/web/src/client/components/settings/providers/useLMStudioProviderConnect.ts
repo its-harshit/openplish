@@ -5,7 +5,7 @@ import type {
   ConnectedProvider,
   LMStudioCredentials,
   ToolSupportStatus,
-} from '@accomplish_ai/agent-core/common';
+} from '@somehow_ai/agent-core/common';
 
 export interface LMStudioModel {
   id: string;

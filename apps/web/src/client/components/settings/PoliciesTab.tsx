@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { getAccomplish } from '@/lib/accomplish';
-import type { FileOperationPolicyMode } from '@accomplish_ai/agent-core';
+import type { FileOperationPolicyMode } from '@somehow_ai/agent-core';
 import { PoliciesLockSection } from './policies/PoliciesLockSection';
 
 const MODES: { value: FileOperationPolicyMode; labelKey: string; descKey: string }[] = [

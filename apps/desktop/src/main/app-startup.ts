@@ -7,8 +7,8 @@
 
 import { app, BrowserWindow, dialog, ipcMain, nativeImage, nativeTheme } from 'electron';
 import path from 'path';
-import { FutureSchemaError } from '@accomplish_ai/agent-core';
-import type { ProviderId } from '@accomplish_ai/agent-core';
+import { FutureSchemaError } from '@somehow_ai/agent-core';
+import type { ProviderId } from '@somehow_ai/agent-core';
 // thought-stream-api removed — daemon owns thought/checkpoint streaming.
 // Events forwarded via daemon notification subscription (task.thought, task.checkpoint).
 import { migrateLegacyData } from './store/legacyMigration';
@@ -126,19 +126,19 @@ export async function startApp(
     logMain('ERROR', '[Main] Provider validation failed', { err: String(err) });
   }
 
-  // Clean up stale accomplish-ai provider if free mode is no longer available.
+  // Clean up stale somehow-ai provider if free mode is no longer available.
   // Handles the case where a user switches from Free to OSS build.
   try {
     const { isFreeMode } = await import('./config/build-config');
     if (!isFreeMode()) {
       const s = getStorage();
-      const provider = s.getConnectedProvider('accomplish-ai');
+      const provider = s.getConnectedProvider('somehow-ai');
       if (provider) {
-        s.removeConnectedProvider('accomplish-ai');
-        if (s.getActiveProviderId() === 'accomplish-ai') {
+        s.removeConnectedProvider('somehow-ai');
+        if (s.getActiveProviderId() === 'somehow-ai') {
           s.setActiveProvider(null);
         }
-        logMain('INFO', '[Main] Removed stale accomplish-ai provider (free mode not available)');
+        logMain('INFO', '[Main] Removed stale somehow-ai provider (free mode not available)');
       }
     }
   } catch {

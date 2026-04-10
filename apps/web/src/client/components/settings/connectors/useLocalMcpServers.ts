@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { LocalMcpServer } from '@accomplish_ai/agent-core';
+import type { LocalMcpServer } from '@somehow_ai/agent-core';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('LocalMcpServers');

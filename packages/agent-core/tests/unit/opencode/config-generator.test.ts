@@ -6,7 +6,7 @@ import { PERMISSION_API_PORT } from '../../../src/common/constants.js';
 import {
   generateConfig,
   getOpenCodeConfigPath,
-  ACCOMPLISH_AGENT_NAME,
+  SOMEHOW_AGENT_NAME,
   ConfigGeneratorOptions,
   ProviderConfig,
 } from '../../../src/opencode/config-generator.js';
@@ -66,9 +66,9 @@ describe('ConfigGenerator', () => {
     }
   });
 
-  describe('ACCOMPLISH_AGENT_NAME', () => {
+  describe('SOMEHOW_AGENT_NAME', () => {
     it('should be "somehow"', () => {
-      expect(ACCOMPLISH_AGENT_NAME).toBe('somehow');
+      expect(SOMEHOW_AGENT_NAME).toBe('somehow');
     });
   });
 
@@ -422,7 +422,7 @@ describe('ConfigGenerator', () => {
 
       const result = generateConfig(options);
 
-      expect(result.config.default_agent).toBe(ACCOMPLISH_AGENT_NAME);
+      expect(result.config.default_agent).toBe(SOMEHOW_AGENT_NAME);
     });
 
     it('should configure agent with correct mode', () => {
@@ -434,7 +434,7 @@ describe('ConfigGenerator', () => {
 
       const result = generateConfig(options);
 
-      expect(result.config.agent?.[ACCOMPLISH_AGENT_NAME]?.mode).toBe('primary');
+      expect(result.config.agent?.[SOMEHOW_AGENT_NAME]?.mode).toBe('primary');
     });
 
     it('should include schema in config', () => {

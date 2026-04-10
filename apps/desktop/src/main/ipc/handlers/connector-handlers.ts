@@ -8,12 +8,8 @@ import {
   generatePkceChallenge,
   buildAuthorizationUrl,
   exchangeCodeForTokens,
-} from '@accomplish_ai/agent-core';
-import type {
-  McpConnector,
-  OAuthMetadata,
-  OAuthClientRegistration,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
+import type { McpConnector, OAuthMetadata, OAuthClientRegistration } from '@somehow_ai/agent-core';
 import { getStorage } from '../../store/storage';
 import { MCP_OAUTH_REDIRECT_URI } from '../../url-scheme';
 import { handle } from './utils';

@@ -16,7 +16,7 @@ import type {
   MessagingConnectionStatus,
   MessagingProviderId,
   ChannelAdapter,
-} from '@accomplish_ai/agent-core/common';
+} from '@somehow_ai/agent-core/common';
 import { normalizeMessage } from './normalizeMessage.js';
 import { cleanupAuthState } from './authCleanup.js';
 import { createReconnectState, clearReconnectTimer, type ReconnectState } from './reconnection.js';

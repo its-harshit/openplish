@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import type { Skill } from '@accomplish_ai/agent-core';
+import type { Skill } from '@somehow_ai/agent-core';
 import { createLogger } from '@/lib/logger';
 import {
   type FilterType,

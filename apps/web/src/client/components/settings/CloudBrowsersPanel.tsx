@@ -4,7 +4,7 @@ import type {
   CloudBrowserConfig,
   CloudBrowserProvider,
   CloudBrowserProviderConfig,
-} from '@accomplish_ai/agent-core/common';
+} from '@somehow_ai/agent-core/common';
 import { CloudBrowserProviderRow } from './CloudBrowserProviderRow';
 
 const PROVIDERS: {

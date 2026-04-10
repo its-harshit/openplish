@@ -26,5 +26,5 @@ export default defineConfig({
   // Bundle all JS dependencies so the packaged daemon is self-contained.
   // Only native modules (above) remain as external imports.
   // Baileys + pino are bundled for WhatsApp integration in the daemon.
-  noExternal: ['@accomplish_ai/agent-core', 'zod', '@whiskeysockets/baileys', 'pino'],
+  noExternal: ['@somehow_ai/agent-core', 'zod', '@whiskeysockets/baileys', 'pino'],
 });

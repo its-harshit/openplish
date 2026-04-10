@@ -110,11 +110,11 @@ export async function buildProviderConfigs(
   ];
   let enabledProviders = baseProviders;
   if (connectedIds.length > 0) {
-    // Filter out accomplish-ai from upfront mapping — it's added via enableToAdd
+    // Filter out somehow-ai from upfront mapping — it's added via enableToAdd
     // only when the builder successfully starts the proxy. Without this, a failed
-    // proxy start would leave accomplish-ai in enabledProviders with no config definition.
+    // proxy start would leave somehow-ai in enabledProviders with no config definition.
     const mappedProviders = connectedIds
-      .filter((id) => id !== 'accomplish-ai')
+      .filter((id) => id !== 'somehow-ai')
       .map((id) => PROVIDER_ID_TO_OPENCODE[id]);
     enabledProviders = [...new Set([...baseProviders, ...mappedProviders])];
   } else {

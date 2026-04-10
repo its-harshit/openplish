@@ -11,8 +11,8 @@ import {
   resumeSessionSchema,
   validate,
   logger,
-} from '@accomplish_ai/agent-core';
-import type { AccomplishRuntime, StorageDeps } from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
+import type { AccomplishRuntime, StorageDeps } from '@somehow_ai/agent-core';
 import { z } from 'zod';
 import { homedir } from 'node:os';
 import type { TaskService } from './task-service.js';
@@ -247,7 +247,7 @@ export function registerRpcMethods(services: RouteServices): void {
     }),
   );
 
-  // ── Accomplish AI Free Tier ─────────────────────────────────────────────
+  // ── SomeHow built-in free tier ───────────────────────────────────────────
   // StorageDeps constructed from daemon's own secure storage — no callbacks over RPC.
   const accomplishStorageDeps: StorageDeps = {
     readKey: (key) => storage.get(key),
@@ -256,7 +256,7 @@ export function registerRpcMethods(services: RouteServices): void {
   };
 
   rpc.registerMethod(
-    'accomplish-ai.connect',
+    'somehow-ai.connect',
     safeHandler(async () => {
       const result = await accomplishRuntime.connect(accomplishStorageDeps);
       return { deviceFingerprint: result.deviceFingerprint, usage: result.usage };
@@ -264,14 +264,14 @@ export function registerRpcMethods(services: RouteServices): void {
   );
 
   rpc.registerMethod(
-    'accomplish-ai.get-usage',
+    'somehow-ai.get-usage',
     safeHandler(async () => {
       return accomplishRuntime.getUsage();
     }),
   );
 
   rpc.registerMethod(
-    'accomplish-ai.disconnect',
+    'somehow-ai.disconnect',
     safeHandler(async () => {
       accomplishRuntime.disconnect();
       return Promise.resolve();
@@ -280,7 +280,7 @@ export function registerRpcMethods(services: RouteServices): void {
 
   // Bridge proxy usage updates to daemon notifications → forwarded to renderer via IPC
   accomplishRuntime.onUsageUpdate((usage) => {
-    rpc.notify('accomplish-ai.usage-update', usage);
+    rpc.notify('somehow-ai.usage-update', usage);
   });
 
   // ── WhatsApp ─────────────────────────────────────────────────────────────

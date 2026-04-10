@@ -1,8 +1,8 @@
 import { app } from 'electron';
 import fs from 'fs';
 import path from 'path';
-import { buildOpenCodeEnvironment, type EnvironmentConfig } from '@accomplish_ai/agent-core';
-import type { BedrockCredentials, VertexCredentials } from '@accomplish_ai/agent-core';
+import { buildOpenCodeEnvironment, type EnvironmentConfig } from '@somehow_ai/agent-core';
+import type { BedrockCredentials, VertexCredentials } from '@somehow_ai/agent-core';
 import { getHuggingFaceServerStatus } from '../providers/huggingface-local';
 import { getStorage } from '../store/storage';
 import { getAllApiKeys, getBedrockCredentials, getApiKey } from '../store/secureStorage';

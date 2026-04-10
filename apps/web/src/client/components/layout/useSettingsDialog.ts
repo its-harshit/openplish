@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { ProviderId, ConnectedProvider } from '@accomplish_ai/agent-core/common';
-import { hasAnyReadyProvider, isProviderReady } from '@accomplish_ai/agent-core/common';
+import type { ProviderId, ConnectedProvider } from '@somehow_ai/agent-core/common';
+import { hasAnyReadyProvider, isProviderReady } from '@somehow_ai/agent-core/common';
 import { getAccomplish } from '@/lib/accomplish';
 import { useProviderSettings } from '@/components/settings/hooks/useProviderSettings';
 import { FIRST_FOUR_PROVIDERS, type SettingsTabId } from './settings-tabs';

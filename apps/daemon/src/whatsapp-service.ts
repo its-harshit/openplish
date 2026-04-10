@@ -11,8 +11,8 @@
  *   'status' — connection status changed
  */
 import { EventEmitter } from 'node:events';
-import type { StorageAPI } from '@accomplish_ai/agent-core';
-import type { MessagingConnectionStatus } from '@accomplish_ai/agent-core/common';
+import type { StorageAPI } from '@somehow_ai/agent-core';
+import type { MessagingConnectionStatus } from '@somehow_ai/agent-core/common';
 import {
   WhatsAppService,
   TaskBridge,

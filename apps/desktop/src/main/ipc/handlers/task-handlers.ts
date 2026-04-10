@@ -11,7 +11,7 @@ import {
   createTaskId,
   type TaskConfig,
   type FileAttachmentInfo,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import { getStorage } from '../../store/storage';
 import {
   isMockTaskEventsEnabled,

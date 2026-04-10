@@ -176,7 +176,7 @@ if (hostNodeTarget) {
   if (!isHostNodeRuntimeAvailable(hostNodeTarget)) {
     console.log(`Missing bundled Node.js runtime for ${hostNodeTarget}.`);
     runPnpm(
-      ['-F', '@accomplish/desktop', 'download:nodejs', `--platform=${hostNodeTarget}`],
+      ['-F', '@somehow/desktop', 'download:nodejs', `--platform=${hostNodeTarget}`],
       `Downloading bundled Node.js runtime for ${hostNodeTarget}...`,
     );
 
@@ -212,7 +212,7 @@ let missingOutputs = [...outputPaths].filter(
 
 const needsAgentCoreBuild = missingOutputs.length > 0 || isAgentCoreBuildOutdated(outputPaths);
 if (needsAgentCoreBuild) {
-  console.log('Missing @accomplish_ai/agent-core build outputs:');
+  console.log('Missing @somehow_ai/agent-core build outputs:');
   if (missingOutputs.length > 0) {
     for (const missingOutput of missingOutputs) {
       console.log(`  - ${missingOutput}`);
@@ -220,13 +220,13 @@ if (needsAgentCoreBuild) {
   } else {
     console.log('  - existing outputs are stale relative to source; rebuilding');
   }
-  runPnpm(['-F', '@accomplish_ai/agent-core', 'build'], 'Building @accomplish_ai/agent-core...');
+  runPnpm(['-F', '@somehow_ai/agent-core', 'build'], 'Building @somehow_ai/agent-core...');
 
   missingOutputs = [...outputPaths].filter(
     (relativeOutputPath) => !fs.existsSync(path.join(agentCoreDir, relativeOutputPath)),
   );
   if (missingOutputs.length > 0) {
-    console.error('Failed to produce required @accomplish_ai/agent-core outputs:');
+    console.error('Failed to produce required @somehow_ai/agent-core outputs:');
     for (const missingOutput of missingOutputs) {
       console.error(`  - ${missingOutput}`);
     }
@@ -243,7 +243,7 @@ if (missingMcpDistOutputs.length > 0) {
     console.log(`  - ${missingOutput}`);
   }
   runPnpm(
-    ['-F', '@accomplish/desktop', 'build:mcp-tools:dev'],
+    ['-F', '@somehow/desktop', 'build:mcp-tools:dev'],
     'Building MCP dist artifacts for dev...',
   );
 
@@ -259,5 +259,5 @@ if (missingMcpDistOutputs.length > 0) {
   }
 }
 
-console.log('✓ @accomplish_ai/agent-core and MCP dist outputs found');
+console.log('✓ @somehow_ai/agent-core and MCP dist outputs found');
 process.exit(0);

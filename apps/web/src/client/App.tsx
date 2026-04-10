@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { isRunningInElectron, getAccomplish } from './lib/accomplish';
 import { logger } from './lib/logger';
 import { springs, variants } from './lib/animations';
-import type { ProviderId } from '@accomplish_ai/agent-core/common';
-import { OAuthProviderId } from '@accomplish_ai/agent-core/common';
+import type { ProviderId } from '@somehow_ai/agent-core/common';
+import { OAuthProviderId } from '@somehow_ai/agent-core/common';
 
 // Components
 import Sidebar from './components/layout/Sidebar';

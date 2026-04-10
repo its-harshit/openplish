@@ -16,7 +16,7 @@ import {
   clearCopilotOAuth,
   getCopilotOAuthStatus,
   type CopilotDeviceCodeResponse,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import { getLogCollector } from '../logging';
 
 export interface CopilotLoginResult {

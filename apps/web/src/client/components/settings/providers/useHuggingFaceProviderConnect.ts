@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getAccomplish } from '@/lib/accomplish';
-import type { ConnectedProvider } from '@accomplish_ai/agent-core/common';
-import type { HuggingFaceLocalCredentials } from '@accomplish_ai/agent-core/common';
+import type { ConnectedProvider } from '@somehow_ai/agent-core/common';
+import type { HuggingFaceLocalCredentials } from '@somehow_ai/agent-core/common';
 
 export interface SuggestedModel {
   id: string;

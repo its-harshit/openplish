@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import type { ProviderId, ConnectedProvider } from '@accomplish_ai/agent-core/common';
-import { PROVIDER_META } from '@accomplish_ai/agent-core/common';
+import type { ProviderId, ConnectedProvider } from '@somehow_ai/agent-core/common';
+import { PROVIDER_META } from '@somehow_ai/agent-core/common';
 import {
   ClassicProviderForm,
   BedrockProviderForm,
@@ -66,8 +66,8 @@ export function ProviderFormSelector({
     );
   }
 
-  // Handle built-in accomplish-ai separately (device fingerprint flow, no API key)
-  if (providerId === 'accomplish-ai') {
+  // Handle built-in somehow-ai separately (device fingerprint flow, no API key)
+  if (providerId === 'somehow-ai') {
     return (
       <AccomplishAiProviderForm
         connectedProvider={connectedProvider}

@@ -1,6 +1,6 @@
 import type { IpcMainInvokeEvent } from 'electron';
-import { testAzureFoundryConnection, validateHttpUrl } from '@accomplish_ai/agent-core';
-import type { AzureFoundryConfig } from '@accomplish_ai/agent-core';
+import { testAzureFoundryConnection, validateHttpUrl } from '@somehow_ai/agent-core';
+import type { AzureFoundryConfig } from '@somehow_ai/agent-core';
 import type { IpcHandler } from '../../types';
 import { storeApiKey } from '../../../store/secureStorage';
 import { getStorage } from '../../../store/storage';

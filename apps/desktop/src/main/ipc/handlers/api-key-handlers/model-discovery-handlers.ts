@@ -3,9 +3,9 @@ import {
   fetchOpenRouterModels,
   fetchProviderModels,
   getOpenAiOauthAccessToken,
-} from '@accomplish_ai/agent-core';
-import { DEFAULT_PROVIDERS, ZAI_ENDPOINTS } from '@accomplish_ai/agent-core';
-import type { ZaiRegion } from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
+import { DEFAULT_PROVIDERS, ZAI_ENDPOINTS } from '@somehow_ai/agent-core';
+import type { ZaiRegion } from '@somehow_ai/agent-core';
 import { getApiKey } from '../../../store/secureStorage';
 import { handle, API_KEY_VALIDATION_TIMEOUT_MS } from '../utils';
 

@@ -1,16 +1,35 @@
 import { app } from 'electron';
 import path from 'path';
-import { createStorage, type StorageAPI } from '@accomplish_ai/agent-core';
+import fs from 'fs';
+import { createStorage, type StorageAPI } from '@somehow_ai/agent-core';
 // Deep import for legacy migration only — getDatabase is intentionally not part of StorageAPI
-import { getDatabase as coreGetDatabase } from '@accomplish_ai/agent-core/storage/database';
+import { getDatabase as coreGetDatabase } from '@somehow_ai/agent-core/storage/database';
 import type { Database } from 'better-sqlite3';
 import { importLegacyElectronStoreData } from './electronStoreImport';
 
 let _storage: StorageAPI | null = null;
 
 export function getDatabasePath(): string {
-  const dbName = app.isPackaged ? 'accomplish.db' : 'accomplish-dev.db';
-  return path.join(app.getPath('userData'), dbName);
+  const userData = app.getPath('userData');
+  const dbName = app.isPackaged ? 'somehow.db' : 'somehow-dev.db';
+  const newPath = path.join(userData, dbName);
+  const legacyName = app.isPackaged ? 'accomplish.db' : 'accomplish-dev.db';
+  const legacyPath = path.join(userData, legacyName);
+  if (!fs.existsSync(newPath) && fs.existsSync(legacyPath)) {
+    try {
+      fs.renameSync(legacyPath, newPath);
+      for (const suf of ['-wal', '-shm'] as const) {
+        const from = legacyPath + suf;
+        const to = newPath + suf;
+        if (fs.existsSync(from)) {
+          fs.renameSync(from, to);
+        }
+      }
+    } catch {
+      /* DB may be locked; next launch may succeed */
+    }
+  }
+  return newPath;
 }
 
 export function getStorage(): StorageAPI {

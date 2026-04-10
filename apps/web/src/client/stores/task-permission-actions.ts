@@ -1,4 +1,4 @@
-import type { PermissionRequest, PermissionResponse } from '@accomplish_ai/agent-core/common';
+import type { PermissionRequest, PermissionResponse } from '@somehow_ai/agent-core/common';
 import { getAccomplish } from '../lib/accomplish';
 import type { TaskState } from './taskStore';
 import { hasTaskStateToken } from './task-state-helpers';

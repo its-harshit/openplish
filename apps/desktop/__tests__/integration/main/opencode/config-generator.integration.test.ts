@@ -60,9 +60,9 @@ vi.mock('electron', () => ({
 // Note: PERMISSION_API_PORT and QUESTION_API_PORT are now imported from @accomplish/shared
 // by config-generator.ts, so no mock needed here
 
-// Mock @accomplish_ai/agent-core (uses SQLite which requires native module)
+// Mock @somehow_ai/agent-core (uses SQLite which requires native module)
 // Note: generateConfig mock creates real files in temp directory for integration testing
-vi.mock('@accomplish_ai/agent-core', async () => {
+vi.mock('@somehow_ai/agent-core', async () => {
   const actualFs = await vi.importActual<typeof import('fs')>('fs');
   const actualPath = await vi.importActual<typeof import('path')>('path');
 
@@ -167,7 +167,7 @@ Use AskUserQuestion tool for user interaction.`,
         };
       },
     ),
-    ACCOMPLISH_AGENT_NAME: 'somehow',
+    SOMEHOW_AGENT_NAME: 'somehow',
 
     // Proxy functions
     ensureAzureFoundryProxy: vi.fn(() => Promise.resolve()),
@@ -572,7 +572,7 @@ describe('OpenCode Config Generator Integration', () => {
       const { generateOpenCodeConfig } = await import('@main/opencode/config-generator');
       await generateOpenCodeConfig();
 
-      const { generateConfig } = await import('@accomplish_ai/agent-core');
+      const { generateConfig } = await import('@somehow_ai/agent-core');
       expect(generateConfig).toHaveBeenCalledWith(
         expect.objectContaining({
           connectors: [
@@ -602,7 +602,7 @@ describe('OpenCode Config Generator Integration', () => {
       await generateOpenCodeConfig();
 
       expect(mockSetConnectorStatus).toHaveBeenCalledWith('mcp-2', 'error');
-      const { generateConfig } = await import('@accomplish_ai/agent-core');
+      const { generateConfig } = await import('@somehow_ai/agent-core');
       expect(generateConfig).toHaveBeenCalledWith(
         expect.objectContaining({ connectors: undefined }),
       );
@@ -683,13 +683,13 @@ describe('OpenCode Config Generator Integration', () => {
     });
   });
 
-  describe('ACCOMPLISH_AGENT_NAME Export', () => {
+  describe('SOMEHOW_AGENT_NAME Export', () => {
     it('should export the agent name constant', async () => {
       // Act
-      const { ACCOMPLISH_AGENT_NAME } = await import('@main/opencode/config-generator');
+      const { SOMEHOW_AGENT_NAME } = await import('@main/opencode/config-generator');
 
       // Assert
-      expect(ACCOMPLISH_AGENT_NAME).toBe('somehow');
+      expect(SOMEHOW_AGENT_NAME).toBe('somehow');
     });
   });
 

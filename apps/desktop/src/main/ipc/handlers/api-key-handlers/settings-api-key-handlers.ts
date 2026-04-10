@@ -1,6 +1,6 @@
 import type { IpcMainInvokeEvent } from 'electron';
-import { sanitizeString } from '@accomplish_ai/agent-core';
-import { ALLOWED_API_KEY_PROVIDERS } from '@accomplish_ai/agent-core';
+import { sanitizeString } from '@somehow_ai/agent-core';
+import { ALLOWED_API_KEY_PROVIDERS } from '@somehow_ai/agent-core';
 import {
   storeApiKey,
   deleteApiKey,

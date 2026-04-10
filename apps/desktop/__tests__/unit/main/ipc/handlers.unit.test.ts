@@ -223,9 +223,9 @@ let mockOnboardingComplete = false;
 let mockSelectedModel: { provider: string; model: string } | null = null;
 let mockOpenAiBaseUrl = '';
 
-// Mock @accomplish_ai/agent-core - comprehensive mock covering all exports used by handlers.ts
-vi.mock('@accomplish_ai/agent-core', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@accomplish_ai/agent-core')>();
+// Mock @somehow_ai/agent-core - comprehensive mock covering all exports used by handlers.ts
+vi.mock('@somehow_ai/agent-core', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@somehow_ai/agent-core')>();
 
   // Storage methods shared between module-level exports and createStorage() return value.
   // Using a shared object ensures test spy assertions (e.g. `const { setDebugMode } = await import(...)`)
@@ -748,7 +748,7 @@ describe('IPC Handlers Integration', () => {
       await invokeHandler('settings:set-debug-mode', true);
 
       // Assert
-      const { setDebugMode } = await import('@accomplish_ai/agent-core');
+      const { setDebugMode } = await import('@somehow_ai/agent-core');
       expect(setDebugMode).toHaveBeenCalledWith(true);
     });
 
@@ -846,7 +846,7 @@ describe('IPC Handlers Integration', () => {
     });
 
     it('opencode:auth:slack:status should return Slack MCP auth status', async () => {
-      const { getSlackMcpOauthStatus } = await import('@accomplish_ai/agent-core');
+      const { getSlackMcpOauthStatus } = await import('@somehow_ai/agent-core');
       vi.mocked(getSlackMcpOauthStatus).mockReturnValue({
         connected: true,
         pendingAuthorization: false,
@@ -1092,7 +1092,7 @@ describe('IPC Handlers Integration', () => {
       await invokeHandler('onboarding:set-complete', true);
 
       // Assert
-      const { setOnboardingComplete } = await import('@accomplish_ai/agent-core');
+      const { setOnboardingComplete } = await import('@somehow_ai/agent-core');
       expect(setOnboardingComplete).toHaveBeenCalledWith(true);
     });
   });
@@ -1183,7 +1183,7 @@ describe('IPC Handlers Integration', () => {
       await invokeHandler('model:set', newModel);
 
       // Assert
-      const { setSelectedModel } = await import('@accomplish_ai/agent-core');
+      const { setSelectedModel } = await import('@somehow_ai/agent-core');
       expect(setSelectedModel).toHaveBeenCalledWith(newModel);
     });
 
@@ -1486,7 +1486,7 @@ describe('IPC Handlers Integration', () => {
       await invokeHandler('task:start', config);
 
       // Assert — storage is NOT called directly; daemon handles persistence
-      const { saveTask } = await import('@accomplish_ai/agent-core');
+      const { saveTask } = await import('@somehow_ai/agent-core');
       expect(saveTask).not.toHaveBeenCalled();
       expect(mockDaemonClient.call).toHaveBeenCalledWith(
         'task.start',
@@ -1598,7 +1598,7 @@ describe('IPC Handlers Integration', () => {
 
       // Assert — daemon returns the task; storage is NOT called directly
       expect(result).toEqual(expect.objectContaining({ id: existingTaskId, status: 'running' }));
-      const { updateTaskStatus } = await import('@accomplish_ai/agent-core');
+      const { updateTaskStatus } = await import('@somehow_ai/agent-core');
       expect(updateTaskStatus).not.toHaveBeenCalled();
     });
 
@@ -1619,7 +1619,7 @@ describe('IPC Handlers Integration', () => {
         }),
       );
       // Storage not called directly
-      const { addTaskMessage } = await import('@accomplish_ai/agent-core');
+      const { addTaskMessage } = await import('@somehow_ai/agent-core');
       expect(addTaskMessage).not.toHaveBeenCalled();
     });
   });
@@ -2129,7 +2129,7 @@ describe('IPC Handlers Integration', () => {
 
       await invokeHandler('favorites:add', taskId);
 
-      const { addFavorite } = await import('@accomplish_ai/agent-core');
+      const { addFavorite } = await import('@somehow_ai/agent-core');
       expect(addFavorite).toHaveBeenCalledWith(taskId, 'Complete me', 'Done');
     });
 
@@ -2146,7 +2146,7 @@ describe('IPC Handlers Integration', () => {
 
       await invokeHandler('favorites:add', taskId);
 
-      const { addFavorite } = await import('@accomplish_ai/agent-core');
+      const { addFavorite } = await import('@somehow_ai/agent-core');
       expect(addFavorite).toHaveBeenCalledWith(taskId, 'Resume later', 'WIP');
     });
 
@@ -2154,7 +2154,7 @@ describe('IPC Handlers Integration', () => {
       await expect(invokeHandler('favorites:add', 'task_nonexistent')).rejects.toThrow(
         'Favorite failed: task not found (taskId: task_nonexistent)',
       );
-      const { addFavorite } = await import('@accomplish_ai/agent-core');
+      const { addFavorite } = await import('@somehow_ai/agent-core');
       expect(addFavorite).not.toHaveBeenCalled();
     });
 
@@ -2171,19 +2171,19 @@ describe('IPC Handlers Integration', () => {
       await expect(invokeHandler('favorites:add', taskId)).rejects.toThrow(
         'Favorite failed: invalid status (taskId: task_running, status: running)',
       );
-      const { addFavorite } = await import('@accomplish_ai/agent-core');
+      const { addFavorite } = await import('@somehow_ai/agent-core');
       expect(addFavorite).not.toHaveBeenCalled();
     });
 
     it('favorites:remove should remove task from favorites', async () => {
       await invokeHandler('favorites:remove', 'task_to_unfav');
-      const { removeFavorite } = await import('@accomplish_ai/agent-core');
+      const { removeFavorite } = await import('@somehow_ai/agent-core');
       expect(removeFavorite).toHaveBeenCalledWith('task_to_unfav');
     });
 
     it('favorites:list should return favorites list', async () => {
       const result = await invokeHandler('favorites:list');
-      const { getFavorites } = await import('@accomplish_ai/agent-core');
+      const { getFavorites } = await import('@somehow_ai/agent-core');
       expect(getFavorites).toHaveBeenCalled();
       expect(Array.isArray(result)).toBe(true);
     });

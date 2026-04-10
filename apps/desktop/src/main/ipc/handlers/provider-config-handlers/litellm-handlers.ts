@@ -1,10 +1,6 @@
 import type { IpcMainInvokeEvent } from 'electron';
-import {
-  testLiteLLMConnection,
-  fetchLiteLLMModels,
-  validateHttpUrl,
-} from '@accomplish_ai/agent-core';
-import type { LiteLLMConfig } from '@accomplish_ai/agent-core';
+import { testLiteLLMConnection, fetchLiteLLMModels, validateHttpUrl } from '@somehow_ai/agent-core';
+import type { LiteLLMConfig } from '@somehow_ai/agent-core';
 import type { IpcHandler } from '../../types';
 import { getApiKey } from '../../../store/secureStorage';
 import { getStorage } from '../../../store/storage';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { FileAttachmentInfo } from '@accomplish_ai/agent-core/common';
+import type { FileAttachmentInfo } from '@somehow_ai/agent-core/common';
 import { createLogger } from '../../lib/logger';
 import { MAX_FILES } from '../../lib/fileUtils';
 import { getAccomplish } from '../../lib/accomplish';

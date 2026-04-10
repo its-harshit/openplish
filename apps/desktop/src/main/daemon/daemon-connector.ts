@@ -13,7 +13,7 @@ import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
-import { DaemonClient, createSocketTransport, getSocketPath } from '@accomplish_ai/agent-core';
+import { DaemonClient, createSocketTransport, getSocketPath } from '@somehow_ai/agent-core';
 import { getNodePath } from '../utils/bundled-node';
 import { getLogCollector } from '../logging';
 import { getBuildConfig } from '../config/build-config';
@@ -107,17 +107,17 @@ export function spawnDaemon(dataDir: string): void {
   // Only set when build.env is present (Free builds); absent in OSS builds.
   const bc = getBuildConfig();
   if (bc.accomplishGatewayUrl) {
-    daemonEnv.ACCOMPLISH_GATEWAY_URL = bc.accomplishGatewayUrl;
+    daemonEnv.SOMEHOW_GATEWAY_URL = bc.accomplishGatewayUrl;
   }
   if (app.isPackaged) {
-    daemonEnv.ACCOMPLISH_IS_PACKAGED = '1';
-    daemonEnv.ACCOMPLISH_RESOURCES_PATH = process.resourcesPath;
-    daemonEnv.ACCOMPLISH_APP_PATH = app.getAppPath();
+    daemonEnv.SOMEHOW_IS_PACKAGED = '1';
+    daemonEnv.SOMEHOW_RESOURCES_PATH = process.resourcesPath;
+    daemonEnv.SOMEHOW_APP_PATH = app.getAppPath();
   } else {
     // Dev mode: pass desktop app path so daemon can find bundled Node.js
     // and other resources relative to the desktop workspace
-    daemonEnv.ACCOMPLISH_APP_PATH = app.getAppPath();
-    daemonEnv.ACCOMPLISH_RESOURCES_PATH = path.join(app.getAppPath(), 'resources');
+    daemonEnv.SOMEHOW_APP_PATH = app.getAppPath();
+    daemonEnv.SOMEHOW_RESOURCES_PATH = path.join(app.getAppPath(), 'resources');
   }
 
   // In dev mode, redirect daemon output to a log file so it can be tailed

@@ -50,8 +50,8 @@ export const MODEL_DISPLAY_NAMES: Record<string, string> = {
   'MiniMax-M2.1-highspeed': 'MiniMax M2.1 Highspeed',
   'MiniMax-M2.5': 'MiniMax M2.5',
   'MiniMax-M2.5-highspeed': 'MiniMax M2.5 Highspeed',
-  // Built-in (accomplish-ai) model display
-  'accomplish-free': 'SomeHow',
+  // Built-in (somehow-ai) model display
+  'somehow-free': 'SomeHow',
 };
 
 export const PROVIDER_PREFIXES = [
@@ -78,7 +78,7 @@ export const PROVIDER_PREFIXES = [
   'groq/',
   'venice/',
   'custom/',
-  'accomplish-ai/',
+  'somehow-ai/',
 ];
 
 /**

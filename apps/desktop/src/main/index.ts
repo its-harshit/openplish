@@ -81,7 +81,7 @@ loadBuildConfig();
 import { initSentry } from './sentry';
 initSentry();
 
-const ROUTER_URL = process.env.ACCOMPLISH_ROUTER_URL;
+const ROUTER_URL = process.env.SOMEHOW_ROUTER_URL;
 const WEB_DIST = app.isPackaged // In production, web's build output is an extraResource.
   ? path.join(process.resourcesPath, 'web-ui')
   : path.join(process.env.APP_ROOT, '../web/dist/client');

@@ -6,7 +6,7 @@
  */
 
 import { contextBridge, ipcRenderer, webUtils } from 'electron';
-import type { MessagingConnectionStatus } from '@accomplish_ai/agent-core/common';
+import type { MessagingConnectionStatus } from '@somehow_ai/agent-core/common';
 import type {
   ProviderType,
   Skill,
@@ -18,8 +18,8 @@ import type {
   KnowledgeNote,
   KnowledgeNoteCreateInput,
   KnowledgeNoteUpdateInput,
-} from '@accomplish_ai/agent-core';
-import type { CloudBrowserConfig } from '@accomplish_ai/agent-core/common';
+} from '@somehow_ai/agent-core';
+import type { CloudBrowserConfig } from '@somehow_ai/agent-core/common';
 
 // Expose the accomplish API to the renderer
 const accomplishAPI = {
@@ -631,11 +631,11 @@ const accomplishAPI = {
 
   // File attachments
   pickFolder: (): Promise<string | null> => ipcRenderer.invoke('files:pick-folder'),
-  pickFiles: (): Promise<import('@accomplish_ai/agent-core/common').FileAttachmentInfo[]> =>
+  pickFiles: (): Promise<import('@somehow_ai/agent-core/common').FileAttachmentInfo[]> =>
     ipcRenderer.invoke('files:pick'),
   processDroppedFiles: (
     paths: string[],
-  ): Promise<import('@accomplish_ai/agent-core/common').FileAttachmentInfo[]> =>
+  ): Promise<import('@somehow_ai/agent-core/common').FileAttachmentInfo[]> =>
     ipcRenderer.invoke('files:process-dropped', paths),
 
   // Sandbox configuration
@@ -670,14 +670,14 @@ const accomplishAPI = {
   disconnectConnector: (connectorId: string): Promise<void> =>
     ipcRenderer.invoke('connectors:disconnect', connectorId),
 
-  getLocalMcpServers: (): Promise<import('@accomplish_ai/agent-core').LocalMcpServer[]> =>
+  getLocalMcpServers: (): Promise<import('@somehow_ai/agent-core').LocalMcpServer[]> =>
     ipcRenderer.invoke('local-mcp:list'),
   addLocalMcpServer: (
     name: string,
     commandJson: string,
     environmentJson?: string,
     cwd?: string,
-  ): Promise<import('@accomplish_ai/agent-core').LocalMcpServer> =>
+  ): Promise<import('@somehow_ai/agent-core').LocalMcpServer> =>
     ipcRenderer.invoke('local-mcp:add', name, commandJson, environmentJson, cwd),
   deleteLocalMcpServer: (id: string): Promise<void> => ipcRenderer.invoke('local-mcp:delete', id),
   setLocalMcpServerEnabled: (id: string, enabled: boolean): Promise<void> =>
@@ -855,17 +855,17 @@ const accomplishAPI = {
     ipcRenderer.invoke('scheduler:set-enabled', scheduleId, enabled),
   isAutoStartEnabled: (): Promise<boolean> => ipcRenderer.invoke('daemon:is-auto-start-enabled'),
 
-  // ── Accomplish AI Free Tier ──────────────────────────────────────────────
-  accomplishAiConnect: (): Promise<unknown> => ipcRenderer.invoke('accomplish-ai:connect'),
-  accomplishAiEnsureReady: (): Promise<unknown> => ipcRenderer.invoke('accomplish-ai:ensure-ready'),
-  accomplishAiDisconnect: (): Promise<void> => ipcRenderer.invoke('accomplish-ai:disconnect'),
-  accomplishAiGetUsage: (): Promise<unknown> => ipcRenderer.invoke('accomplish-ai:get-usage'),
+  // ── SomeHow built-in free tier (somehow-ai provider) ─────────────────
+  accomplishAiConnect: (): Promise<unknown> => ipcRenderer.invoke('somehow-ai:connect'),
+  accomplishAiEnsureReady: (): Promise<unknown> => ipcRenderer.invoke('somehow-ai:ensure-ready'),
+  accomplishAiDisconnect: (): Promise<void> => ipcRenderer.invoke('somehow-ai:disconnect'),
+  accomplishAiGetUsage: (): Promise<unknown> => ipcRenderer.invoke('somehow-ai:get-usage'),
   accomplishAiGetStatus: (): Promise<{ connected: boolean }> =>
-    ipcRenderer.invoke('accomplish-ai:get-status'),
+    ipcRenderer.invoke('somehow-ai:get-status'),
   onAccomplishAiUsageUpdate: (callback: (usage: unknown) => void) => {
     const listener = (_: unknown, usage: unknown) => callback(usage);
-    ipcRenderer.on('accomplish-ai:usage-updated', listener);
-    return () => ipcRenderer.removeListener('accomplish-ai:usage-updated', listener);
+    ipcRenderer.on('somehow-ai:usage-updated', listener);
+    return () => ipcRenderer.removeListener('somehow-ai:usage-updated', listener);
   },
 
   policyGetState: (): Promise<{
@@ -909,7 +909,8 @@ const accomplishAPI = {
   },
 };
 
-// Expose the API to the renderer
+// Expose the API to the renderer (preferred + legacy names)
+contextBridge.exposeInMainWorld('somehow', accomplishAPI);
 contextBridge.exposeInMainWorld('accomplish', accomplishAPI);
 
 // Also expose shell info for compatibility checks
@@ -917,11 +918,13 @@ const packageVersion = process.env.npm_package_version;
 if (!packageVersion) {
   throw new Error('Package version is not defined. Build is misconfigured.');
 }
-contextBridge.exposeInMainWorld('accomplishShell', {
+const shellInfo = {
   version: packageVersion,
   platform: process.platform,
-  isElectron: true,
-});
+  isElectron: true as const,
+};
+contextBridge.exposeInMainWorld('somehowShell', shellInfo);
+contextBridge.exposeInMainWorld('accomplishShell', shellInfo);
 
 // Type declarations
 export type AccomplishAPI = typeof accomplishAPI;

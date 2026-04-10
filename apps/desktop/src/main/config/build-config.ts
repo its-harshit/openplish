@@ -59,7 +59,7 @@ export function loadBuildConfig(): BuildConfig {
     gaApiSecret: raw.GA_API_SECRET,
     gaMeasurementId: raw.GA_MEASUREMENT_ID,
     sentryDsn: raw.SENTRY_DSN,
-    accomplishGatewayUrl: raw.ACCOMPLISH_GATEWAY_URL,
+    accomplishGatewayUrl: raw.SOMEHOW_GATEWAY_URL,
   });
 
   if (!parsed.success) {

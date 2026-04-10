@@ -5,7 +5,7 @@ import type {
   ConnectedProvider,
   OllamaCredentials,
   ToolSupportStatus,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import type { OllamaModel } from './ollama-types';
 
 export type { OllamaModel } from './ollama-types';

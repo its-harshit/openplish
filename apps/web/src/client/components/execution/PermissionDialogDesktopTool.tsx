@@ -1,4 +1,4 @@
-import type { PermissionRequest } from '@accomplish_ai/agent-core/common';
+import type { PermissionRequest } from '@somehow_ai/agent-core/common';
 
 interface PermissionDialogDesktopToolProps {
   permissionRequest: PermissionRequest;

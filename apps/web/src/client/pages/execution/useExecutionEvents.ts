@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { TaskUpdateEvent } from '@accomplish_ai/agent-core/common';
+import type { TaskUpdateEvent } from '@somehow_ai/agent-core/common';
 import type { DebugLogEntry } from '../../components/execution/DebugPanel';
 import { getAccomplish } from '../../lib/accomplish';
 
@@ -11,13 +11,13 @@ interface UseExecutionEventsOptions {
   addTaskUpdate: (event: TaskUpdateEvent) => void;
   addTaskUpdateBatch: (event: {
     taskId: string;
-    messages: import('@accomplish_ai/agent-core/common').TaskMessage[];
+    messages: import('@somehow_ai/agent-core/common').TaskMessage[];
   }) => void;
   updateTaskStatus: (
     taskId: string,
-    status: import('@accomplish_ai/agent-core/common').TaskStatus,
+    status: import('@somehow_ai/agent-core/common').TaskStatus,
   ) => void;
-  setPermissionRequest: (req: import('@accomplish_ai/agent-core/common').PermissionRequest) => void;
+  setPermissionRequest: (req: import('@somehow_ai/agent-core/common').PermissionRequest) => void;
   setCurrentTool: (tool: string | null) => void;
   setCurrentToolInput: (input: unknown) => void;
   clearStartupStage: (taskId: string) => void;

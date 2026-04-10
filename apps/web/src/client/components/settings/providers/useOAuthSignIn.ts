@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { ProviderId, ConnectedProvider, OAuthCredentials } from '@accomplish_ai/agent-core';
-import { DEFAULT_PROVIDERS } from '@accomplish_ai/agent-core/common';
+import type { ProviderId, ConnectedProvider, OAuthCredentials } from '@somehow_ai/agent-core';
+import { DEFAULT_PROVIDERS } from '@somehow_ai/agent-core/common';
 import { getAccomplish } from '@/lib/accomplish';
 import { createLogger } from '@/lib/logger';
 

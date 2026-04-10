@@ -7,8 +7,8 @@
  */
 
 import type { BrowserWindow } from 'electron';
-import type { DaemonClient } from '@accomplish_ai/agent-core';
-import { createSocketTransport } from '@accomplish_ai/agent-core';
+import type { DaemonClient } from '@somehow_ai/agent-core';
+import { createSocketTransport } from '@somehow_ai/agent-core';
 import {
   ensureDaemonRunning,
   onReconnect,
@@ -184,9 +184,9 @@ function registerNotificationHandlers(
     forward('task:checkpoint', data);
   });
 
-  // Accomplish AI credit usage updates (proxy → daemon → Electron → renderer)
-  client.onNotification('accomplish-ai.usage-update', (data) => {
-    forward('accomplish-ai:usage-updated', data);
+  // Built-in free-tier credit usage updates (proxy → daemon → Electron → renderer)
+  client.onNotification('somehow-ai.usage-update', (data) => {
+    forward('somehow-ai:usage-updated', data);
   });
 
   // WhatsApp events

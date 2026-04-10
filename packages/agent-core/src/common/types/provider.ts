@@ -32,7 +32,7 @@ export type ProviderType =
   | 'venice'
   | 'nim'
   | 'copilot'
-  | 'accomplish-ai';
+  | 'somehow-ai';
 
 export type ApiKeyProvider =
   | 'anthropic'
@@ -490,16 +490,16 @@ export const DEFAULT_PROVIDERS: ProviderConfig[] = [
     models: [],
   },
   {
-    id: 'accomplish-ai',
+    id: 'somehow-ai',
     name: 'SomeHow AI',
     requiresApiKey: false,
-    defaultModelId: 'accomplish-ai/accomplish-free',
+    defaultModelId: 'somehow-ai/somehow-free',
     models: [
       {
-        id: 'accomplish-free',
+        id: 'somehow-free',
         displayName: 'SomeHow',
-        provider: 'accomplish-ai',
-        fullId: 'accomplish-ai/accomplish-free',
+        provider: 'somehow-ai',
+        fullId: 'somehow-ai/somehow-free',
         contextWindow: 128_000,
         maxOutputTokens: 32_000,
         supportsVision: true,

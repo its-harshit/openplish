@@ -8,8 +8,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router';
-import type { Task, TaskStatus, TaskMessage, PermissionRequest } from '@accomplish_ai/agent-core';
-import { OAuthProviderId, PROMPT_DEFAULT_MAX_LENGTH } from '@accomplish_ai/agent-core/common';
+import type { Task, TaskStatus, TaskMessage, PermissionRequest } from '@somehow_ai/agent-core';
+import { OAuthProviderId, PROMPT_DEFAULT_MAX_LENGTH } from '@somehow_ai/agent-core/common';
 
 // Create mock functions
 const mockLoadTaskById = vi.fn();

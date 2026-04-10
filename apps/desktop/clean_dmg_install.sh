@@ -77,7 +77,7 @@ APP_SUPPORT_DIRS=(
   "$HOME/Library/Application Support/com.accomplish.lite"
   "$HOME/Library/Application Support/ai.accomplish.desktop"
   "$HOME/Library/Application Support/ai.accomplish.lite"
-  "$HOME/Library/Application Support/@accomplish/desktop"
+  "$HOME/Library/Application Support/@somehow/desktop"
 )
 
 for dir in "${APP_SUPPORT_DIRS[@]}"; do
@@ -113,7 +113,7 @@ CACHE_DIRS=(
   "$HOME/Library/Caches/com.accomplish.lite"
   "$HOME/Library/Caches/ai.accomplish.desktop"
   "$HOME/Library/Caches/ai.accomplish.lite"
-  "$HOME/Library/Caches/@accomplish/desktop"
+  "$HOME/Library/Caches/@somehow/desktop"
 )
 
 for dir in "${CACHE_DIRS[@]}"; do
@@ -130,7 +130,7 @@ LOG_DIRS=(
   "$HOME/Library/Logs/Accomplish Lite"
   "$HOME/Library/Logs/ai.accomplish.desktop"
   "$HOME/Library/Logs/ai.accomplish.lite"
-  "$HOME/Library/Logs/@accomplish/desktop"
+  "$HOME/Library/Logs/@somehow/desktop"
 )
 
 for dir in "${LOG_DIRS[@]}"; do
@@ -165,7 +165,7 @@ KEYCHAIN_SERVICES=(
   "com.accomplish.lite"
   "ai.accomplish.desktop"
   "ai.accomplish.lite"
-  "@accomplish/desktop"
+  "@somehow/desktop"
 )
 KEYCHAIN_KEYS=("accessToken" "refreshToken" "userId" "tokenExpiresAt" "tokenIntegrity" "deviceSecret")
 

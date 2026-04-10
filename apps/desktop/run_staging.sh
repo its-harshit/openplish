@@ -6,9 +6,9 @@
 set -e
 
 echo "Building unpacked app for staging..."
-pnpm -F @accomplish/desktop build:unpack
+pnpm -F @somehow/desktop build:unpack
 
 echo "Launching app with staging configuration..."
-ACCOMPLISH_UI_URL=https://lite-staging.accomplish.ai \
-ACCOMPLISH_API_URL=https://lite-staging.accomplish.ai \
+SOMEHOW_UI_URL=https://lite-staging.accomplish.ai \
+SOMEHOW_API_URL=https://lite-staging.accomplish.ai \
 open apps/desktop/release/mac-arm64/Accomplish.app

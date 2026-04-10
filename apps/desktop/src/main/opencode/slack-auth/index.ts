@@ -16,7 +16,7 @@ import {
   OPENCODE_SLACK_MCP_CALLBACK_HOST,
   OPENCODE_SLACK_MCP_CALLBACK_PORT,
   OPENCODE_SLACK_MCP_CALLBACK_PATH,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import { createOAuthCallbackServer, type OAuthCallbackServer } from '../../oauth-callback-server';
 import { AuthLoginError } from '../auth-login-error';
 

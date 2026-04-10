@@ -172,9 +172,9 @@ function getLaunchAgentContent(): string {
     lines.push(
       '  <key>EnvironmentVariables</key>',
       '  <dict>',
-      '    <key>ACCOMPLISH_IS_PACKAGED</key><string>1</string>',
-      `    <key>ACCOMPLISH_RESOURCES_PATH</key><string>${process.resourcesPath}</string>`,
-      `    <key>ACCOMPLISH_APP_PATH</key><string>${app.getAppPath()}</string>`,
+      '    <key>SOMEHOW_IS_PACKAGED</key><string>1</string>',
+      `    <key>SOMEHOW_RESOURCES_PATH</key><string>${process.resourcesPath}</string>`,
+      `    <key>SOMEHOW_APP_PATH</key><string>${app.getAppPath()}</string>`,
       '  </dict>',
     );
   }
@@ -264,9 +264,9 @@ function getSystemdServiceContent(): string {
   // Pass packaged-mode context so daemon resolves paths correctly
   if (app.isPackaged) {
     lines.push(
-      `Environment=ACCOMPLISH_IS_PACKAGED=1`,
-      `Environment=ACCOMPLISH_RESOURCES_PATH=${process.resourcesPath}`,
-      `Environment=ACCOMPLISH_APP_PATH=${app.getAppPath()}`,
+      `Environment=SOMEHOW_IS_PACKAGED=1`,
+      `Environment=SOMEHOW_RESOURCES_PATH=${process.resourcesPath}`,
+      `Environment=SOMEHOW_APP_PATH=${app.getAppPath()}`,
     );
   }
 

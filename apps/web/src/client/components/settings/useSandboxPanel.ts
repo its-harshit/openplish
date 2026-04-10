@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAccomplish } from '@/lib/accomplish';
 import { createLogger } from '@/lib/logger';
-import type { SandboxConfig } from '@accomplish_ai/agent-core';
+import type { SandboxConfig } from '@somehow_ai/agent-core';
 
 const logger = createLogger('SandboxPanel');
 const DEFAULT_NETWORK_POLICY = { allowOutbound: true };

@@ -5,7 +5,7 @@ import {
   createTextareaRef,
   createKeyboardEvent,
 } from '../__helpers__/slashCommandTestUtils';
-import type { Skill } from '@accomplish_ai/agent-core/common';
+import type { Skill } from '@somehow_ai/agent-core/common';
 import type { UseSlashCommandReturn } from '@/hooks/useSlashCommand';
 
 const mockGetEnabledSkills = vi.fn().mockResolvedValue(mockSkillsWithHidden);

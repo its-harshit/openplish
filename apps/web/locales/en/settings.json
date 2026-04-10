@@ -60,7 +60,7 @@
     "together": "Together AI",
     "fireworks": "Fireworks AI",
     "groq": "Groq",
-    "accomplish-ai": "SomeHow AI",
+    "somehow-ai": "SomeHow AI",
     "accomplishAi": {
       "description": "Use the built-in model powered by SomeHow - no API key required.\nIncludes 200 free credits per month to get you started.",
       "disconnect": "Disconnect",
@@ -93,7 +93,7 @@
     "together": "Llama & Mixtral models",
     "fireworks": "Fast inference models",
     "groq": "Ultra-fast Llama models",
-    "accomplish-ai": "Free Tier",
+    "somehow-ai": "Free Tier",
     "venice": "Service",
     "nim": "NVIDIA-hosted models",
     "custom": "Custom",
@@ -288,7 +288,7 @@
     "modes": {
       "inherit": {
         "label": "Inherit from environment",
-        "desc": "Use ACCOMPLISH_FILE_OPERATION_POLICY from .env or system environment (default is restricted unless set to standard/full)."
+        "desc": "Use SOMEHOW_FILE_OPERATION_POLICY from .env or system environment (default is restricted unless set to standard/full)."
       },
       "restricted": {
         "label": "Restricted (recommended)",

@@ -55,8 +55,8 @@ flowchart TB
         preload_script --- renderer
     end
 
-    dev_cjs -- "spawn: pnpm -F @accomplish/web dev" --> vite_proc
-    dev_cjs -- "spawn (after :5173 ready): pnpm -F @accomplish/desktop dev" --> electron_proc
+    dev_cjs -- "spawn: pnpm -F @somehow/web dev" --> vite_proc
+    dev_cjs -- "spawn (after :5173 ready): pnpm -F @somehow/desktop dev" --> electron_proc
 
     vite_proc -- "startup(argv) spawns Electron
     after build completes" --> electron_proc

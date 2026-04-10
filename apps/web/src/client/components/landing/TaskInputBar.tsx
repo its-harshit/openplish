@@ -3,7 +3,7 @@
 import { type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { WarningCircle } from '@phosphor-icons/react';
-import type { FileAttachmentInfo } from '@accomplish_ai/agent-core';
+import type { FileAttachmentInfo } from '@somehow_ai/agent-core';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { cn } from '@/lib/utils';
 import { TaskInputAttachmentList } from './TaskInputAttachmentList';

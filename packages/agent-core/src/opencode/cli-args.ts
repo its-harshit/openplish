@@ -2,7 +2,7 @@
  * CLI argument builder for OpenCode invocations.
  * Extracted from config-generator.ts.
  */
-import { ACCOMPLISH_AGENT_NAME } from './config-generator.js';
+import { SOMEHOW_AGENT_NAME } from './config-generator.js';
 import type { ProviderId } from '../common/types/providerSettings.js';
 
 export interface BuildCliArgsOptions {
@@ -61,7 +61,7 @@ export function buildCliArgs(options: BuildCliArgsOptions): string[] {
     args.push('--session', sessionId);
   }
 
-  args.push('--agent', ACCOMPLISH_AGENT_NAME);
+  args.push('--agent', SOMEHOW_AGENT_NAME);
   args.push(prompt);
 
   return args;

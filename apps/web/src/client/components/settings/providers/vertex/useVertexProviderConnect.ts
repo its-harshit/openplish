@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getAccomplish } from '@/lib/accomplish';
-import type { ConnectedProvider, VertexProviderCredentials } from '@accomplish_ai/agent-core';
+import type { ConnectedProvider, VertexProviderCredentials } from '@somehow_ai/agent-core';
 import { isCuratedVertexModel } from './vertex-model-utils';
 import type {
   UseVertexProviderConnectParams,

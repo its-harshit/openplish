@@ -1,7 +1,7 @@
 import { homedir } from 'node:os';
 import { join } from 'node:path';
-import { mkdirSync } from 'node:fs';
-import { createStorage, type StorageAPI } from '@accomplish_ai/agent-core';
+import { existsSync, mkdirSync, renameSync } from 'node:fs';
+import { createStorage, type StorageAPI } from '@somehow_ai/agent-core';
 import { log } from './logger.js';
 
 const DEV_DEFAULT_DATA_DIR = join(homedir(), '.somehow');
@@ -20,13 +20,28 @@ export class StorageService {
     mkdirSync(dir, { recursive: true, mode: 0o700 });
 
     // Match the desktop app's database naming:
-    // - Packaged (ACCOMPLISH_IS_PACKAGED=1): accomplish.db + secure-storage.json
-    // - Dev mode: accomplish-dev.db + secure-storage-dev.json
-    // This ensures both the daemon and Electron read/write the same database.
-    const isPackaged = process.env.ACCOMPLISH_IS_PACKAGED === '1';
-    const dbName = isPackaged ? 'accomplish.db' : 'accomplish-dev.db';
+    // - Packaged (SOMEHOW_IS_PACKAGED=1): somehow.db + secure-storage.json
+    // - Dev mode: somehow-dev.db + secure-storage-dev.json
+    // Renames legacy accomplish*.db files in the same directory when present.
+    const isPackaged = process.env.SOMEHOW_IS_PACKAGED === '1';
+    const dbName = isPackaged ? 'somehow.db' : 'somehow-dev.db';
     const secureFileName = isPackaged ? 'secure-storage.json' : 'secure-storage-dev.json';
     const databasePath = join(dir, dbName);
+    const legacyPath = join(dir, isPackaged ? 'accomplish.db' : 'accomplish-dev.db');
+    if (!existsSync(databasePath) && existsSync(legacyPath)) {
+      try {
+        renameSync(legacyPath, databasePath);
+        for (const suf of ['-wal', '-shm'] as const) {
+          const from = legacyPath + suf;
+          const to = databasePath + suf;
+          if (existsSync(from)) {
+            renameSync(from, to);
+          }
+        }
+      } catch {
+        /* locked or permission — may succeed on next start */
+      }
+    }
 
     this.storage = createStorage({
       databasePath,

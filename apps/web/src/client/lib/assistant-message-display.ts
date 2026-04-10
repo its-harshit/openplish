@@ -1,7 +1,4 @@
-import {
-  partitionAssistantTextForDisplay,
-  type TaskMessage,
-} from '@accomplish_ai/agent-core/common';
+import { partitionAssistantTextForDisplay, type TaskMessage } from '@somehow_ai/agent-core/common';
 
 export function getAssistantMessageDisplayParts(message: TaskMessage): {
   thinking: string | null;

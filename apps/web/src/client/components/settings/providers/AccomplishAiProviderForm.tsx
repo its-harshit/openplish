@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
 import { getAccomplish } from '@/lib/accomplish';
-import type { ConnectedProvider, CreditUsage } from '@accomplish_ai/agent-core/common';
-import { DEFAULT_PROVIDERS } from '@accomplish_ai/agent-core/common';
+import type { ConnectedProvider, CreditUsage } from '@somehow_ai/agent-core/common';
+import { DEFAULT_PROVIDERS } from '@somehow_ai/agent-core/common';
 import { ProviderFormHeader } from '../shared';
 import { PROVIDER_LOGOS } from '@/lib/provider-logos';
 import { getCreditStatusColor } from '@/hooks/useCreditsState';
@@ -11,15 +11,15 @@ import { settingsVariants, settingsTransitions } from '@/lib/animations';
 
 // ─── Static config (module-level, derived once from constants) ────────────────
 
-const ACCOMPLISH_CONFIG = DEFAULT_PROVIDERS.find((p) => p.id === 'accomplish-ai');
-if (!ACCOMPLISH_CONFIG || ACCOMPLISH_CONFIG.models.length === 0) {
+const SOMEHOW_CONFIG = DEFAULT_PROVIDERS.find((p) => p.id === 'somehow-ai');
+if (!SOMEHOW_CONFIG || SOMEHOW_CONFIG.models.length === 0) {
   throw new Error('SomeHow built-in provider configuration is missing required models');
 }
-const STATIC_MODELS = ACCOMPLISH_CONFIG.models.map((m) => ({
+const STATIC_MODELS = SOMEHOW_CONFIG.models.map((m) => ({
   id: m.fullId,
   name: m.displayName,
 }));
-const ACCOMPLISH_LOGO = PROVIDER_LOGOS['accomplish-ai'];
+const SOMEHOW_LOGO = PROVIDER_LOGOS['somehow-ai'];
 
 // ─── Skeleton ─────────────────────────────────────────────────────────────────
 
@@ -225,16 +225,16 @@ export function AccomplishAiProviderForm({
         const data = await accomplish.accomplishAiEnsureReady();
         if (cancelled) return;
         if (!data.deviceFingerprint) {
-          throw new Error('Missing deviceFingerprint in accomplish-ai ready response');
+          throw new Error('Missing deviceFingerprint in somehow-ai ready response');
         }
         setConnectionError(null);
 
         // Use onUpdateProvider (not onConnect) to refresh renderer state
-        // without promoting accomplish-ai to the active provider.
+        // without promoting somehow-ai to the active provider.
         const connected: ConnectedProvider = {
-          providerId: 'accomplish-ai',
+          providerId: 'somehow-ai',
           connectionStatus: 'connected',
-          credentials: { type: 'accomplish-ai', deviceFingerprint: data.deviceFingerprint },
+          credentials: { type: 'somehow-ai', deviceFingerprint: data.deviceFingerprint },
           lastConnectedAt: new Date().toISOString(),
           availableModels: STATIC_MODELS,
           selectedModelId: STATIC_MODELS[0].id,
@@ -328,7 +328,7 @@ export function AccomplishAiProviderForm({
       className="rounded-xl border border-border bg-card p-5"
       data-testid="provider-settings-panel"
     >
-      <ProviderFormHeader logoSrc={ACCOMPLISH_LOGO} providerName="SomeHow" />
+      <ProviderFormHeader logoSrc={SOMEHOW_LOGO} providerName="SomeHow" />
 
       <div className="space-y-3">
         <p className="text-sm text-muted-foreground whitespace-pre-line">

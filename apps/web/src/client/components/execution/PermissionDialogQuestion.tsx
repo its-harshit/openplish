@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { PermissionRequest } from '@accomplish_ai/agent-core';
+import type { PermissionRequest } from '@somehow_ai/agent-core';
 import { cn } from '@/lib/utils';
 
 interface PermissionDialogQuestionProps {

@@ -74,7 +74,7 @@ A fully independent daemon process with:
 - Graceful shutdown with 30-second drain phase for active tasks
 - Health check endpoint
 
-**Nobody starts it.** The Electron app does not depend on `@accomplish/daemon`, does not import from it, and does not spawn it. It exists as an independent workspace package but has no integration point.
+**Nobody starts it.** The Electron app does not depend on `@somehow/daemon`, does not import from it, and does not spawn it. It exists as an independent workspace package but has no integration point.
 
 | File                                                                  | Lines                       |
 | --------------------------------------------------------------------- | --------------------------- |

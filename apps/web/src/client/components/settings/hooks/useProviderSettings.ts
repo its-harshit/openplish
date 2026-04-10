@@ -6,7 +6,7 @@ import type {
   ProviderSettings,
   ProviderId,
   ConnectedProvider,
-} from '@accomplish_ai/agent-core/common';
+} from '@somehow_ai/agent-core/common';
 
 export function useProviderSettings() {
   const [settings, setSettings] = useState<ProviderSettings | null>(null);

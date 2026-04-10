@@ -1,4 +1,4 @@
-import type { Skill } from '@accomplish_ai/agent-core';
+import type { Skill } from '@somehow_ai/agent-core';
 
 export interface SlashCommandState {
   isOpen: boolean;

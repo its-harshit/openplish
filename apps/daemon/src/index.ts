@@ -14,7 +14,7 @@ import {
   PERMISSION_API_PORT,
   QUESTION_API_PORT,
   THOUGHT_STREAM_PORT,
-} from '@accomplish_ai/agent-core';
+} from '@somehow_ai/agent-core';
 import { StorageService } from './storage-service.js';
 import { TaskService } from './task-service.js';
 import { PermissionService } from './permission-service.js';
@@ -42,7 +42,7 @@ async function main(): Promise<void> {
 
   installCrashHandlers();
 
-  // ── Load Accomplish AI runtime (noop in OSS, real impl in commercial) ───
+  // ── Load SomeHow gateway runtime (noop in OSS, real impl in commercial) ─
   let accomplishRuntime: AccomplishRuntime = noopRuntime;
   try {
     const mod = await import('@accomplish/llm-gateway-client');
@@ -65,14 +65,14 @@ async function main(): Promise<void> {
   // --data-dir is required by default. Only explicitly opted-in dev mode skips it,
   // so a misconfigured launcher can never silently use the wrong profile.
   const dataDir = args.dataDir;
-  const isDevMode = process.env.ACCOMPLISH_DAEMON_DEV === '1';
+  const isDevMode = process.env.SOMEHOW_DAEMON_DEV === '1';
   if (!dataDir && !isDevMode) {
     log.error(
       '[Daemon] Error: --data-dir is required.\n' +
         'The daemon must know which data directory to use so it shares the same\n' +
         'database, socket, and PID file as the desktop app.\n\n' +
         'Usage: node daemon/index.js --data-dir /path/to/userData\n\n' +
-        'For local development without --data-dir, set ACCOMPLISH_DAEMON_DEV=1\n' +
+        'For local development without --data-dir, set SOMEHOW_DAEMON_DEV=1\n' +
         'to fall back to ~/.somehow.',
     );
     process.exit(1);
@@ -107,9 +107,9 @@ async function main(): Promise<void> {
   // 5. Create services
   // Packaged-mode context: CLI args take precedence over env vars (for Windows login-item).
   const userDataPath = dataDir || path.join(homedir(), '.somehow');
-  const isPackaged = args.isPackaged || process.env.ACCOMPLISH_IS_PACKAGED === '1';
-  const resourcesPath = args.resourcesPath || process.env.ACCOMPLISH_RESOURCES_PATH || '';
-  const appPath = args.appPath || process.env.ACCOMPLISH_APP_PATH || '';
+  const isPackaged = args.isPackaged || process.env.SOMEHOW_IS_PACKAGED === '1';
+  const resourcesPath = args.resourcesPath || process.env.SOMEHOW_RESOURCES_PATH || '';
+  const appPath = args.appPath || process.env.SOMEHOW_APP_PATH || '';
   const mcpToolsPath = isPackaged
     ? path.join(resourcesPath, 'mcp-tools')
     : process.env.MCP_TOOLS_PATH ||
@@ -183,15 +183,15 @@ async function main(): Promise<void> {
   // Pass auth token and actual ports to child processes via environment
   const permPorts = permissionService.getPorts();
   const thoughtPort = thoughtStreamService.getPort();
-  process.env.ACCOMPLISH_DAEMON_AUTH_TOKEN = authToken;
+  process.env.SOMEHOW_DAEMON_AUTH_TOKEN = authToken;
   if (permPorts.permissionPort) {
-    process.env.ACCOMPLISH_PERMISSION_API_PORT = String(permPorts.permissionPort);
+    process.env.SOMEHOW_PERMISSION_API_PORT = String(permPorts.permissionPort);
   }
   if (permPorts.questionPort) {
-    process.env.ACCOMPLISH_QUESTION_API_PORT = String(permPorts.questionPort);
+    process.env.SOMEHOW_QUESTION_API_PORT = String(permPorts.questionPort);
   }
   if (thoughtPort) {
-    process.env.ACCOMPLISH_THOUGHT_STREAM_PORT = String(thoughtPort);
+    process.env.SOMEHOW_THOUGHT_STREAM_PORT = String(thoughtPort);
     // MCP tools (report-thought, report-checkpoint) read THOUGHT_STREAM_PORT
     process.env.THOUGHT_STREAM_PORT = String(thoughtPort);
   }

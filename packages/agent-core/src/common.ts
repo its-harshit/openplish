@@ -1,5 +1,5 @@
 // =============================================================================
-// @accomplish_ai/agent-core/common - Browser-safe exports
+// @somehow_ai/agent-core/common - Browser-safe exports
 // =============================================================================
 // This file exports only browser-safe code (types, constants, pure functions).
 // Use this entry point for renderer/browser contexts.

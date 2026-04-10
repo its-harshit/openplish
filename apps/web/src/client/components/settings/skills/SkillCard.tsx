@@ -2,7 +2,7 @@
 
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Skill } from '@accomplish_ai/agent-core/common';
+import type { Skill } from '@somehow_ai/agent-core/common';
 import {
   DropdownMenu,
   DropdownMenuContent,

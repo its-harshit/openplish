@@ -114,9 +114,9 @@ export function removeConnectedProvider(providerId: ProviderId): void {
       db.prepare('UPDATE provider_meta SET active_provider_id = NULL WHERE id = 1').run();
     }
 
-    // Clear cached credits when Accomplish AI is disconnected
-    if (providerId === 'accomplish-ai') {
-      db.prepare('DELETE FROM accomplish_ai_credits WHERE id = 1').run();
+    // Clear cached credits when built-in free-tier AI is disconnected
+    if (providerId === 'somehow-ai') {
+      db.prepare('DELETE FROM somehow_ai_credits WHERE id = 1').run();
     }
   })();
 }
@@ -145,8 +145,8 @@ export function clearProviderSettings(): void {
     db.prepare(
       'UPDATE provider_meta SET active_provider_id = NULL, debug_mode = 0 WHERE id = 1',
     ).run();
-    // Clear cached Accomplish AI credits on full reset
-    db.prepare('DELETE FROM accomplish_ai_credits WHERE id = 1').run();
+    // Clear cached built-in free-tier AI credits on full reset
+    db.prepare('DELETE FROM somehow_ai_credits WHERE id = 1').run();
   })();
 }
 
@@ -196,11 +196,11 @@ export function getConnectedProviderIds(): ProviderId[] {
   return rows.map((r) => r.provider_id as ProviderId);
 }
 
-// ─── Accomplish AI Credit Cache ──────────────────────────────────────────────
+// ─── Built-in free-tier AI credit cache ─────────────────────────────────────
 
 export function getAccomplishAiCredits(): CreditUsage | null {
   const db = getDatabase();
-  const row = db.prepare('SELECT credits_json FROM accomplish_ai_credits WHERE id = 1').get() as
+  const row = db.prepare('SELECT credits_json FROM somehow_ai_credits WHERE id = 1').get() as
     | { credits_json: string }
     | undefined;
   if (!row) return null;
@@ -213,12 +213,12 @@ export function getAccomplishAiCredits(): CreditUsage | null {
 
 export function saveAccomplishAiCredits(usage: CreditUsage): void {
   const db = getDatabase();
-  db.prepare('INSERT OR REPLACE INTO accomplish_ai_credits (id, credits_json) VALUES (1, ?)').run(
+  db.prepare('INSERT OR REPLACE INTO somehow_ai_credits (id, credits_json) VALUES (1, ?)').run(
     JSON.stringify(usage),
   );
 }
 
 export function clearAccomplishAiCredits(): void {
   const db = getDatabase();
-  db.prepare('DELETE FROM accomplish_ai_credits WHERE id = 1').run();
+  db.prepare('DELETE FROM somehow_ai_credits WHERE id = 1').run();
 }

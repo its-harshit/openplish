@@ -30,7 +30,7 @@ log('  PATH (first 500 chars):', (process.env.PATH || '').substring(0, 500));
 
 if (!process.env.NODE_BIN_PATH) {
   log('ERROR: NODE_BIN_PATH is required but was not provided.');
-  log('Run "pnpm -F @accomplish/desktop download:nodejs" and rebuild before launching.');
+  log('Run "pnpm -F @somehow/desktop download:nodejs" and rebuild before launching.');
   process.exit(1);
 }
 
@@ -47,7 +47,7 @@ log('  Using bundled node:', nodeExe);
 const bundledServer = path.join(skillDir, 'dist', 'start-server.mjs');
 if (!fs.existsSync(bundledServer)) {
   log('ERROR: Missing dev-browser dist entry:', bundledServer);
-  log('Run "pnpm -F @accomplish/desktop build:mcp-tools:dev" before starting the app.');
+  log('Run "pnpm -F @somehow/desktop build:mcp-tools:dev" before starting the app.');
   process.exit(1);
 }
 log('  Using bundled server:', bundledServer);

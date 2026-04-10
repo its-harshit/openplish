@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getAccomplish } from '@/lib/accomplish';
-import type { KnowledgeNote, KnowledgeNoteType } from '@accomplish_ai/agent-core';
+import type { KnowledgeNote, KnowledgeNoteType } from '@somehow_ai/agent-core';
 
 type AccomplishInstance = ReturnType<typeof getAccomplish>;
 

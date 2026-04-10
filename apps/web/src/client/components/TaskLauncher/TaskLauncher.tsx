@@ -5,7 +5,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useTaskStore } from '@/stores/taskStore';
 import { getAccomplish } from '@/lib/accomplish';
 import { TaskLauncherContent } from './TaskLauncherContent';
-import { hasAnyReadyProvider } from '@accomplish_ai/agent-core/common';
+import { hasAnyReadyProvider } from '@somehow_ai/agent-core/common';
 
 export function TaskLauncher() {
   const navigate = useNavigate();
