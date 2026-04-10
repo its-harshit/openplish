@@ -117,7 +117,7 @@ export const MessageBubble = memo(
               className={cn(
                 'max-w-[85%] rounded-2xl px-4 py-3 transition-all duration-150 relative',
                 isUser
-                  ? 'bg-primary text-primary-foreground'
+                  ? 'bg-muted text-foreground border border-border'
                   : isTool
                     ? 'bg-muted border border-border'
                     : isSystem
@@ -140,12 +140,7 @@ export const MessageBubble = memo(
                     </div>
                   )}
                   {isUser ? (
-                    <p
-                      className={cn(
-                        'text-sm whitespace-pre-wrap break-words',
-                        'text-primary-foreground',
-                      )}
-                    >
+                    <p className={cn('text-sm whitespace-pre-wrap break-words', 'text-foreground')}>
                       {message.content}
                     </p>
                   ) : isAssistant && shouldStream && !streamComplete ? (
@@ -183,12 +178,7 @@ export const MessageBubble = memo(
                       </ReactMarkdown>
                     </div>
                   )}
-                  <p
-                    className={cn(
-                      'text-xs mt-1.5',
-                      isUser ? 'text-primary-foreground/70' : 'text-muted-foreground',
-                    )}
-                  >
+                  <p className={cn('text-xs mt-1.5', 'text-muted-foreground')}>
                     {new Date(message.timestamp).toLocaleTimeString()}
                   </p>
                   {isAssistant && showTaskActionButton && onTaskAction && (

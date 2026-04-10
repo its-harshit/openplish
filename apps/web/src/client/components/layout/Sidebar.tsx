@@ -52,7 +52,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <div className="flex h-screen w-[260px] flex-col border-r border-border bg-card pt-12 shadow-[inset_-3px_0_0_0_hsl(var(--saffron)/0.12)]">
+      <div className="flex h-screen w-[280px] flex-col border-r border-sidebar-border bg-sidebar pt-12 text-sidebar-foreground shadow-[inset_-3px_0_0_0_hsl(var(--sidebar-primary)/0.14)]">
         {/* Workspace Selector */}
         <div className="px-3 pt-3 pb-1">
           <WorkspaceSelector
@@ -64,13 +64,13 @@ export default function Sidebar() {
         </div>
 
         {/* Action Buttons */}
-        <div className="px-3 py-3 border-b border-border flex gap-2">
+        <div className="px-3 py-3 border-b border-sidebar-border flex gap-2">
           <Button
             data-testid="sidebar-new-task-button"
             onClick={handleNewConversation}
             variant="default"
             size="sm"
-            className="flex-1 justify-center gap-2 shadow-sm shadow-saffron/25"
+            className="flex-1 justify-center gap-2 shadow-sm shadow-primary/25"
             title={t('newTask')}
           >
             <ChatText className="h-4 w-4" />
@@ -80,7 +80,7 @@ export default function Sidebar() {
             onClick={openLauncher}
             variant="outline"
             size="sm"
-            className="px-2"
+            className="px-2 border-border bg-card text-foreground hover:bg-sidebar-accent hover:text-foreground"
             title={t('searchTasks')}
           >
             <MagnifyingGlass className="h-4 w-4" />
@@ -119,7 +119,7 @@ export default function Sidebar() {
         </ScrollArea>
 
         {/* Bottom Section - Logo and Settings */}
-        <div className="px-3 py-4 border-t border-border flex items-center justify-between gap-2">
+        <div className="px-3 py-4 border-t border-sidebar-border flex items-center justify-between gap-2">
           <BrandedLogo className="pl-1.5 flex-1" />
 
           {/* Settings Button + Daemon Status - Bottom Right */}
@@ -129,6 +129,7 @@ export default function Sidebar() {
               data-testid="sidebar-settings-button"
               variant="ghost"
               size="icon"
+              className="text-sidebar-foreground hover:bg-sidebar-accent"
               onClick={() => {
                 setSettingsInitialTab('providers');
                 setShowSettings(true);

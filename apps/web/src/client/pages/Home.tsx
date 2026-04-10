@@ -6,7 +6,7 @@ import { springs } from '@/lib/animations';
 import { PlusMenu } from '@/components/landing/PlusMenu';
 import { useHomePage } from './home/useHomePage';
 import { FavoritesSection } from './home/FavoritesSection';
-import { ExamplesSection } from './home/ExamplesSection';
+// import { ExamplesSection } from './home/ExamplesSection';
 
 export function HomePage() {
   const { t } = useTranslation('home');
@@ -25,7 +25,7 @@ export function HomePage() {
     favoritesList,
     removeFavorite,
     isLoading,
-    useCaseExamples,
+    // useCaseExamples,
     displayedFavorites,
     hasMoreFavorites,
     handleSubmit,
@@ -33,7 +33,7 @@ export function HomePage() {
     handleOpenSpeechSettings,
     handleOpenModelSettings,
     handleApiKeySaved,
-    handleExampleClick,
+    // handleExampleClick,
     handleSkillSelect,
     handleAttachFiles,
     handleOpenSettings,
@@ -122,10 +122,10 @@ export function HomePage() {
               onShowAll={() => setShowAllFavorites(true)}
             />
 
-            <ExamplesSection
+            {/* <ExamplesSection
               useCaseExamples={useCaseExamples}
               onExampleClick={handleExampleClick}
-            />
+            /> */}
           </div>
         </div>
 

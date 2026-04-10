@@ -17,7 +17,7 @@ export function MessageCopyButton({ content, isUser }: MessageCopyButtonProps) {
   const tone = isUser ? 'user' : 'assistant';
   const stateClassMap = {
     user: {
-      idle: 'text-primary-foreground/70 hover:text-primary-foreground',
+      idle: 'text-muted-foreground hover:text-foreground',
       copied: 'bg-accent text-foreground hover:bg-accent',
     },
     assistant: {
@@ -65,7 +65,7 @@ export function MessageCopyButton({ content, isUser }: MessageCopyButtonProps) {
             'opacity-0 transition-all duration-200',
             'group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100',
             'p-1 rounded',
-            isUser ? 'hover:bg-primary-foreground/20' : 'hover:bg-accent',
+            'hover:bg-accent',
             stateClasses,
           )}
           aria-label={'Copy to clipboard'}

@@ -1,8 +1,8 @@
 /**
  * SomeHow shell API - Interface to the Electron main process
  *
- * This module provides type-safe access to the accomplish API
- * exposed by the preload script via contextBridge.
+ * This module provides type-safe access to the `window.accomplish` bridge
+ * exposed by the preload script via contextBridge (internal name unchanged for compatibility).
  */
 
 import type {
@@ -624,7 +624,7 @@ interface AccomplishAPI {
   deleteLocalMcpServer(id: string): Promise<void>;
   setLocalMcpServerEnabled(id: string, enabled: boolean): Promise<void>;
 
-  // Accomplish AI Free Tier
+  // Built-in free tier (provider id: accomplish-ai)
   accomplishAiConnect(): Promise<{
     deviceFingerprint: string;
     spentCredits: number;
@@ -694,8 +694,8 @@ declare global {
 }
 
 /**
- * Get the accomplish API
- * Throws if not running in Electron
+ * Returns the Electron shell API (`window.accomplish`).
+ * Throws if not running in Electron.
  */
 export function getAccomplish() {
   if (!window.accomplish) {

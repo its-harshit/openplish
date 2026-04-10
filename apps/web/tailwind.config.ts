@@ -74,6 +74,14 @@ const config: Config = {
         'todo-progress-pending': 'hsl(var(--todo-progress-pending))',
         'todo-item-completed': 'hsl(var(--todo-item-completed))',
         'todo-item-in-progress': 'hsl(var(--todo-item-in-progress))',
+        sidebar: {
+          DEFAULT: 'hsl(var(--sidebar))',
+          foreground: 'hsl(var(--sidebar-foreground))',
+          border: 'hsl(var(--sidebar-border))',
+          accent: 'hsl(var(--sidebar-accent))',
+          primary: 'hsl(var(--sidebar-primary))',
+          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+        },
       },
       boxShadow: {
         sm: '0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10)',
@@ -94,9 +102,12 @@ const config: Config = {
         '2xl': 'var(--radius)',
         '3xl': 'var(--radius)',
         card: 'var(--radius)',
+        tile: 'var(--radius-lg)',
       },
       fontFamily: {
         sans: [
+          'Inter Variable',
+          'Inter',
           'Geist',
           'ui-sans-serif',
           'system-ui',

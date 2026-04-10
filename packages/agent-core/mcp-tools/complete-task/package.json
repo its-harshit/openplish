@@ -7,9 +7,7 @@
     "start": "npx tsx src/index.ts"
   },
   "devDependencies": {
+    "@accomplish/desktop": "file:../../../../apps/desktop",
     "@modelcontextprotocol/sdk": "^1.0.0"
-  },
-  "dependencies": {
-    "@accomplish/desktop": "file:../../../../apps/desktop"
   }
 }

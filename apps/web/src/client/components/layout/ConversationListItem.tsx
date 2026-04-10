@@ -61,14 +61,15 @@ export function ConversationListItem({ task }: ConversationListItemProps) {
       className={cn(
         'w-full text-left py-2 pr-2 rounded-lg text-xs font-medium transition-colors duration-200',
         'border-l-2 border-transparent pl-[10px]',
-        'text-foreground hover:bg-accent hover:text-foreground',
+        'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground',
         'flex items-center gap-3 group relative cursor-pointer',
-        isActive && 'bg-saffron-subtle text-foreground border-saffron',
+        isActive &&
+          'bg-card text-foreground border-primary shadow-sm ring-1 ring-border/70 dark:ring-border',
       )}
     >
       <span className="flex items-center justify-center shrink-0 w-3 h-3">
         {task.status === 'running' || task.status === 'waiting_permission' ? (
-          <SpinnerGap className="w-3 h-3 animate-spin text-saffron" />
+          <SpinnerGap className="w-3 h-3 animate-spin text-primary" />
         ) : (
           <span className={cn('w-2 h-2 rounded-full', statusColor)} />
         )}
@@ -81,7 +82,7 @@ export function ConversationListItem({ task }: ConversationListItemProps) {
               <span
                 key={domain}
                 className={cn(
-                  'flex items-center p-0.5 rounded-full bg-card shrink-0 relative',
+                  'flex items-center p-0.5 rounded-full bg-card ring-1 ring-border shrink-0 relative',
                   i > 0 && '-ml-1',
                   i === 0 && 'z-30',
                   i === 1 && 'z-20',
@@ -117,8 +118,8 @@ export function ConversationListItem({ task }: ConversationListItemProps) {
               'absolute right-6 top-1/2 -translate-y-1/2',
               'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto',
               'transition-opacity duration-200',
-              'p-1 rounded hover:bg-accent shrink-0',
-              isFavorited && 'opacity-100 text-saffron',
+              'p-1 rounded hover:bg-sidebar-accent shrink-0',
+              isFavorited && 'opacity-100 text-primary',
             )}
           >
             <Star className={cn('h-3 w-3', isFavorited && 'fill-current')} />
@@ -132,7 +133,7 @@ export function ConversationListItem({ task }: ConversationListItemProps) {
             'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto',
             'transition-opacity duration-200',
             'p-1 rounded hover:bg-destructive/10',
-            'text-zinc-400 hover:text-destructive',
+            'text-muted-foreground hover:text-destructive',
           )}
           aria-label={t('deleteTask')}
         >

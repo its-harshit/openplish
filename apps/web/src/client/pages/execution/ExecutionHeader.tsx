@@ -78,7 +78,7 @@ export function ExecutionHeader({ prompt, status }: { prompt: string; status: Ta
   const navigate = useNavigate();
 
   return (
-    <div className="flex-shrink-0 border-b border-border bg-card/50 px-6 py-4">
+    <div className="flex-shrink-0 border-b border-border bg-card/90 backdrop-blur-sm px-6 py-4">
       <div className="flex items-center justify-between max-w-4xl mx-auto">
         <div className="flex items-center gap-4 min-w-0 flex-1">
           <Button

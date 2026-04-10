@@ -69,53 +69,58 @@
 @tailwind utilities;
 
 /*
- * Light theme — NPCI / UPI palette (verify hex against official Brand Centre PDFs).
- * Reference: UPI grey #6D6E71, orange #D9782D, green #2B8B4B, dark grey #434244
- * Saffron accent ~#FF9933 (flag / cultural saffron — tune per brand guide)
+ * Light theme — UPI Help chat UI (upihelp.npci.org.in): light gray sidebar, white main,
+ * vibrant orange CTAs / active stripe (#FF9800 family), soft rounded chrome. Deep blue is
+ * optional for marketing chrome only — not the chat shell.
  */
 :root {
-  --background: 220 9% 97%; /* cool grey shell */
-  --foreground: 280 2% 26%; /* #434244 dark grey */
-  --card: 220 7% 99%;
-  --card-foreground: 280 2% 26%;
-  --popover: 220 7% 99%;
-  --popover-foreground: 280 2% 26%;
-  /* UPI green #2B8B4B — slightly darker for WCAG on white button labels */
-  --primary: 142 53% 32%;
+  --background: 0 0% 100%;
+  --foreground: 0 0% 26%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 26%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 26%;
+  --primary: 24 95% 48%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 142 14% 91%; /* muted green-grey */
-  --secondary-foreground: 142 48% 22%;
-  --muted: 220 8% 93%;
-  --muted-foreground: 220 3% 44%; /* #6D6E71 UPI grey */
-  --accent: 220 10% 96%;
-  --accent-foreground: 280 2% 26%;
-  --destructive: 8 78% 54%; /* #e54d2e — keep distinct error red */
+  --secondary: 220 10% 92%;
+  --secondary-foreground: 220 8% 28%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 46%;
+  --accent: 0 0% 94%;
+  --accent-foreground: 0 0% 26%;
+  --destructive: 4 90% 58%;
   --destructive-foreground: 0 0% 100%;
-  --border: 220 7% 88%;
-  --input: 220 6% 82%;
-  --ring: 25 70% 51%; /* #D9782D UPI orange — focus */
-  --radius: 0.25rem;
-  --warning-subtle: 28 85% 96%; /* pale UPI orange */
-  --success-subtle: 142 40% 94%; /* pale UPI green */
-  --provider-bg: 220 8% 94%;
-  --provider-bg-active: 142 32% 93%;
-  --provider-bg-hover: 220 8% 96%;
-  --provider-border-active: 25 68% 40%; /* darker UPI orange */
-  --provider-accent: 142 52% 36%; /* #2B8B4B */
-  --provider-accent-text: 142 55% 22%;
-  --todo-progress-pending: 220 6% 86%;
-  --todo-item-completed: 142 22% 94%;
-  --todo-item-in-progress: 220 6% 98%;
-  /* Tailwind semantic colors (NPCI green / orange + neutral info surfaces) */
-  --success: 142 52% 36%;
-  --warning: 25 70% 51%;
-  --info-bg: 220 14% 94%;
-  --info-border: 220 10% 84%;
-  --info-foreground: 220 8% 32%;
-  --info-icon: 142 42% 38%;
-  --saffron: 32 95% 54%;
-  --saffron-subtle: 32 90% 94%;
-  --saffron-muted: 32 80% 82%;
+  --border: 0 0% 88%;
+  --input: 0 0% 88%;
+  --ring: 24 95% 48%;
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --sidebar: 220 14% 96%;
+  --sidebar-foreground: 0 0% 26%;
+  --sidebar-border: 220 10% 88%;
+  --sidebar-accent: 220 12% 91%;
+  --sidebar-primary: 24 95% 48%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --warning-subtle: 36 100% 94%;
+  --success-subtle: 122 40% 94%;
+  --provider-bg: 0 0% 96%;
+  --provider-bg-active: 28 90% 94%;
+  --provider-bg-hover: 0 0% 97%;
+  --provider-border-active: 24 85% 42%;
+  --provider-accent: 24 95% 44%;
+  --provider-accent-text: 24 90% 28%;
+  --todo-progress-pending: 0 0% 88%;
+  --todo-item-completed: 28 40% 94%;
+  --todo-item-in-progress: 0 0% 98%;
+  --success: 122 39% 49%;
+  --warning: 36 100% 50%;
+  --info-bg: 220 20% 96%;
+  --info-border: 220 14% 88%;
+  --info-foreground: 220 10% 30%;
+  --info-icon: 220 55% 45%;
+  --saffron: 24 95% 48%;
+  --saffron-subtle: 28 100% 95%;
+  --saffron-muted: 28 90% 82%;
 }
 
 .dark {
@@ -125,39 +130,45 @@
   --card-foreground: 0 0% 95%;
   --popover: 0 0% 11%;
   --popover-foreground: 0 0% 95%;
-  --primary: 123 30% 45%;
-  --primary-foreground: 0 0% 9%;
-  --secondary: 120 10% 20%;
-  --secondary-foreground: 120 14% 85%;
+  --primary: 24 90% 54%;
+  --primary-foreground: 24 80% 12%;
+  --secondary: 0 0% 16%;
+  --secondary-foreground: 0 0% 90%;
   --muted: 0 0% 15%;
   --muted-foreground: 0 0% 64%;
   --accent: 0 0% 18%;
   --accent-foreground: 0 0% 95%;
-  --destructive: 8 78% 54%;
+  --destructive: 4 75% 52%;
   --destructive-foreground: 0 0% 100%;
   --border: 0 0% 20%;
-  --input: 0 0% 25%;
-  --ring: 20 25% 55%;
+  --input: 0 0% 22%;
+  --ring: 24 90% 54%;
+  --sidebar: 0 0% 13%;
+  --sidebar-foreground: 0 0% 93%;
+  --sidebar-border: 0 0% 20%;
+  --sidebar-accent: 0 0% 18%;
+  --sidebar-primary: 24 90% 54%;
+  --sidebar-primary-foreground: 24 80% 10%;
   --warning-subtle: 30 60% 15%;
-  --success-subtle: 150 40% 12%;
+  --success-subtle: 122 35% 14%;
   --provider-bg: 0 0% 15%;
-  --provider-bg-active: 130 20% 15%;
-  --provider-bg-hover: 0 0% 13%;
-  --provider-border-active: 40 30% 50%;
-  --provider-accent: 123 30% 45%;
-  --provider-accent-text: 123 30% 75%;
+  --provider-bg-active: 24 40% 16%;
+  --provider-bg-hover: 0 0% 14%;
+  --provider-border-active: 24 75% 48%;
+  --provider-accent: 24 85% 55%;
+  --provider-accent-text: 28 80% 78%;
   --todo-progress-pending: 0 0% 24%;
   --todo-item-completed: 0 0% 14%;
   --todo-item-in-progress: 0 0% 11%;
-  --success: 142 48% 52%;
-  --warning: 28 78% 58%;
-  --info-bg: 220 12% 16%;
-  --info-border: 220 10% 28%;
+  --success: 122 45% 50%;
+  --warning: 36 90% 55%;
+  --info-bg: 220 15% 16%;
+  --info-border: 220 12% 26%;
   --info-foreground: 220 8% 88%;
-  --info-icon: 142 40% 55%;
-  --saffron: 32 88% 58%;
-  --saffron-subtle: 32 45% 16%;
-  --saffron-muted: 32 55% 28%;
+  --info-icon: 220 40% 60%;
+  --saffron: 24 88% 58%;
+  --saffron-subtle: 24 35% 16%;
+  --saffron-muted: 24 40% 28%;
 }
 
 /* Custom scrollbar — auto-hide, shown only while scrolling */
@@ -167,7 +178,7 @@
 }
 
 *:hover {
-  scrollbar-color: hsl(var(--saffron) / 0.35) transparent;
+  scrollbar-color: hsl(var(--ring) / 0.4) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -186,11 +197,11 @@
 }
 
 *:hover::-webkit-scrollbar-thumb {
-  background: hsl(var(--saffron) / 0.35);
+  background: hsl(var(--ring) / 0.4);
 }
 
 *:hover::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--saffron) / 0.55);
+  background: hsl(var(--ring) / 0.6);
 }
 
 /* Drag region for frameless window - these work when loaded in Electron BrowserView */
@@ -204,7 +215,7 @@
 
 /* Focus visible for accessibility */
 :focus-visible {
-  outline: 2px solid hsl(var(--saffron) / 0.85);
+  outline: 2px solid hsl(var(--ring) / 0.9);
   outline-offset: 2px;
 }
 
@@ -228,6 +239,8 @@
 /* Placeholder font family for textareas */
 textarea::-webkit-input-placeholder {
   font-family:
+    'Inter Variable',
+    Inter,
     'Geist',
     ui-sans-serif,
     system-ui,
@@ -242,6 +255,8 @@ textarea::-webkit-input-placeholder {
 
 textarea:-ms-input-placeholder {
   font-family:
+    'Inter Variable',
+    Inter,
     'Geist',
     ui-sans-serif,
     system-ui,
@@ -256,6 +271,8 @@ textarea:-ms-input-placeholder {
 
 textarea:-moz-placeholder {
   font-family:
+    'Inter Variable',
+    Inter,
     'Geist',
     ui-sans-serif,
     system-ui,
@@ -270,6 +287,8 @@ textarea:-moz-placeholder {
 
 textarea::-moz-placeholder {
   font-family:
+    'Inter Variable',
+    Inter,
     'Geist',
     ui-sans-serif,
     system-ui,
@@ -284,6 +303,8 @@ textarea::-moz-placeholder {
 
 textarea::placeholder {
   font-family:
+    'Inter Variable',
+    Inter,
     'Geist',
     ui-sans-serif,
     system-ui,

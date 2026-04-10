@@ -3,12 +3,14 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@accomplish/desktop": "file:../../../apps/desktop",
     "@hono/node-server": "^1.19.11",
     "@hono/node-ws": "^1.2.0",
     "@modelcontextprotocol/sdk": "^1.27.1",
     "express": "^4.21.0",
     "hono": "^4.12.8",
     "playwright": "npm:rebrowser-playwright@^1.52.0"
+  },
+  "devDependencies": {
+    "@accomplish/desktop": "file:../../../apps/desktop"
   }
 }

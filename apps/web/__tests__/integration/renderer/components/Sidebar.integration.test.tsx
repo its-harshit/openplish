@@ -161,8 +161,8 @@ describe('Sidebar Integration', () => {
         </MemoryRouter>,
       );
 
-      // Assert - sidebar should be present (260px width)
-      const sidebar = document.querySelector('.w-\\[260px\\]');
+      // Assert - sidebar should be present (280px width)
+      const sidebar = document.querySelector('.w-\\[280px\\]');
       expect(sidebar).toBeInTheDocument();
     });
 
@@ -522,7 +522,7 @@ describe('Sidebar Integration', () => {
       );
 
       // Assert - Check for border classes
-      const sidebar = document.querySelector('.w-\\[260px\\]');
+      const sidebar = document.querySelector('.w-\\[280px\\]');
       expect(sidebar?.className).toContain('border-r');
     });
 
