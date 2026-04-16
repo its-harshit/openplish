@@ -100,9 +100,7 @@ describe('TaskHistory Integration', () => {
       );
 
       // Assert
-      expect(
-        screen.getByText(/start by describing what you want to accomplish/i),
-      ).toBeInTheDocument();
+      expect(screen.getByText(/start by describing what you want to somehow/i)).toBeInTheDocument();
     });
 
     it('should not render task list in empty state', () => {

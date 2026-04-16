@@ -26,7 +26,7 @@
     "build:unpack": "pnpm build:base && pnpm -F @somehow/daemon build && pnpm build:mcp-tools:package && node scripts/package.cjs --dir",
     "package": "pnpm download:nodejs && pnpm build:base && pnpm -F @somehow/daemon build && pnpm build:mcp-tools:package && node scripts/package.cjs --mac --publish never && npx electron-rebuild -f",
     "package:mac": "pnpm download:nodejs && pnpm build:base && pnpm -F @somehow/daemon build && pnpm build:mcp-tools:package && node scripts/package.cjs --mac --publish never && npx electron-rebuild -f",
-    "package:win": "pnpm download:nodejs && pnpm build:base && pnpm -F @somehow/daemon build && pnpm build:mcp-tools:package && node scripts/package.cjs --win --x64 --publish never",
+    "package:win": "pnpm download:nodejs -- --platform=win32-x64 --prune-others && pnpm build:base && node scripts/prepare-daemon-runtime.cjs && pnpm -F @somehow/daemon build && pnpm build:mcp-tools:package && node scripts/package.cjs --win --x64 --publish never",
     "package:linux": "pnpm download:nodejs && pnpm build:base && pnpm -F @somehow/daemon build && SOMEHOW_BUNDLED_MCP=1 pnpm build:mcp-tools:package && node scripts/package.cjs --linux --x64 --arm64 --publish never",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
@@ -41,7 +41,7 @@
     "test:watch": "vitest watch",
     "test:e2e": "bash e2e/docker/run-e2e.sh",
     "test:e2e:build": "bash e2e/docker/run-e2e.sh --build-only",
-    "test:e2e:clean": "docker rmi $(docker images 'accomplish-e2e' -q) 2>/dev/null || true",
+    "test:e2e:clean": "docker rmi $(docker images 'somehow-e2e' -q) 2>/dev/null || true",
     "test:e2e:report": "playwright show-report e2e/html-report",
     "test:e2e:native": "playwright test --config=e2e/playwright.config.ts",
     "test:e2e:native:ui": "playwright test --config=e2e/playwright.config.ts --ui",
@@ -123,6 +123,8 @@
     "files": [
       "dist-electron/**/*",
       "node_modules/opencode-ai/**",
+      "node_modules/opencode-windows-x64/**",
+      "node_modules/opencode-windows-x64-baseline/**",
       "node_modules/opencode-darwin-arm64/**",
       "node_modules/opencode-darwin-x64/**",
       "node_modules/opencode-darwin-x64-baseline/**",
@@ -177,6 +179,26 @@
       {
         "from": "../../apps/daemon/dist",
         "to": "daemon"
+      },
+      {
+        "from": "daemon-runtime/node_modules/node-pty",
+        "to": "daemon/node_modules/node-pty"
+      },
+      {
+        "from": "daemon-runtime/node_modules/node-addon-api",
+        "to": "daemon/node_modules/node-addon-api"
+      },
+      {
+        "from": "daemon-runtime/node_modules/better-sqlite3",
+        "to": "daemon/node_modules/better-sqlite3"
+      },
+      {
+        "from": "daemon-runtime/node_modules/bindings",
+        "to": "daemon/node_modules/bindings"
+      },
+      {
+        "from": "daemon-runtime/node_modules/file-uri-to-path",
+        "to": "daemon/node_modules/file-uri-to-path"
       },
       {
         "from": "build.env",

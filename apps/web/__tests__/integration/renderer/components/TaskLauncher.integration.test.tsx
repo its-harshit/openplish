@@ -32,8 +32,8 @@ function createMockTask(
   };
 }
 
-// Mock accomplish API
-const mockAccomplish = {
+// Mock somehow API
+const mockSomeHow = {
   ...SOMEHOW_BASELINE_MOCKS,
   hasAnyApiKey: mockHasAnyApiKey,
   getSelectedModel: vi.fn().mockResolvedValue({ provider: 'anthropic', id: 'claude-3-opus' }),
@@ -61,12 +61,12 @@ const mockAccomplish = {
   saveBedrockCredentials: vi.fn().mockResolvedValue(undefined),
 };
 
-// Mock the accomplish module
+// Mock the somehow module
 vi.mock('@/lib/somehow', () => ({
-  getSomehow: () => mockAccomplish,
-  useSomehow: () => mockAccomplish,
+  getSomehow: () => mockSomeHow,
+  useSomehow: () => mockSomeHow,
   getOptionalWindowBridge: () =>
-    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+    typeof window !== 'undefined' ? (window.somehow ?? window.somehow) : undefined,
 }));
 
 // Create a store state holder for testing
@@ -274,7 +274,7 @@ describe('TaskLauncher', () => {
       startTask: mockStartTask,
     };
     // Set up default provider settings with a ready provider
-    mockAccomplish.getProviderSettings.mockResolvedValue({
+    mockSomeHow.getProviderSettings.mockResolvedValue({
       activeProviderId: 'anthropic',
       connectedProviders: {
         anthropic: {
@@ -811,7 +811,7 @@ describe('TaskLauncher', () => {
 
       // Assert
       await waitFor(() => {
-        expect(mockAccomplish.getProviderSettings).toHaveBeenCalled();
+        expect(mockSomeHow.getProviderSettings).toHaveBeenCalled();
         expect(mockCloseLauncher).toHaveBeenCalled();
         expect(mockStartTask).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -824,7 +824,7 @@ describe('TaskLauncher', () => {
     it('should navigate to home if no provider is ready when starting new task', async () => {
       // Arrange - No ready provider
       mockStoreState.isLauncherOpen = true;
-      mockAccomplish.getProviderSettings.mockResolvedValue({
+      mockSomeHow.getProviderSettings.mockResolvedValue({
         activeProviderId: null,
         connectedProviders: {},
         debugMode: false,
@@ -847,7 +847,7 @@ describe('TaskLauncher', () => {
 
       // Assert
       await waitFor(() => {
-        expect(mockAccomplish.getProviderSettings).toHaveBeenCalled();
+        expect(mockSomeHow.getProviderSettings).toHaveBeenCalled();
         expect(mockCloseLauncher).toHaveBeenCalled();
         expect(mockStartTask).not.toHaveBeenCalled();
       });

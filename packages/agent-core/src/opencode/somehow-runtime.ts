@@ -2,7 +2,7 @@
  * SomehowRuntime — adapter interface for the SomeHow AI free-tier gateway.
  *
  * OSS ships a noop implementation. The real implementation lives in the private
- * @accomplish/llm-gateway-client package and is injected at daemon startup via
+ * @somehow/llm-gateway-client package and is injected at daemon startup via
  * dynamic import.
  *
  * All call sites (config-builder, daemon-routes, IPC handlers) depend on this
@@ -61,7 +61,7 @@ export interface SomehowRuntime {
 
 // ─── Noop runtime (OSS default — fails closed) ──────────────────────────────
 
-const UNAVAILABLE_ERROR = 'accomplish_runtime_unavailable';
+const UNAVAILABLE_ERROR = 'somehow_runtime_unavailable';
 
 export const noopRuntime: SomehowRuntime = {
   connect: async () => {

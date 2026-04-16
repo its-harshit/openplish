@@ -61,8 +61,8 @@ function createMockMessage(
   };
 }
 
-// Mock accomplish API
-const mockAccomplish = {
+// Mock somehow API
+const mockSomeHow = {
   ...SOMEHOW_BASELINE_MOCKS,
   onTaskUpdate: mockOnTaskUpdate.mockReturnValue(() => {}),
   onTaskUpdateBatch: mockOnTaskUpdateBatch.mockReturnValue(() => {}),
@@ -120,12 +120,12 @@ const mockAccomplish = {
   onThemeChange: undefined,
 };
 
-// Mock the accomplish module
+// Mock the somehow module
 vi.mock('@/lib/somehow', () => ({
-  getSomehow: () => mockAccomplish,
-  useSomehow: () => mockAccomplish,
+  getSomehow: () => mockSomeHow,
+  useSomehow: () => mockSomeHow,
   getOptionalWindowBridge: () =>
-    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+    typeof window !== 'undefined' ? (window.somehow ?? window.somehow) : undefined,
 }));
 
 // Mock store state holder
@@ -268,7 +268,7 @@ describe('Execution Page Integration', () => {
     ]);
     mockGetConnectors.mockResolvedValue([]);
     mockResyncSkills.mockResolvedValue(undefined);
-    (window as Window & { accomplish: typeof mockAccomplish }).accomplish = mockAccomplish;
+    (window as Window & { somehow: typeof mockSomeHow }).somehow = mockSomeHow;
     // Reset store state
     mockStoreState = {
       currentTask: null,
@@ -1204,7 +1204,7 @@ describe('Execution Page Integration', () => {
       };
       mockStoreState.currentTask = task;
       let slackStatusCalls = 0;
-      mockAccomplish.getSlackMcpOauthStatus.mockImplementation(async () => {
+      mockSomeHow.getSlackMcpOauthStatus.mockImplementation(async () => {
         slackStatusCalls += 1;
         // Call 1: useExecutionEffects prefetch; call 2: handlePauseAction first check — both disconnected so login runs.
         if (slackStatusCalls <= 2) {
@@ -1220,7 +1220,7 @@ describe('Execution Page Integration', () => {
       });
 
       await waitFor(() => {
-        expect(mockAccomplish.loginSlackMcp).toHaveBeenCalled();
+        expect(mockSomeHow.loginSlackMcp).toHaveBeenCalled();
       });
       expect(mockSendFollowUp).toHaveBeenCalledWith('Slack is connected.', []);
     });

@@ -24,7 +24,7 @@ function translateSettingsKey(key: string, options?: Record<string, unknown>): s
   }, value);
 }
 
-const mockAccomplish = {
+const mockSomeHow = {
   getConnectors: vi.fn().mockResolvedValue([]),
   getSlackMcpOauthStatus: vi
     .fn()
@@ -39,10 +39,10 @@ const mockAccomplish = {
 };
 
 vi.mock('@/lib/somehow', () => ({
-  getSomehow: () => mockAccomplish,
-  useSomehow: () => mockAccomplish,
+  getSomehow: () => mockSomeHow,
+  useSomehow: () => mockSomeHow,
   getOptionalWindowBridge: () =>
-    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+    typeof window !== 'undefined' ? (window.somehow ?? window.somehow) : undefined,
 }));
 
 vi.mock('react-i18next', () => ({
@@ -66,12 +66,12 @@ import { ConnectorsPanel } from '@/components/settings/connectors';
 describe('ConnectorsPanel', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockAccomplish.getConnectors.mockResolvedValue([]);
-    mockAccomplish.getSlackMcpOauthStatus.mockResolvedValue({
+    mockSomeHow.getConnectors.mockResolvedValue([]);
+    mockSomeHow.getSlackMcpOauthStatus.mockResolvedValue({
       connected: false,
       pendingAuthorization: false,
     });
-    mockAccomplish.loginSlackMcp.mockResolvedValue({ ok: true });
+    mockSomeHow.loginSlackMcp.mockResolvedValue({ ok: true });
   });
 
   afterEach(() => {
@@ -90,7 +90,7 @@ describe('ConnectorsPanel', () => {
   });
 
   it('starts Slack authentication from the card button', async () => {
-    mockAccomplish.getSlackMcpOauthStatus
+    mockSomeHow.getSlackMcpOauthStatus
       .mockResolvedValueOnce({ connected: false, pendingAuthorization: false })
       .mockResolvedValueOnce({ connected: true, pendingAuthorization: false });
 
@@ -103,7 +103,7 @@ describe('ConnectorsPanel', () => {
     fireEvent.click(screen.getByTestId('slack-auth-button'));
 
     await waitFor(() => {
-      expect(mockAccomplish.loginSlackMcp).toHaveBeenCalled();
+      expect(mockSomeHow.loginSlackMcp).toHaveBeenCalled();
     });
 
     await waitFor(() => {

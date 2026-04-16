@@ -55,7 +55,7 @@ This includes greetings, short knowledge questions, meta-questions about capabil
 
 start_task requires:
 - original_request: Echo the user's request exactly as stated
-- goal: What you aim to accomplish
+- goal: What you aim to somehow
 - steps: Array of planned actions to achieve the goal
 - verification: Array of how you will verify the task is complete
 - skills: Array of relevant skill names from <available-skills> (or empty [] if none apply)

@@ -13,7 +13,7 @@ vi.mock('@/lib/somehow', () => {
     getSomehow: () => api,
     useSomehow: () => api,
     getOptionalWindowBridge: () =>
-      typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+      typeof window !== 'undefined' ? (window.somehow ?? window.somehow) : undefined,
   };
 });
 

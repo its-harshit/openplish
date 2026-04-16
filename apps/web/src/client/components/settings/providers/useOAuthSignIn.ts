@@ -61,8 +61,8 @@ export function useOAuthSignIn({
     const providerConfig = DEFAULT_PROVIDERS.find((p) => p.id === providerId);
 
     try {
-      const accomplish = getSomehow();
-      const result = await accomplish.loginOpenAiWithChatGpt();
+      const somehow = getSomehow();
+      const result = await somehow.loginOpenAiWithChatGpt();
 
       if (abortController.signal.aborted || attemptId !== signInAttemptRef.current) {
         shouldBail = true;
@@ -87,7 +87,7 @@ export function useOAuthSignIn({
             return;
           }
 
-          const status = await accomplish.getOpenAiOauthStatus();
+          const status = await somehow.getOpenAiOauthStatus();
 
           if (abortController.signal.aborted || attemptId !== signInAttemptRef.current) {
             return;
@@ -96,7 +96,7 @@ export function useOAuthSignIn({
           if (status.connected) {
             let availableModels = OPENAI_OAUTH_FALLBACK_MODELS;
             if (providerConfig?.modelsEndpoint) {
-              const fetchResult = await accomplish.fetchProviderModels(providerId, {});
+              const fetchResult = await somehow.fetchProviderModels(providerId, {});
               if (fetchResult.success && fetchResult.models?.length) {
                 availableModels = fetchResult.models;
               }

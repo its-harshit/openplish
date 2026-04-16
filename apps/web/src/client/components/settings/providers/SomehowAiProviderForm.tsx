@@ -221,8 +221,8 @@ export function SomehowAiProviderForm({
 
     const tryConnect = async () => {
       try {
-        const accomplish = getSomehow();
-        const data = await accomplish.somehowAiEnsureReady();
+        const somehow = getSomehow();
+        const data = await somehow.somehowAiEnsureReady();
         if (cancelled) return;
         if (!data.deviceFingerprint) {
           throw new Error('Missing deviceFingerprint in somehow-ai ready response');

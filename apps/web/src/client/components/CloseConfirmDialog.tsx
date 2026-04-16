@@ -19,30 +19,30 @@ import { useSomehow } from '@/lib/somehow';
 type CloseDecision = 'keep-daemon' | 'stop-daemon';
 
 export function CloseConfirmDialog() {
-  const accomplish = useSomehow();
+  const somehow = useSomehow();
   const [open, setOpen] = useState(false);
   const [decision, setDecision] = useState<CloseDecision>('keep-daemon');
 
   useEffect(() => {
-    if (!accomplish.onCloseRequested) {
+    if (!somehow.onCloseRequested) {
       return;
     }
-    const unsubscribe = accomplish.onCloseRequested(() => {
+    const unsubscribe = somehow.onCloseRequested(() => {
       setDecision('keep-daemon');
       setOpen(true);
     });
     return unsubscribe;
-  }, [accomplish]);
+  }, [somehow]);
 
   const handleConfirm = useCallback(() => {
     setOpen(false);
-    accomplish.respondToClose?.(decision);
-  }, [accomplish, decision]);
+    somehow.respondToClose?.(decision);
+  }, [somehow, decision]);
 
   const handleCancel = useCallback(() => {
     setOpen(false);
-    accomplish.respondToClose?.('cancel');
-  }, [accomplish]);
+    somehow.respondToClose?.('cancel');
+  }, [somehow]);
 
   const isKeepDaemon = decision === 'keep-daemon';
 

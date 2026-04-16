@@ -697,7 +697,7 @@ vi.mock('@main/store/secureStorage', () => ({
   getBedrockCredentials: vi.fn(() => null),
 }));
 
-// Note: App settings and provider settings are now mocked via @accomplish/core mock above
+// Note: App settings and provider settings are now mocked via @somehow/core mock above
 
 // Mock config generator
 vi.mock('@main/opencode/config-generator', () => ({

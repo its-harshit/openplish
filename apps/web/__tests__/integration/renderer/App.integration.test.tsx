@@ -19,7 +19,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider, Navigate } from 'react-router';
 import { SOMEHOW_BASELINE_MOCKS } from './somehow-mock-baseline';
 
-// Create mock functions for accomplish API
+// Create mock functions for somehow API
 const mockSetOnboardingComplete = vi.fn();
 const mockLogEvent = vi.fn();
 const mockListTasks = vi.fn();
@@ -27,8 +27,8 @@ const mockOnTaskStatusChange = vi.fn();
 const mockOnTaskUpdate = vi.fn();
 const mockGetTask = vi.fn();
 
-// Mock accomplish API
-const mockAccomplish = {
+// Mock somehow API
+const mockSomeHow = {
   ...SOMEHOW_BASELINE_MOCKS,
   setOnboardingComplete: mockSetOnboardingComplete,
   logEvent: mockLogEvent.mockResolvedValue(undefined),
@@ -61,13 +61,13 @@ const mockAccomplish = {
   saveBedrockCredentials: vi.fn().mockResolvedValue(undefined),
 };
 
-// Mock the accomplish module - always return true for isRunningInElectron for most tests
+// Mock the somehow module - always return true for isRunningInElectron for most tests
 vi.mock('@/lib/somehow', () => ({
-  getSomehow: () => mockAccomplish,
-  useSomehow: () => mockAccomplish,
+  getSomehow: () => mockSomeHow,
+  useSomehow: () => mockSomeHow,
   isRunningInElectron: () => true,
   getOptionalWindowBridge: () =>
-    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+    typeof window !== 'undefined' ? (window.somehow ?? window.somehow) : undefined,
 }));
 
 // Mock framer-motion to simplify testing animations

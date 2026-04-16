@@ -9,8 +9,8 @@ type GetFn = () => TaskState;
 export function createTaskUpdateActions(set: SetFn, _get: GetFn) {
   return {
     addTaskUpdate: (event: TaskUpdateEvent) => {
-      const accomplish = getSomehow();
-      void accomplish.logEvent({
+      const somehow = getSomehow();
+      void somehow.logEvent({
         level: 'debug',
         message: 'UI task update received',
         context: { ...event },
@@ -96,8 +96,8 @@ export function createTaskUpdateActions(set: SetFn, _get: GetFn) {
     },
 
     addTaskUpdateBatch: (event: { taskId: string; messages: TaskMessage[] }) => {
-      const accomplish = getSomehow();
-      void accomplish.logEvent({
+      const somehow = getSomehow();
+      void somehow.logEvent({
         level: 'debug',
         message: 'UI task batch update received',
         context: { taskId: event.taskId, messageCount: event.messages.length },

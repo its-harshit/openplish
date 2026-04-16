@@ -8,7 +8,7 @@ import type { WhatsAppCardState } from './useWhatsAppCard';
 const QR_EXPIRY_SECONDS = 60;
 
 interface UseWhatsAppSubscriptionsOptions {
-  accomplish: {
+  somehow: {
     onWhatsAppQR: (cb: (qr: string) => void) => () => void;
     onWhatsAppStatus: (cb: (status: string) => void) => () => void;
   };
@@ -24,7 +24,7 @@ interface UseWhatsAppSubscriptionsOptions {
 }
 
 export function useWhatsAppSubscriptions({
-  accomplish,
+  somehow,
   qrTimerRef,
   connectTimeoutRef,
   setQrCode,
@@ -47,7 +47,7 @@ export function useWhatsAppSubscriptions({
   };
 
   useEffect(() => {
-    const unsubQR = accomplish.onWhatsAppQR((qr: string) => {
+    const unsubQR = somehow.onWhatsAppQR((qr: string) => {
       setQrCode(qr);
       setQrExpiresAt(Date.now() + QR_EXPIRY_SECONDS * 1000);
       setError(null);
@@ -59,7 +59,7 @@ export function useWhatsAppSubscriptions({
       setConfig((prev) => (prev ? { ...prev, status: 'qr_ready' } : { status: 'qr_ready' }));
     });
 
-    const unsubStatus = accomplish.onWhatsAppStatus((status: string) => {
+    const unsubStatus = somehow.onWhatsAppStatus((status: string) => {
       const nextStatus = normalizeStatus(status);
       setConfig((prev) => (prev ? { ...prev, status: nextStatus } : { status: nextStatus }));
 
@@ -82,7 +82,7 @@ export function useWhatsAppSubscriptions({
       unsubStatus();
     };
   }, [
-    accomplish,
+    somehow,
     fetchConfig,
     normalizeStatus,
     qrTimerRef,

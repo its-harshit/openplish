@@ -45,14 +45,14 @@ export function useSandboxPanel(): UseSandboxPanelResult {
   const hostsRef = useRef<HTMLTextAreaElement>(null);
   const pathsRef = useRef<HTMLTextAreaElement>(null);
   const configRef = useRef<SandboxConfig>(DEFAULT_CONFIG);
-  const accomplish = useSomehow();
+  const somehow = useSomehow();
 
   useEffect(() => {
     configRef.current = config;
   }, [config]);
 
   useEffect(() => {
-    accomplish
+    somehow
       .getSandboxConfig()
       .then((c) => {
         const mergedConfig: SandboxConfig = {
@@ -71,7 +71,7 @@ export function useSandboxPanel(): UseSandboxPanelResult {
         setLoadError('Failed to load sandbox configuration');
         logger.error('Failed to load sandbox config:', err);
       });
-  }, [accomplish]);
+  }, [somehow]);
 
   const saveConfig = useCallback(
     async (patch: Partial<SandboxConfig>) => {
@@ -96,7 +96,7 @@ export function useSandboxPanel(): UseSandboxPanelResult {
       configRef.current = merged;
       setConfig(merged);
       try {
-        await accomplish.setSandboxConfig(merged);
+        await somehow.setSandboxConfig(merged);
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to save sandbox configuration';
         setSaveError(message);
@@ -105,7 +105,7 @@ export function useSandboxPanel(): UseSandboxPanelResult {
         setSaving(false);
       }
     },
-    [accomplish, isLoaded, loadError],
+    [somehow, isLoaded, loadError],
   );
 
   const handleModeChange = useCallback(

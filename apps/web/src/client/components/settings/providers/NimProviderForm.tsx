@@ -36,7 +36,7 @@ export function NimProviderForm({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       const trimmedKey = apiKey.trim();
 
       if (!trimmedKey) {
@@ -47,14 +47,14 @@ export function NimProviderForm({
 
       const trimmedUrl = serverUrl.trim() || NIM_DEFAULT_BASE_URL;
 
-      const result = await accomplish.testNimConnection(trimmedUrl, trimmedKey);
+      const result = await somehow.testNimConnection(trimmedUrl, trimmedKey);
       if (!result.success) {
         setError(result.error || t('status.connectionFailed'));
         setConnecting(false);
         return;
       }
 
-      await accomplish.addApiKey('nim', trimmedKey);
+      await somehow.addApiKey('nim', trimmedKey);
 
       const models = result.models?.map((m) => ({ ...m })) || [];
 

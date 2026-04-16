@@ -9,7 +9,7 @@
  * - sanitizeString (text validation/sanitization)
  * - extractScreenshots (base64 image extraction)
  * - sanitizeToolOutput (output cleaning)
- * - ID generation patterns (from @accomplish/shared)
+ * - ID generation patterns (from @somehow/shared)
  */
 
 import { describe, it, expect } from 'vitest';

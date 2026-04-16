@@ -1,4 +1,4 @@
-# Architecture Description: Accomplish
+# Architecture Description: SomeHow
 
 **Version**: 1.0 | **Created**: 2026-03-26 | **Last Updated**: 2026-03-26
 **Architect**: AI (reverse-engineered from codebase) | **Status**: Draft
@@ -10,7 +10,7 @@
 
 ### 1.1 Purpose
 
-Accomplish is an open-source AI automation assistant that lives on the user's
+SomeHow is an open-source AI automation assistant that lives on the user's
 desktop. It enables users to delegate complex software engineering tasks to an
 AI agent that can browse the web, write code, run commands, and manage files —
 all orchestrated through a local-first desktop application with bring-your-own
@@ -44,7 +44,7 @@ API key support.
 | IPC      | Inter-Process Communication — Electron main ↔ renderer bridge      |
 | MCP      | Model Context Protocol — standardized tool interface for AI agents |
 | PTY      | Pseudo-Terminal — terminal emulation for spawning CLI processes    |
-| OpenCode | External CLI agent engine spawned by Accomplish to execute tasks   |
+| OpenCode | External CLI agent engine spawned by SomeHow to execute tasks      |
 
 ---
 
@@ -69,7 +69,7 @@ API key support.
 
 #### 3.1.1 System Scope
 
-Accomplish is a **desktop application** that acts as a bridge between users and
+SomeHow is a **desktop application** that acts as a bridge between users and
 AI agent capabilities. It runs entirely on the user's machine — no cloud
 backend, no remote server. The system connects outward to LLM provider APIs
 and local model servers, but all orchestration, storage, and credential
@@ -92,7 +92,7 @@ management happen locally.
 graph TD
     User["End User"]
 
-    System["Accomplish<br/>(Desktop App)"]
+    System["SomeHow<br/>(Desktop App)"]
 
     CloudLLM["Cloud LLM Providers<br/>(OpenAI, Anthropic, Google,<br/>AWS Bedrock, Azure, etc.)"]
     LocalLLM["Local Model Servers<br/>(Ollama, LM Studio, NIM)"]
@@ -136,15 +136,15 @@ graph TD
 
 #### 3.2.1 Functional Elements
 
-| Element              | Responsibility                                                                  | Workspace                           | Key Files                                  |
-| -------------------- | ------------------------------------------------------------------------------- | ----------------------------------- | ------------------------------------------ |
-| **Web UI**           | React frontend — task launcher, execution view, settings, history               | `apps/web`                          | `stores/taskStore.ts`, `lib/accomplish.ts` |
-| **Desktop Shell**    | Electron main process — IPC handlers, preload, tray, daemon bootstrap           | `apps/desktop`                      | `ipc/handlers/`, `preload/index.ts`        |
-| **Agent Core**       | Business logic — storage, providers, encryption, task manager, OpenCode adapter | `packages/agent-core`               | `factories/`, `internal/classes/`          |
-| **Daemon** (in-dev)  | Background process — task execution, storage access, event streaming            | `apps/daemon`                       | `task-service.ts`, `storage-service.ts`    |
-| **Provider Layer**   | LLM provider abstraction — validation, model fetching, config                   | `packages/agent-core/src/providers` | Per-provider modules                       |
-| **Storage Layer**    | SQLite database — migrations, repositories, secure storage                      | `packages/agent-core/src/storage`   | `database.ts`, `migrations/`               |
-| **OpenCode Adapter** | Spawns OpenCode CLI via PTY, parses streaming output, emits events              | `packages/agent-core/src/internal`  | `OpenCodeAdapter.ts`, `StreamParser`       |
+| Element              | Responsibility                                                                  | Workspace                           | Key Files                               |
+| -------------------- | ------------------------------------------------------------------------------- | ----------------------------------- | --------------------------------------- |
+| **Web UI**           | React frontend — task launcher, execution view, settings, history               | `apps/web`                          | `stores/taskStore.ts`, `lib/somehow.ts` |
+| **Desktop Shell**    | Electron main process — IPC handlers, preload, tray, daemon bootstrap           | `apps/desktop`                      | `ipc/handlers/`, `preload/index.ts`     |
+| **Agent Core**       | Business logic — storage, providers, encryption, task manager, OpenCode adapter | `packages/agent-core`               | `factories/`, `internal/classes/`       |
+| **Daemon** (in-dev)  | Background process — task execution, storage access, event streaming            | `apps/daemon`                       | `task-service.ts`, `storage-service.ts` |
+| **Provider Layer**   | LLM provider abstraction — validation, model fetching, config                   | `packages/agent-core/src/providers` | Per-provider modules                    |
+| **Storage Layer**    | SQLite database — migrations, repositories, secure storage                      | `packages/agent-core/src/storage`   | `database.ts`, `migrations/`            |
+| **OpenCode Adapter** | Spawns OpenCode CLI via PTY, parses streaming output, emits events              | `packages/agent-core/src/internal`  | `OpenCodeAdapter.ts`, `StreamParser`    |
 
 #### 3.2.2 Element Interactions
 
@@ -155,7 +155,7 @@ graph TD
     end
 
     subgraph "Preload"
-        Bridge["contextBridge<br/>(accomplish API)"]
+        Bridge["contextBridge<br/>(somehow API)"]
     end
 
     subgraph "Main Process"
@@ -175,7 +175,7 @@ graph TD
         OpenCode["OpenCode CLI<br/>(PTY process)"]
     end
 
-    WebUI -->|"window.accomplish.*"| Bridge
+    WebUI -->|"window.somehow.*"| Bridge
     Bridge -->|"ipcRenderer.invoke"| IPC
     IPC --> DaemonClient
     DaemonClient --> TaskMgr
@@ -225,7 +225,7 @@ graph TD
 
 | Entity             | Storage                       | Owner            | Lifecycle                              | Access Pattern                                 |
 | ------------------ | ----------------------------- | ---------------- | -------------------------------------- | ---------------------------------------------- |
-| Tasks              | SQLite (`accomplish.db`)      | Storage Layer    | Create -> Execute -> Complete/Cancel   | Write-heavy during execution, read for history |
+| Tasks              | SQLite (`somehow.db`)         | Storage Layer    | Create -> Execute -> Complete/Cancel   | Write-heavy during execution, read for history |
 | Task Messages      | SQLite                        | Storage Layer    | Append-only during task execution      | Write-heavy, read for replay                   |
 | API Keys           | Encrypted file (AES-256-GCM)  | Secure Storage   | Set by user, persisted across sessions | Read on task start, write on settings change   |
 | Provider Config    | SQLite                        | Storage Layer    | CRUD via settings UI                   | Read on task start                             |
@@ -302,7 +302,7 @@ erDiagram
 #### 3.5.1 Code Organization
 
 ```text
-accomplish/
+somehow/
 ├── apps/
 │   ├── web/                        # @somehow/web — Standalone React UI
 │   │   ├── src/client/
@@ -310,7 +310,7 @@ accomplish/
 │   │   │   ├── stores/             # Zustand state management
 │   │   │   ├── pages/              # Route pages
 │   │   │   ├── hooks/              # Custom React hooks
-│   │   │   ├── lib/                # Utilities + accomplish.ts IPC wrapper
+│   │   │   ├── lib/                # Utilities + somehow.ts IPC wrapper
 │   │   │   └── i18n/               # Internationalization
 │   │   └── __tests__/              # Unit + integration tests (Vitest, jsdom)
 │   ├── desktop/                    # @somehow/desktop — Electron shell
@@ -431,7 +431,7 @@ graph TB
         end
 
         subgraph "User Data Directory"
-            SQLiteDB["accomplish.db<br/>(SQLite)"]
+            SQLiteDB["somehow.db<br/>(SQLite)"]
             EncryptedKeys["Encrypted API Keys<br/>(AES-256-GCM)"]
             WorkspaceMeta["workspace-meta.db"]
         end
@@ -490,7 +490,7 @@ bundled runtime is used on machines without system Node.js.
 
 #### 4.1.1 Authentication & Authorization
 
-- **No User Auth**: Accomplish is a local-first desktop app — no user accounts or login. The user who runs the app owns all data.
+- **No User Auth**: SomeHow is a local-first desktop app — no user accounts or login. The user who runs the app owns all data.
 - **Provider Auth**: API keys stored encrypted (AES-256-GCM). OAuth flows for GitHub Copilot and OpenAI (device code / browser redirect).
 - **Agent Permissions**: OpenCode CLI requests permission for dangerous operations (file writes, shell commands). User approves/denies via UI.
 - **IPC Security**: Electron `contextBridge` enforces a strict API boundary — renderer cannot access Node.js APIs directly (Constitution Principle III).
@@ -530,7 +530,7 @@ bundled runtime is used on machines without system Node.js.
 
 #### 4.2.2 Scalability Model
 
-Accomplish is a **single-user desktop application** — traditional horizontal/vertical
+SomeHow is a **single-user desktop application** — traditional horizontal/vertical
 scaling does not apply. Scaling concerns are:
 
 - **Task Concurrency**: Queue overflow when >10 tasks running (managed by TaskManager queue)

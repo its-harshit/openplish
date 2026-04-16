@@ -9,7 +9,7 @@
 
 ```mermaid
 graph TB
-  subgraph APP["Accomplish Desktop"]
+  subgraph APP["SomeHow Desktop"]
     direction TB
     subgraph PERSIST["Persisted to Disk"]
       DB["🗄️ <b>SQLite DB</b><br/><i>Tasks · Messages · Todos<br/>Providers · Skills · Connectors<br/>App Settings</i>"]

@@ -44,8 +44,8 @@ export function useHuggingFaceProviderConnect({
   const [cachedModels, setCachedModels] = useState<SuggestedModel[]>([]);
 
   useEffect(() => {
-    const accomplish = getSomehow();
-    accomplish
+    const somehow = getSomehow();
+    somehow
       .listHuggingFaceModels()
       .then(({ cached, suggested }) => {
         setCachedModels(cached);
@@ -62,8 +62,8 @@ export function useHuggingFaceProviderConnect({
   }, []);
 
   useEffect(() => {
-    const accomplish = getSomehow();
-    const unsub = accomplish.onHuggingFaceDownloadProgress((progress) => {
+    const somehow = getSomehow();
+    const unsub = somehow.onHuggingFaceDownloadProgress((progress) => {
       if (progress.status === 'downloading') {
         setDownloadProgress(progress.progress);
       } else if (progress.status === 'complete') {
@@ -91,9 +91,9 @@ export function useHuggingFaceProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
 
-      const downloadResult = await accomplish.downloadHuggingFaceModel(selectedModelId);
+      const downloadResult = await somehow.downloadHuggingFaceModel(selectedModelId);
       if (!downloadResult.success) {
         setError(downloadResult.error ?? 'Download failed');
         setIsDownloading(false);
@@ -103,7 +103,7 @@ export function useHuggingFaceProviderConnect({
 
       setIsDownloading(false);
 
-      const serverResult = await accomplish.startHuggingFaceServer(selectedModelId);
+      const serverResult = await somehow.startHuggingFaceServer(selectedModelId);
       if (!serverResult.success) {
         setError(serverResult.error ?? 'Failed to start inference server');
         setConnecting(false);
@@ -140,8 +140,8 @@ export function useHuggingFaceProviderConnect({
 
   const handleDisconnect = async () => {
     try {
-      const accomplish = getSomehow();
-      await accomplish.stopHuggingFaceServer();
+      const somehow = getSomehow();
+      await somehow.stopHuggingFaceServer();
     } catch {
       // Ignore errors during disconnect
     }

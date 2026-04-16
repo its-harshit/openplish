@@ -63,7 +63,7 @@ export function getBundledOpenCodeVersion(): string | null {
     // Use execFileSync (no shell) so installation paths that contain spaces
     // (e.g. "C:\Users\My Name\...") are passed directly to the OS without
     // cmd.exe quoting ambiguity.
-    // See: https://github.com/somehow-ai/accomplish/issues/596
+    // See: https://github.com/somehow-ai/somehow/issues/596
     const output = execFileSync(command, ['--version'], {
       encoding: 'utf-8',
       timeout: 5000,

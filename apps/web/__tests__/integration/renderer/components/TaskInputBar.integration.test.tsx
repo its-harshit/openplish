@@ -1,6 +1,6 @@
 /**
  * Integration tests for TaskInputBar component
- * Tests component rendering and user interactions with mocked window.accomplish API
+ * Tests component rendering and user interactions with mocked window.somehow API
  * @module __tests__/integration/renderer/components/TaskInputBar.integration.test
  * @vitest-environment jsdom
  */
@@ -18,8 +18,8 @@ const renderWithRouter = (ui: React.ReactElement) => {
   return render(<MemoryRouter>{ui}</MemoryRouter>);
 };
 
-// Mock accomplish API
-const mockAccomplish = {
+// Mock somehow API
+const mockSomeHow = {
   ...SOMEHOW_BASELINE_MOCKS,
   logEvent: vi.fn().mockResolvedValue(undefined),
   getSelectedModel: vi.fn().mockResolvedValue({ provider: 'anthropic', id: 'claude-3-opus' }),
@@ -49,12 +49,12 @@ const mockAccomplish = {
   getEnabledSkills: vi.fn().mockResolvedValue([]),
 };
 
-// Mock the accomplish module
+// Mock the somehow module
 vi.mock('@/lib/somehow', () => ({
-  getSomehow: () => mockAccomplish,
-  useSomehow: () => mockAccomplish,
+  getSomehow: () => mockSomeHow,
+  useSomehow: () => mockSomeHow,
   getOptionalWindowBridge: () =>
-    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+    typeof window !== 'undefined' ? (window.somehow ?? window.somehow) : undefined,
 }));
 
 // Mock Radix Tooltip to render content directly (portals don't work in jsdom)
@@ -525,11 +525,11 @@ describe('TaskInputBar Integration', () => {
     ];
 
     beforeEach(() => {
-      vi.mocked(mockAccomplish.getEnabledSkills).mockResolvedValue(mockSkills);
+      vi.mocked(mockSomeHow.getEnabledSkills).mockResolvedValue(mockSkills);
     });
 
     afterEach(() => {
-      vi.mocked(mockAccomplish.getEnabledSkills).mockResolvedValue([]);
+      vi.mocked(mockSomeHow.getEnabledSkills).mockResolvedValue([]);
     });
 
     it('should show slash command popover when "/" is typed', async () => {
@@ -608,7 +608,7 @@ describe('TaskInputBar Integration', () => {
       const onChange = vi.fn();
       const onSubmit = vi.fn();
 
-      (window as Window & { accomplish: Record<string, unknown> }).accomplish = {
+      (window as Window & { somehow: Record<string, unknown> }).somehow = {
         getEnabledSkills: vi.fn().mockResolvedValue([
           {
             id: 'skill-git-helper',
@@ -661,7 +661,7 @@ describe('TaskInputBar Integration', () => {
       const onChange = vi.fn();
       const onSubmit = vi.fn();
 
-      (window as Window & { accomplish: Record<string, unknown> }).accomplish = {
+      (window as Window & { somehow: Record<string, unknown> }).somehow = {
         getEnabledSkills: vi.fn().mockResolvedValue([
           {
             id: 'skill-git-helper',

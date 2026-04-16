@@ -1,4 +1,4 @@
-# Accomplish Task Flow — Phase-by-Phase Sequence Diagrams
+# SomeHow Task Flow — Phase-by-Phase Sequence Diagrams
 
 > Example: User types **"Please organize my Download folder"**, then follows up with **"Leave the pictures as is"**
 
@@ -22,7 +22,7 @@ sequenceDiagram
 
     User->>React: Types "Please organize<br/>my Download folder"
     React->>React: set({ isLoading: true })
-    React->>Preload: accomplish.startTask({ prompt })
+    React->>Preload: somehow.startTask({ prompt })
     Preload->>IPC: ipcRenderer.invoke('task:start', config)
 
     Note over IPC: assertTrustedWindow()<br/>validateTaskConfig()
@@ -66,7 +66,7 @@ sequenceDiagram
     participant React as React UI<br/>(Zustand Store)
 
     TM->>OCA: adapter.startTask(config)
-    OCA->>OCA: buildCliArgs(config)<br/>→ ["run","--format","json",<br/>"--model","anthropic/claude-sonnet",<br/>"--agent","accomplish",<br/>"Please organize..."]
+    OCA->>OCA: buildCliArgs(config)<br/>→ ["run","--format","json",<br/>"--model","anthropic/claude-sonnet",<br/>"--agent","somehow",<br/>"Please organize..."]
     OCA->>OCA: buildEnvironment(taskId)<br/>→ env with OPENCODE_CONFIG path
     OCA->>PTY: pty.spawn('/bin/zsh', ['-c', 'opencode run ...'])
     OCA->>React: emit('progress', { stage:'loading' })
@@ -183,7 +183,7 @@ sequenceDiagram
     Note over MCP_FP, PermAPI: BLOCKED — waiting for user decision
 
     User->>React: Clicks "Allow"
-    React->>Preload: accomplish.respondToPermission(<br/>{ decision:'allow' })
+    React->>Preload: somehow.respondToPermission(<br/>{ decision:'allow' })
     Preload->>IPC: ipcRenderer.invoke(<br/>'permission:respond', response)
     IPC->>PermAPI: resolvePermission(requestId, true)
 
@@ -321,7 +321,7 @@ sequenceDiagram
 
     React->>React: Optimistic update:<br/>messages.push(userMessage)<br/>status → 'running'
 
-    React->>Preload: accomplish.resumeSession(<br/>'sess_abc123',<br/>'Leave the pictures as is',<br/>'tsk_001')
+    React->>Preload: somehow.resumeSession(<br/>'sess_abc123',<br/>'Leave the pictures as is',<br/>'tsk_001')
     Preload->>IPC: ipcRenderer.invoke('session:resume',<br/>sessionId, prompt, existingTaskId)
 
     Note over IPC: session:resume handler
@@ -335,7 +335,7 @@ sequenceDiagram
 
     Note over OCA: sessionId present →<br/>args.push('--session', 'sess_abc123')
 
-    OCA->>PTY: pty.spawn('opencode run<br/>--format json --model claude-sonnet<br/>--session sess_abc123<br/>--agent accomplish<br/>"Leave the pictures as is"')
+    OCA->>PTY: pty.spawn('opencode run<br/>--format json --model claude-sonnet<br/>--session sess_abc123<br/>--agent somehow<br/>"Leave the pictures as is"')
 
     PTY->>CLI: New process starts
 

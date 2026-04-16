@@ -79,7 +79,7 @@ function getStatusDotClass(displayStatus: string): string {
 const DAEMON_TRANSITIONAL_STATES = new Set(['starting', 'stopping', 'reconnecting']);
 
 export function DaemonSection() {
-  const accomplish = useSomehow();
+  const somehow = useSomehow();
   const { t } = useTranslation('settings');
 
   // Read status from global store — single source of truth
@@ -98,7 +98,7 @@ export function DaemonSection() {
   // to prevent the polling loop from defeating intentional state transitions.
   const pollStatus = useCallback(async () => {
     try {
-      const result = await accomplish.daemonPing();
+      const result = await somehow.daemonPing();
       if (result.status === 'ok') {
         setUptime(result.uptime);
         // Only set connected if not in a transitional state
@@ -119,7 +119,7 @@ export function DaemonSection() {
       // Don't override store status on poll failure — store handles
       // disconnect/reconnect events with more nuance
     }
-  }, [accomplish, setGlobalStatus]);
+  }, [somehow, setGlobalStatus]);
 
   useEffect(() => {
     void pollStatus();
@@ -138,7 +138,7 @@ export function DaemonSection() {
     setActionInProgress('restart');
     setGlobalStatus('reconnecting');
     try {
-      await accomplish.daemonRestart();
+      await somehow.daemonRestart();
       setGlobalStatus('connected'); // Explicit: daemon is healthy
       await pollStatus(); // Updates uptime/lastPing
     } catch {
@@ -152,7 +152,7 @@ export function DaemonSection() {
     setActionInProgress('stop');
     setGlobalStatus('stopping');
     try {
-      await accomplish.daemonStop();
+      await somehow.daemonStop();
       setGlobalStatus('stopped');
       setUptime(0);
     } catch {
@@ -166,7 +166,7 @@ export function DaemonSection() {
     setActionInProgress('start');
     setGlobalStatus('starting');
     try {
-      await accomplish.daemonStart();
+      await somehow.daemonStart();
       setGlobalStatus('connected'); // Explicit: daemon is healthy
       await pollStatus(); // Updates uptime/lastPing
     } catch {

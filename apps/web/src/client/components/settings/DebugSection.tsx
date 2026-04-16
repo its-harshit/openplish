@@ -15,12 +15,12 @@ export function DebugSection({ debugMode, onDebugToggle }: DebugSectionProps) {
   const [exportStatus, setExportStatus] = useState<'idle' | 'exporting' | 'success' | 'error'>(
     'idle',
   );
-  const accomplish = getSomehow();
+  const somehow = getSomehow();
 
   const handleExportLogs = useCallback(async () => {
     setExportStatus('exporting');
     try {
-      const result = await accomplish.exportLogs();
+      const result = await somehow.exportLogs();
       if (result.success) {
         setExportStatus('success');
         setTimeout(() => setExportStatus('idle'), 2000);
@@ -36,7 +36,7 @@ export function DebugSection({ debugMode, onDebugToggle }: DebugSectionProps) {
       setExportStatus('error');
       setTimeout(() => setExportStatus('idle'), 3000);
     }
-  }, [accomplish]);
+  }, [somehow]);
 
   return (
     <div className="rounded-lg border border-border bg-card p-5">

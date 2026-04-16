@@ -42,6 +42,7 @@ const PLATFORMS = [
 const platformFlag = process.argv.find((a) => a.startsWith('--platform='));
 const hasPlatformFlag = Boolean(platformFlag);
 const platformArg = platformFlag?.split('=').slice(1).join('=').trim() ?? '';
+const shouldPruneOthers = process.argv.includes('--prune-others');
 const filteredPlatforms = hasPlatformFlag
   ? PLATFORMS.filter((p) => p.name === platformArg)
   : PLATFORMS;
@@ -52,6 +53,29 @@ if (hasPlatformFlag && filteredPlatforms.length === 0) {
 }
 
 const RESOURCES_DIR = path.join(__dirname, '..', 'resources', 'nodejs');
+
+function pruneOtherPlatforms() {
+  if (!hasPlatformFlag || !shouldPruneOthers) {
+    return;
+  }
+  try {
+    const entries = fs.readdirSync(RESOURCES_DIR, { withFileTypes: true });
+    for (const entry of entries) {
+      if (!entry.isDirectory()) {
+        continue;
+      }
+      const name = entry.name;
+      // Keep only the selected platform directory (e.g. win32-x64).
+      if (name === platformArg) {
+        continue;
+      }
+      // Remove other platform dirs (e.g. darwin-x64) to avoid packaging symlinks on Windows.
+      fs.rmSync(path.join(RESOURCES_DIR, name), { recursive: true, force: true });
+    }
+  } catch {
+    // Best-effort only
+  }
+}
 
 /**
  * Download a file from URL with progress reporting
@@ -170,6 +194,8 @@ async function main() {
   if (!fs.existsSync(RESOURCES_DIR)) {
     fs.mkdirSync(RESOURCES_DIR, { recursive: true });
   }
+
+  pruneOtherPlatforms();
 
   // Create temp directory for downloads
   const tempDir = path.join(RESOURCES_DIR, '.temp');

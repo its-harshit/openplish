@@ -59,7 +59,7 @@ pnpm -F @somehow/web vitest run --config vitest.unit.config.ts path/to/file.unit
 
 ```
 React UI (apps/web)
-  ↓ window.somehow.* calls (legacy: window.accomplish)
+  ↓ window.somehow.* calls (legacy: window.somehow)
 Preload (contextBridge) — apps/desktop/src/preload/index.ts
   ↓ ipcRenderer.invoke / ipcRenderer.on
 Main Process — apps/desktop/src/main/ipc/handlers.ts
@@ -75,7 +75,7 @@ The daemon is a **child process** forked by the Electron main process. It handle
 
 1. Handler in `apps/desktop/src/main/ipc/handlers.ts`
 2. Expose via `contextBridge` in `apps/desktop/src/preload/index.ts`
-3. Typed wrapper in `apps/web/src/client/lib/accomplish.ts`
+3. Typed wrapper in `apps/web/src/client/lib/somehow.ts`
 4. Consume from components or `apps/web/src/client/stores/taskStore.ts`
 5. `pnpm typecheck` to verify the full chain
 
@@ -90,7 +90,7 @@ Never skip a step — all 4 must be done together.
 
 ### SQLite / Migrations
 
-- DB: `somehow.db` (prod) / `somehow-dev.db` (dev), in Electron user-data directory (legacy `accomplish*.db` renamed on startup)
+- DB: `somehow.db` (prod) / `somehow-dev.db` (dev), in Electron user-data directory (legacy `somehow*.db` renamed on startup)
 - Current schema version: **29** (in `packages/agent-core/src/storage/migrations/index.ts`)
 - To add a migration: create `vXXX-description.ts`, import + add to the `migrations` array, bump `CURRENT_VERSION`
 - **Never modify released migration files** — always add a new one

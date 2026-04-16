@@ -49,10 +49,10 @@ export function AzureFoundryProviderForm({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
 
       // Validate connection
-      const validation = await accomplish.testAzureFoundryConnection({
+      const validation = await somehow.testAzureFoundryConnection({
         endpoint: endpoint.trim(),
         deploymentName: deploymentName.trim(),
         authType,
@@ -66,7 +66,7 @@ export function AzureFoundryProviderForm({
       }
 
       // Save credentials
-      await accomplish.saveAzureFoundryConfig({
+      await somehow.saveAzureFoundryConfig({
         endpoint: endpoint.trim(),
         deploymentName: deploymentName.trim(),
         authType,

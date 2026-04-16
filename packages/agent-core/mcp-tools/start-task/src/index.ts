@@ -30,7 +30,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
           goal: {
             type: 'string',
             description:
-              'What you aim to accomplish for the user (required when needs_planning is true)',
+              'What you aim to somehow for the user (required when needs_planning is true)',
           },
           steps: {
             type: 'array',

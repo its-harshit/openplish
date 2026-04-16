@@ -59,11 +59,11 @@ export function CustomProviderForm({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       const trimmedKey = apiKey.trim() || undefined;
 
       // Test connection to the endpoint
-      const result = await accomplish.testCustomConnection(baseUrl.trim(), trimmedKey);
+      const result = await somehow.testCustomConnection(baseUrl.trim(), trimmedKey);
       if (!result.success) {
         setError(result.error || 'Connection failed');
         setConnecting(false);
@@ -72,10 +72,10 @@ export function CustomProviderForm({
 
       // Save or remove API key based on user input
       if (trimmedKey) {
-        await accomplish.addApiKey('custom', trimmedKey);
+        await somehow.addApiKey('custom', trimmedKey);
       } else {
         // Remove any previously stored key when connecting without one
-        await accomplish.removeApiKey('custom');
+        await somehow.removeApiKey('custom');
       }
 
       // Create the model with the custom/ prefix

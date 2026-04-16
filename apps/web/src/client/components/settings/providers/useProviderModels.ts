@@ -36,8 +36,8 @@ export function useProviderModels({
     if (!providerConfig?.modelsEndpoint) return;
 
     const controller = new AbortController();
-    const accomplish = getSomehow();
-    accomplish
+    const somehow = getSomehow();
+    somehow
       .fetchProviderModels(providerId, {
         baseUrl: isOpenAI ? openAiBaseUrl.trim() || undefined : connectedProviderBaseUrl,
       })

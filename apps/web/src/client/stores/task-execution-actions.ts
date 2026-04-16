@@ -19,16 +19,16 @@ type GetFn = () => TaskState;
 export function createTaskExecutionActions(set: SetFn, get: GetFn) {
   return {
     startTask: async (config: TaskConfig): Promise<Task | null> => {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       const taskStateToken = get()._taskStateToken;
       set({ isLoading: true, error: null });
       try {
-        void accomplish.logEvent({
+        void somehow.logEvent({
           level: 'info',
           message: 'UI start task',
           context: { prompt: config.prompt, taskId: config.taskId, files: config.files?.length },
         });
-        const task = await accomplish.startTask(config);
+        const task = await somehow.startTask(config);
         const currentState = get();
         if (!hasTaskStateToken(currentState, taskStateToken)) {
           return null;
@@ -39,7 +39,7 @@ export function createTaskExecutionActions(set: SetFn, get: GetFn) {
           tasks: [task, ...currentTasks.filter((t) => t.id !== task.id)],
           isLoading: task.status === 'queued',
         });
-        void accomplish.logEvent({
+        void somehow.logEvent({
           level: 'info',
           message: task.status === 'queued' ? 'UI task queued' : 'UI task started',
           context: { taskId: task.id, status: task.status },
@@ -53,7 +53,7 @@ export function createTaskExecutionActions(set: SetFn, get: GetFn) {
           error: err instanceof Error ? err.message : 'Failed to start task',
           isLoading: false,
         });
-        void accomplish.logEvent({
+        void somehow.logEvent({
           level: 'error',
           message: 'UI task start failed',
           context: { error: err instanceof Error ? err.message : String(err) },
@@ -63,17 +63,17 @@ export function createTaskExecutionActions(set: SetFn, get: GetFn) {
     },
 
     sendFollowUp: async (message: string, attachments?: FileAttachmentInfo[]): Promise<boolean> => {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       const { currentTask, startTask } = get();
       const taskStateToken = get()._taskStateToken;
       if (!currentTask) {
         set({ error: 'No active task to continue' });
-        void accomplish.logEvent({ level: 'warn', message: 'UI follow-up failed: no active task' });
+        void somehow.logEvent({ level: 'warn', message: 'UI follow-up failed: no active task' });
         return false;
       }
       const sessionId = currentTask.result?.sessionId || currentTask.sessionId;
       if (!sessionId && currentTask.status === 'interrupted') {
-        void accomplish.logEvent({
+        void somehow.logEvent({
           level: 'info',
           message: 'UI follow-up: starting fresh task (no session from interrupted task)',
           context: { taskId: currentTask.id },
@@ -83,7 +83,7 @@ export function createTaskExecutionActions(set: SetFn, get: GetFn) {
       }
       if (!sessionId) {
         set({ error: 'No session to continue - please start a new task' });
-        void accomplish.logEvent({
+        void somehow.logEvent({
           level: 'warn',
           message: 'UI follow-up failed: missing session',
           context: { taskId: currentTask.id },
@@ -116,17 +116,12 @@ export function createTaskExecutionActions(set: SetFn, get: GetFn) {
         ),
       }));
       try {
-        void accomplish.logEvent({
+        void somehow.logEvent({
           level: 'info',
           message: 'UI follow-up sent',
           context: { taskId: currentTask.id, message, attachments: attachments?.length },
         });
-        const task = await accomplish.resumeSession(
-          sessionId,
-          message,
-          currentTask.id,
-          attachments,
-        );
+        const task = await somehow.resumeSession(sessionId, message, currentTask.id, attachments);
         if (!hasTaskStateToken(get(), taskStateToken)) {
           return false;
         }
@@ -148,7 +143,7 @@ export function createTaskExecutionActions(set: SetFn, get: GetFn) {
             t.id === taskId ? { ...t, status: 'failed' as TaskStatus } : t,
           ),
         }));
-        void accomplish.logEvent({
+        void somehow.logEvent({
           level: 'error',
           message: 'UI follow-up failed',
           context: {

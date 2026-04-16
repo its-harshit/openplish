@@ -62,12 +62,12 @@ vi.mock('react-i18next', () => ({
   initReactI18next: { type: '3rdParty', init: vi.fn() },
 }));
 
-const g = global as unknown as { window: { accomplish?: unknown } };
+const g = global as unknown as { window: { somehow?: unknown } };
 if (!g.window) {
   g.window = {};
 }
-g.window.accomplish = {
-  ...(g.window.accomplish ? (g.window.accomplish as object) : {}),
+g.window.somehow = {
+  ...(g.window.somehow ? (g.window.somehow as object) : {}),
   pickFolder: vi.fn().mockResolvedValue(null),
   pickFiles: vi.fn().mockResolvedValue([]),
   getFilePath: vi.fn((file: File) => file.name),

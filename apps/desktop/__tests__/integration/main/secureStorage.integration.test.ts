@@ -1,6 +1,6 @@
 /**
  * Integration tests for secureStorage module
- * Tests @accomplish/core SecureStorage with encrypted API key storage
+ * Tests @somehow/core SecureStorage with encrypted API key storage
  * @module __tests__/integration/main/secureStorage.integration.test
  */
 

@@ -24,9 +24,9 @@ export function VertexAdcTab({
 
   useEffect(() => {
     let cancelled = false;
-    const accomplish = getSomehow();
+    const somehow = getSomehow();
 
-    Promise.all([accomplish.listVertexProjects(), accomplish.detectVertexProject()])
+    Promise.all([somehow.listVertexProjects(), somehow.detectVertexProject()])
       .then(([listResult, detectResult]) => {
         if (cancelled) return;
 

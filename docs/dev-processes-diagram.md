@@ -1,4 +1,4 @@
-# Accomplish — Dev Mode Process Architecture
+# SomeHow — Dev Mode Process Architecture
 
 ## What `pnpm dev` Spawns
 
@@ -88,7 +88,7 @@ flowchart TB
     subgraph pty_proc["Process 3: OpenCode CLI (via PTY)"]
         cli["opencode run --format json
         --model openai/gpt-5.2
-        --agent accomplish
+        --agent somehow
         Reads session from ~/.opencode/sessions/
         Communicates with AI provider via HTTPS"]
     end

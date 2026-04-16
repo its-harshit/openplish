@@ -3,7 +3,7 @@
  *
  * Delegates to the injected SomehowRuntime adapter. In OSS the runtime is
  * noopRuntime (isAvailable() === false), so this builder returns empty configs.
- * The private @accomplish/llm-gateway-client package provides the real runtime.
+ * The private @somehow/llm-gateway-client package provides the real runtime.
  */
 
 import { createConsoleLogger } from '../utils/logging.js';

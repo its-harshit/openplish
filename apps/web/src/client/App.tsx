@@ -115,8 +115,8 @@ export function App() {
       }
 
       try {
-        const accomplish = getSomehow();
-        await accomplish.setOnboardingComplete(true);
+        const somehow = getSomehow();
+        await somehow.setOnboardingComplete(true);
         setStatus('ready');
       } catch (error) {
         logger.error('Failed to initialize app:', error);

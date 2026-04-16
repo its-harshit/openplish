@@ -13,7 +13,7 @@ function getDataDir(): string {
   } else if (process.platform === 'win32') {
     return join(process.env.APPDATA || homeDir, 'SomeHow', 'dev-browser');
   } else {
-    return join(homeDir, '.accomplish', 'dev-browser');
+    return join(homeDir, '.somehow', 'dev-browser');
   }
 }
 

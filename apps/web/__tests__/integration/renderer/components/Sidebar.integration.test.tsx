@@ -34,8 +34,8 @@ function createMockTask(
   };
 }
 
-// Mock accomplish API
-const mockAccomplish = {
+// Mock somehow API
+const mockSomeHow = {
   ...SOMEHOW_BASELINE_MOCKS,
   listTasks: mockListTasks.mockResolvedValue([]),
   onTaskStatusChange: mockOnTaskStatusChange.mockReturnValue(() => {}),
@@ -69,12 +69,12 @@ const mockAccomplish = {
   onThemeChange: undefined,
 };
 
-// Mock the accomplish module
+// Mock the somehow module
 vi.mock('@/lib/somehow', () => ({
-  getSomehow: () => mockAccomplish,
-  useSomehow: () => mockAccomplish,
+  getSomehow: () => mockSomeHow,
+  useSomehow: () => mockSomeHow,
   getOptionalWindowBridge: () =>
-    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+    typeof window !== 'undefined' ? (window.somehow ?? window.somehow) : undefined,
 }));
 
 // Create a store state holder for testing

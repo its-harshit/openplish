@@ -49,10 +49,10 @@ export function CloudBrowsersPanel() {
   const [expandedProvider, setExpandedProvider] = useState<CloudBrowserProvider | null>(null);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
-  const accomplish = useSomehow();
+  const somehow = useSomehow();
 
   useEffect(() => {
-    accomplish
+    somehow
       .getCloudBrowserConfig()
       .then((c) => {
         if (c) {
@@ -63,7 +63,7 @@ export function CloudBrowsersPanel() {
         const message = err instanceof Error ? err.message : 'Failed to load configuration';
         setSaveError(message);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- accomplish is a stable singleton
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- somehow is a stable singleton
   }, []);
 
   const saveConfig = useCallback(
@@ -71,7 +71,7 @@ export function CloudBrowsersPanel() {
       setSaving(true);
       setSaveError(null);
       try {
-        await accomplish.setCloudBrowserConfig(newConfig);
+        await somehow.setCloudBrowserConfig(newConfig);
         setConfig(newConfig);
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to save configuration';
@@ -80,7 +80,7 @@ export function CloudBrowsersPanel() {
         setSaving(false);
       }
     },
-    [accomplish],
+    [somehow],
   );
 
   const handleToggleActive = useCallback(

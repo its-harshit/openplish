@@ -156,9 +156,9 @@ After creating the skill:
 3. Update SKILL.md or bundled resources
 4. Test again
 
-## Saving Skills in Accomplish
+## Saving Skills in SomeHow
 
-**IMPORTANT:** When creating skills in Accomplish, you can ONLY create "custom" skills. You CANNOT create "official" skills - those are bundled with the app and managed by the Accomplish team.
+**IMPORTANT:** When creating skills in SomeHow, you can ONLY create "custom" skills. You CANNOT create "official" skills - those are bundled with the app and managed by the SomeHow team.
 
 ### User Skills Directory
 
@@ -166,11 +166,11 @@ After creating the skill:
 
 If the task prompt includes an explicit skills base directory or exact SKILL.md path, that value is the source of truth and must be used exactly.
 
-Skills must be saved to the Accomplish user data directory under a `skills` folder:
+Skills must be saved to the SomeHow user data directory under a `skills` folder:
 
-**macOS:** `~/Library/Application Support/Accomplish/skills/<skill-name>/SKILL.md`
-**Windows:** `%APPDATA%\Accomplish\skills\<skill-name>\SKILL.md`
-**Linux:** `~/.config/Accomplish/skills/<skill-name>/SKILL.md`
+**macOS:** `~/Library/Application Support/SomeHow/skills/<skill-name>/SKILL.md`
+**Windows:** `%APPDATA%\SomeHow\skills\<skill-name>\SKILL.md`
+**Linux:** `~/.config/SomeHow/skills/<skill-name>/SKILL.md`
 
 **NEVER:**
 
@@ -186,9 +186,9 @@ The path is determined by the application runtime. Use the explicit runtime path
 
 1. **Use the base path from the task prompt** when present.
    - If no path is provided, detect the OS and use:
-     - macOS: `~/Library/Application Support/Accomplish/skills/`
-     - Windows: `%APPDATA%\Accomplish\skills\`
-     - Linux: `~/.config/Accomplish/skills/`
+     - macOS: `~/Library/Application Support/SomeHow/skills/`
+     - Windows: `%APPDATA%\SomeHow\skills\`
+     - Linux: `~/.config/SomeHow/skills/`
 
 2. **Create the skill directory** named after your skill (lowercase, hyphenated), or use the exact directory name provided in the task prompt:
 
@@ -212,11 +212,11 @@ The path is determined by the application runtime. Use the explicit runtime path
    └── assets/
    ```
 
-5. **The skill is automatically detected** - Accomplish scans this directory on startup and syncs new skills to its database. The skill will appear in Settings > Skills as a "Custom" skill.
+5. **The skill is automatically detected** - SomeHow scans this directory on startup and syncs new skills to its database. The skill will appear in Settings > Skills as a "Custom" skill.
 
 ### Skill Frontmatter Rules
 
-For custom skills in Accomplish:
+For custom skills in SomeHow:
 
 - `name`: Required - the skill's display name
 - `description`: Required - when to use this skill
@@ -246,9 +246,9 @@ command: /awesome
 
 2. **Verify the path** - Confirm the file path matches the explicit path from the task prompt.
    - If no explicit path was provided, verify against:
-     - macOS: `~/Library/Application Support/Accomplish/skills/<skill-name>/SKILL.md`
-     - Windows: `%APPDATA%\Accomplish\skills\<skill-name>\SKILL.md`
-     - Linux: `~/.config/Accomplish/skills/<skill-name>/SKILL.md`
+     - macOS: `~/Library/Application Support/SomeHow/skills/<skill-name>/SKILL.md`
+     - Windows: `%APPDATA%\SomeHow\skills\<skill-name>\SKILL.md`
+     - Linux: `~/.config/SomeHow/skills/<skill-name>/SKILL.md`
 
 3. **Validate frontmatter** - Confirm the YAML frontmatter contains:
    - `name`: Present and non-empty

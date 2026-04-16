@@ -8,10 +8,7 @@ const __dirname = path.dirname(__filename);
 
 const TEST_LOCAL_AGENT_HTTP_PORT = 9226;
 const TEST_LOCAL_AGENT_CDP_PORT = 9227;
-const TEST_LOCAL_AGENT_CHROME_PROFILE = path.join(
-  os.homedir(),
-  '.accomplish-test-local-agent-chrome',
-);
+const TEST_LOCAL_AGENT_CHROME_PROFILE = path.join(os.homedir(), '.somehow-test-local-agent-chrome');
 
 const PERMISSION_API_PORT = 3847;
 const QUESTION_API_PORT = 3848;

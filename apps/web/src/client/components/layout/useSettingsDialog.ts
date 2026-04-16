@@ -40,17 +40,17 @@ export function useSettingsDialog({
     updateModel,
     refetch,
   } = useProviderSettings();
-  const accomplish = getSomehow();
+  const somehow = getSomehow();
 
   useEffect(() => {
     if (!open) {
       return;
     }
     refetch();
-    accomplish.getDebugMode().then(setDebugModeState);
-    accomplish.getNotificationsEnabled().then(setNotificationsEnabledState);
-    accomplish.getVersion().then(setAppVersion);
-  }, [open, refetch, accomplish]);
+    somehow.getDebugMode().then(setDebugModeState);
+    somehow.getNotificationsEnabled().then(setNotificationsEnabledState);
+    somehow.getVersion().then(setAppVersion);
+  }, [open, refetch, somehow]);
 
   useEffect(() => {
     if (!open) {
@@ -160,15 +160,15 @@ export function useSettingsDialog({
 
   const handleDebugToggle = useCallback(async () => {
     const newValue = !debugMode;
-    await accomplish.setDebugMode(newValue);
+    await somehow.setDebugMode(newValue);
     setDebugModeState(newValue);
-  }, [debugMode, accomplish]);
+  }, [debugMode, somehow]);
 
   const handleNotificationsToggle = useCallback(async () => {
     const newValue = !notificationsEnabled;
-    await accomplish.setNotificationsEnabled(newValue);
+    await somehow.setNotificationsEnabled(newValue);
     setNotificationsEnabledState(newValue);
-  }, [notificationsEnabled, accomplish]);
+  }, [notificationsEnabled, somehow]);
 
   const handleDone = useCallback(() => {
     if (!settings) {

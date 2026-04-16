@@ -60,8 +60,8 @@ export function useOllamaProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
-      const result = await accomplish.testOllamaConnection(serverUrl);
+      const somehow = getSomehow();
+      const result = await somehow.testOllamaConnection(serverUrl);
 
       if (!result.success) {
         setError(result.error || t('status.connectionFailed'));
@@ -110,10 +110,10 @@ export function useOllamaProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       const currentUrl =
         (baseProvider.credentials as OllamaCredentials)?.serverUrl || 'http://localhost:11434';
-      const result = await accomplish.testOllamaConnection(currentUrl);
+      const result = await somehow.testOllamaConnection(currentUrl);
 
       if (requestId !== refreshRequestIdRef.current) {
         return;

@@ -16,4 +16,4 @@ export function isOpenCodeCliInstallError(message: string): boolean {
 }
 
 export const INSTALL_ERROR_MESSAGE =
-  'OpenCode CLI installation issue detected. Please try restarting the app or reinstalling from accomplish.ai';
+  'OpenCode CLI installation issue detected. Please try restarting the app or reinstalling from somehow.ai';

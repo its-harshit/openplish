@@ -2,7 +2,7 @@
  * Electron-specific LogFileWriter wrapper.
  *
  * This thin wrapper injects the Electron app's userData path into the
- * platform-agnostic LogFileWriter from @accomplish/core.
+ * platform-agnostic LogFileWriter from @somehow/core.
  */
 
 import path from 'path';

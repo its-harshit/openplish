@@ -42,8 +42,8 @@ export function useTheme() {
 
   // Sync from Electron backend on mount and subscribe to host-driven changes
   useEffect(() => {
-    const accomplish = getSomehow();
-    accomplish
+    const somehow = getSomehow();
+    somehow
       .getTheme()
       .then((theme) => {
         // Skip if the user already made a choice before this async call resolved
@@ -57,8 +57,8 @@ export function useTheme() {
         // fall back to locally stored preference
       });
 
-    if (accomplish.onThemeChange) {
-      const cleanup = accomplish.onThemeChange(({ theme, resolved }) => {
+    if (somehow.onThemeChange) {
+      const cleanup = somehow.onThemeChange(({ theme, resolved }) => {
         if (theme === 'light' || theme === 'dark' || theme === 'system') {
           setPreference(theme);
         }

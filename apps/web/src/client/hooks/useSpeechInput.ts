@@ -25,7 +25,7 @@ export function useSpeechInput(options: UseSpeechInputOptions = {}): UseSpeechIn
     maxDuration = 120000,
   } = options;
 
-  const accomplish = getSomehow();
+  const somehow = getSomehow();
   const lastAudioDataRef = useRef<ArrayBuffer | null>(null);
   const isPushToTalkRef = useRef(false);
   const isStartingRef = useRef(false);
@@ -134,7 +134,7 @@ export function useSpeechInput(options: UseSpeechInputOptions = {}): UseSpeechIn
         return;
       }
       lastAudioDataRef.current = audioData;
-      const result = await accomplish.speechTranscribe(audioData, 'audio/webm');
+      const result = await somehow.speechTranscribe(audioData, 'audio/webm');
       if (result.success) {
         setState((prev) => ({
           ...prev,
@@ -165,7 +165,7 @@ export function useSpeechInput(options: UseSpeechInputOptions = {}): UseSpeechIn
       }));
       onError?.(speechError);
     }
-  }, [recorder, accomplish, onTranscriptionComplete, onError, formatErrorMessage]);
+  }, [recorder, somehow, onTranscriptionComplete, onError, formatErrorMessage]);
 
   const startRecording = useCallback(async () => {
     if (recorder.isCapturing || state.isTranscribing) {
@@ -200,7 +200,7 @@ export function useSpeechInput(options: UseSpeechInputOptions = {}): UseSpeechIn
     }
     try {
       setState((prev) => ({ ...prev, isTranscribing: true, error: null }));
-      const result = await accomplish.speechTranscribe(lastAudioDataRef.current, 'audio/webm');
+      const result = await somehow.speechTranscribe(lastAudioDataRef.current, 'audio/webm');
       if (result.success) {
         setState((prev) => ({
           ...prev,
@@ -230,7 +230,7 @@ export function useSpeechInput(options: UseSpeechInputOptions = {}): UseSpeechIn
     state.isRecording,
     onTranscriptionComplete,
     onError,
-    accomplish,
+    somehow,
     formatErrorMessage,
   ]);
 

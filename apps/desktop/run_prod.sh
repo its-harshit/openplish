@@ -1,6 +1,6 @@
 #!/bin/bash
 # Run desktop app with PRODUCTION UI + PRODUCTION API
-# UI: lite.accomplish.ai | API: lite.accomplish.ai
+# UI: lite.somehow.ai | API: lite.somehow.ai
 # This builds an unpacked app and runs it (no hot reload)
 
 set -e
@@ -9,6 +9,6 @@ echo "Building unpacked app for production..."
 pnpm -F @somehow/desktop build:unpack
 
 echo "Launching app with production configuration..."
-SOMEHOW_UI_URL=https://lite.accomplish.ai \
-SOMEHOW_API_URL=https://lite.accomplish.ai \
-open apps/desktop/release/mac-arm64/Accomplish.app
+SOMEHOW_UI_URL=https://lite.somehow.ai \
+SOMEHOW_API_URL=https://lite.somehow.ai \
+open apps/desktop/release/mac-arm64/SomeHow.app

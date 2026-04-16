@@ -20,7 +20,7 @@ const buildConfigSchema = z.object({
   gaApiSecret: z.string().default(''),
   gaMeasurementId: z.string().default(''),
   sentryDsn: z.string().default(''),
-  accomplishGatewayUrl: z.string().default(''),
+  somehowGatewayUrl: z.string().default(''),
 });
 
 export type BuildConfig = z.infer<typeof buildConfigSchema>;
@@ -59,7 +59,7 @@ export function loadBuildConfig(): BuildConfig {
     gaApiSecret: raw.GA_API_SECRET,
     gaMeasurementId: raw.GA_MEASUREMENT_ID,
     sentryDsn: raw.SENTRY_DSN,
-    accomplishGatewayUrl: raw.SOMEHOW_GATEWAY_URL,
+    somehowGatewayUrl: raw.SOMEHOW_GATEWAY_URL,
   });
 
   if (!parsed.success) {
@@ -92,7 +92,7 @@ export function getBuildConfig(): BuildConfig {
 
 /** True when the gateway URL is configured — Free tier is available. */
 export function isFreeMode(): boolean {
-  return !!getBuildConfig().accomplishGatewayUrl;
+  return !!getBuildConfig().somehowGatewayUrl;
 }
 
 /** True when any analytics or error-tracking service is configured. */

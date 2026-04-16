@@ -14,16 +14,16 @@ interface SpeechSettingsFormProps {
 
 export function SpeechSettingsForm({ onSave, onChange }: SpeechSettingsFormProps) {
   const { t } = useTranslation('settings');
-  const accomplish = getSomehow();
+  const somehow = getSomehow();
 
   const [apiKey, setApiKey] = useState('');
   const [isConfigured, setIsConfigured] = useState(false);
 
   useEffect(() => {
-    accomplish.speechGetConfig().then((config) => {
+    somehow.speechGetConfig().then((config) => {
       setIsConfigured(config.hasApiKey);
     });
-  }, [accomplish]);
+  }, [somehow]);
   const [isLoading, setIsLoading] = useState(false);
   const [saveResult, setSaveResult] = useState<{ success: boolean; message: string } | null>(null);
 
@@ -37,7 +37,7 @@ export function SpeechSettingsForm({ onSave, onChange }: SpeechSettingsFormProps
     setSaveResult(null);
 
     try {
-      await accomplish.addApiKey('elevenlabs', apiKey, 'ElevenLabs Speech-to-Text');
+      await somehow.addApiKey('elevenlabs', apiKey, 'ElevenLabs Speech-to-Text');
       setSaveResult({ success: true, message: t('speech.apiKeySaved') });
       setIsConfigured(true);
       setApiKey('');

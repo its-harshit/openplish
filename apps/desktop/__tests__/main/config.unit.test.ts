@@ -29,7 +29,7 @@ describe('config.ts', () => {
         const config = getDesktopConfig();
 
         // Assert
-        expect(config.apiUrl).toBe('https://lite.accomplish.ai');
+        expect(config.apiUrl).toBe('https://lite.somehow.ai');
       });
 
       it('should return default API URL when SOMEHOW_API_URL is undefined', async () => {
@@ -41,7 +41,7 @@ describe('config.ts', () => {
         const config = getDesktopConfig();
 
         // Assert
-        expect(config.apiUrl).toBe('https://lite.accomplish.ai');
+        expect(config.apiUrl).toBe('https://lite.somehow.ai');
       });
     });
 

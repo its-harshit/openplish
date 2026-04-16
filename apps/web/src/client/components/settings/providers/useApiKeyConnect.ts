@@ -58,8 +58,8 @@ export function useApiKeyConnect({
   useEffect(() => {
     if (!isOpenAI) return;
     const controller = new AbortController();
-    const accomplish = getSomehow();
-    accomplish
+    const somehow = getSomehow();
+    somehow
       .getOpenAiBaseUrl()
       .then((url) => {
         if (!controller.signal.aborted) setOpenAiBaseUrl(url);
@@ -117,18 +117,18 @@ export function useApiKeyConnect({
     setConnecting(true);
     setError(null);
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       // Issue #3: use openAiBaseUrl consistently for OpenAI resolvedBaseUrl
       let resolvedBaseUrl: string | undefined;
       if (isOpenAI) {
         resolvedBaseUrl = openAiBaseUrl.trim() || undefined;
-        await accomplish.setOpenAiBaseUrl(resolvedBaseUrl ?? '');
+        await somehow.setOpenAiBaseUrl(resolvedBaseUrl ?? '');
       } else if (hasEditableBaseUrl) {
         const explicitCustomBaseUrl = customBaseUrl.trim();
         resolvedBaseUrl = explicitCustomBaseUrl || defaultBaseUrl || undefined;
       }
       const explicitCustomBaseUrl = hasEditableBaseUrl && !isOpenAI ? customBaseUrl.trim() : '';
-      const validation = await accomplish.validateApiKeyForProvider(providerId, apiKey.trim(), {
+      const validation = await somehow.validateApiKeyForProvider(providerId, apiKey.trim(), {
         baseUrl: resolvedBaseUrl,
       });
       if (!validation.valid) {
@@ -137,10 +137,10 @@ export function useApiKeyConnect({
         return;
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await accomplish.addApiKey(providerId as any, apiKey.trim());
+      await somehow.addApiKey(providerId as any, apiKey.trim());
       let models: Array<{ id: string; name: string }> | undefined;
       if (providerConfig?.modelsEndpoint) {
-        const fetchResult = await accomplish.fetchProviderModels(providerId, {
+        const fetchResult = await somehow.fetchProviderModels(providerId, {
           baseUrl: resolvedBaseUrl,
         });
         if (fetchResult.success && fetchResult.models) {

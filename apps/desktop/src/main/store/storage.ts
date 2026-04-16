@@ -13,7 +13,7 @@ export function getDatabasePath(): string {
   const userData = app.getPath('userData');
   const dbName = app.isPackaged ? 'somehow.db' : 'somehow-dev.db';
   const newPath = path.join(userData, dbName);
-  const legacyName = app.isPackaged ? 'accomplish.db' : 'accomplish-dev.db';
+  const legacyName = app.isPackaged ? 'somehow.db' : 'somehow-dev.db';
   const legacyPath = path.join(userData, legacyName);
   if (!fs.existsSync(newPath) && fs.existsSync(legacyPath)) {
     try {

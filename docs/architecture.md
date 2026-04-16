@@ -4,7 +4,7 @@ apps/daemon/             # Background daemon process for task execution
 packages/agent-core/     # Core business logic, shared types, MCP tools (published as @somehow_ai/agent-core)
 ```
 
-- `index.ts` - Electron bootstrap, single-instance enforcement, `accomplish://` protocol handler
+- `index.ts` - Electron bootstrap, single-instance enforcement, `somehow://` protocol handler
 - `ipc/handlers.ts` - IPC handlers for task lifecycle, settings, onboarding, API keys, providers
 - `ipc/validation.ts` - IPC validation utilities
 - `opencode/` - Electron-specific OpenCode CLI integration

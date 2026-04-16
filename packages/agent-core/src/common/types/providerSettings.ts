@@ -33,7 +33,7 @@ export type ProviderCategory =
   | 'local'
   | 'proxy'
   | 'hybrid'
-  | 'accomplish';
+  | 'somehow';
 
 export interface ProviderMeta {
   id: ProviderId;
@@ -221,9 +221,9 @@ export const PROVIDER_META: Record<ProviderId, ProviderMeta> = {
   'somehow-ai': {
     id: 'somehow-ai',
     name: 'SomeHow AI',
-    category: 'accomplish',
+    category: 'somehow',
     label: 'Free Tier',
-    logoKey: 'accomplish',
+    logoKey: 'somehow',
   },
 };
 

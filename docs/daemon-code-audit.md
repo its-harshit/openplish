@@ -67,7 +67,7 @@ A `fork()`-ed Node.js child process that handles storage-only RPC methods. Compi
 A fully independent daemon process with:
 
 - Unix domain socket RPC server (`DaemonRpcServer`)
-- PID lock with stale detection (`~/.accomplish/daemon.pid`)
+- PID lock with stale detection (`~/.somehow/daemon.pid`)
 - Full task execution (`task.start`, `task.stop`, `task.interrupt`)
 - Own PermissionService and ThoughtStreamService with HTTP servers
 - Crash recovery (marks stale `running` tasks as `failed` on boot)

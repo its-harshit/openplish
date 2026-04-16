@@ -12,7 +12,7 @@ interface PoliciesLockSectionProps {
 
 export function PoliciesLockSection({ lockConfigured, onChanged }: PoliciesLockSectionProps) {
   const { t } = useTranslation('settings');
-  const accomplish = getSomehow();
+  const somehow = getSomehow();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -42,7 +42,7 @@ export function PoliciesLockSection({ lockConfigured, onChanged }: PoliciesLockS
       return;
     }
     void run(async () => {
-      await accomplish.policySetInitialPassword(newPw);
+      await somehow.policySetInitialPassword(newPw);
       setSuccess(t('policies.passwordSet'));
       setNewPw('');
       setConfirmPw('');
@@ -55,7 +55,7 @@ export function PoliciesLockSection({ lockConfigured, onChanged }: PoliciesLockS
       return;
     }
     void run(async () => {
-      await accomplish.policyChangePassword({
+      await somehow.policyChangePassword({
         currentPassword: currentPw,
         newPassword: changeNew,
       });
@@ -68,7 +68,7 @@ export function PoliciesLockSection({ lockConfigured, onChanged }: PoliciesLockS
 
   const clearPassword = () => {
     void run(async () => {
-      await accomplish.policyClearPassword(currentPw || undefined);
+      await somehow.policyClearPassword(currentPw || undefined);
       setSuccess(t('policies.passwordCleared'));
       setCurrentPw('');
     });

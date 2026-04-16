@@ -54,7 +54,9 @@ export function getDataDir(): string {
  */
 export function getDaemonEntryPath(): string {
   if (app.isPackaged) {
-    return path.join(process.resourcesPath, 'daemon', 'index.js');
+    // Packaged daemon is executed by a plain Node.js binary, so use CJS entry.
+    // (ESM `index.js` would require a nearby package.json with "type":"module".)
+    return path.join(process.resourcesPath, 'daemon', 'index.cjs');
   }
   return path.join(app.getAppPath(), '..', 'daemon', 'dist', 'index.js');
 }
@@ -103,11 +105,11 @@ export function spawnDaemon(dataDir: string): void {
     ELECTRON_RUN_AS_NODE: app.isPackaged ? undefined : '1',
   };
 
-  // Inject gateway URL so the daemon can start the Accomplish AI proxy.
+  // Inject gateway URL so the daemon can start the SomeHow AI proxy.
   // Only set when build.env is present (Free builds); absent in OSS builds.
   const bc = getBuildConfig();
-  if (bc.accomplishGatewayUrl) {
-    daemonEnv.SOMEHOW_GATEWAY_URL = bc.accomplishGatewayUrl;
+  if (bc.somehowGatewayUrl) {
+    daemonEnv.SOMEHOW_GATEWAY_URL = bc.somehowGatewayUrl;
   }
   if (app.isPackaged) {
     daemonEnv.SOMEHOW_IS_PACKAGED = '1';
@@ -120,19 +122,16 @@ export function spawnDaemon(dataDir: string): void {
     daemonEnv.SOMEHOW_RESOURCES_PATH = path.join(app.getAppPath(), 'resources');
   }
 
-  // In dev mode, redirect daemon output to a log file so it can be tailed
-  // by any Electron process (including restarts). In production, use 'ignore'.
+  // Redirect daemon output to a log file so failures are diagnosable in both
+  // dev and packaged builds. (In packaged mode there is no console.)
   const spawnOptions: Parameters<typeof spawn>[2] = {
     detached: true,
-    stdio: 'ignore',
     env: daemonEnv,
   };
 
-  if (!app.isPackaged) {
-    const logPath = getDaemonLogPath(dataDir);
-    const logFd = fs.openSync(logPath, 'a');
-    spawnOptions.stdio = ['ignore', logFd, logFd];
-  }
+  const logPath = getDaemonLogPath(dataDir);
+  const logFd = fs.openSync(logPath, 'a');
+  spawnOptions.stdio = ['ignore', logFd, logFd];
 
   const child = spawn(nodeBin, [entryPath, '--data-dir', dataDir], spawnOptions);
 

@@ -26,31 +26,31 @@ describe('SomeHow shell API', () => {
   });
 
   describe('isRunningInElectron', () => {
-    it('should return true when accomplishShell.isElectron is true', async () => {
-      (globalThis as unknown as { window: { accomplishShell: { isElectron: boolean } } }).window = {
-        accomplishShell: { isElectron: true },
+    it('should return true when somehowShell.isElectron is true', async () => {
+      (globalThis as unknown as { window: { somehowShell: { isElectron: boolean } } }).window = {
+        somehowShell: { isElectron: true },
       };
 
       const { isRunningInElectron } = await import('@/lib/somehow');
       expect(isRunningInElectron()).toBe(true);
     });
 
-    it('should return false when accomplishShell.isElectron is false', async () => {
-      (globalThis as unknown as { window: { accomplishShell: { isElectron: boolean } } }).window = {
-        accomplishShell: { isElectron: false },
+    it('should return false when somehowShell.isElectron is false', async () => {
+      (globalThis as unknown as { window: { somehowShell: { isElectron: boolean } } }).window = {
+        somehowShell: { isElectron: false },
       };
 
       const { isRunningInElectron } = await import('@/lib/somehow');
       expect(isRunningInElectron()).toBe(false);
     });
 
-    it('should return false when accomplishShell is unavailable', async () => {
+    it('should return false when somehowShell is unavailable', async () => {
       // Test undefined, null, missing property, and empty object
       const unavailableScenarios = [
-        { accomplishShell: undefined },
-        { accomplishShell: null },
-        { accomplishShell: { version: '1.0.0' } }, // missing isElectron
-        {}, // no accomplishShell at all
+        { somehowShell: undefined },
+        { somehowShell: null },
+        { somehowShell: { version: '1.0.0' } }, // missing isElectron
+        {}, // no somehowShell at all
       ];
 
       for (const scenario of unavailableScenarios) {
@@ -63,8 +63,8 @@ describe('SomeHow shell API', () => {
 
     it('should use strict equality for isElectron check', async () => {
       // Truthy but not true should return false
-      (globalThis as unknown as { window: { accomplishShell: { isElectron: number } } }).window = {
-        accomplishShell: { isElectron: 1 },
+      (globalThis as unknown as { window: { somehowShell: { isElectron: number } } }).window = {
+        somehowShell: { isElectron: 1 },
       };
 
       const { isRunningInElectron } = await import('@/lib/somehow');
@@ -74,8 +74,8 @@ describe('SomeHow shell API', () => {
 
   describe('getShellVersion', () => {
     it('should return version when available', async () => {
-      (globalThis as unknown as { window: { accomplishShell: { version: string } } }).window = {
-        accomplishShell: { version: '1.2.3' },
+      (globalThis as unknown as { window: { somehowShell: { version: string } } }).window = {
+        somehowShell: { version: '1.2.3' },
       };
 
       const { getShellVersion } = await import('@/lib/somehow');
@@ -84,8 +84,8 @@ describe('SomeHow shell API', () => {
 
     it('should return null when version is unavailable', async () => {
       const unavailableScenarios = [
-        { accomplishShell: undefined },
-        { accomplishShell: { isElectron: true } }, // no version property
+        { somehowShell: undefined },
+        { somehowShell: { isElectron: true } }, // no version property
         {},
       ];
 
@@ -102,8 +102,8 @@ describe('SomeHow shell API', () => {
 
       for (const version of versions) {
         vi.resetModules();
-        (globalThis as unknown as { window: { accomplishShell: { version: string } } }).window = {
-          accomplishShell: { version },
+        (globalThis as unknown as { window: { somehowShell: { version: string } } }).window = {
+          somehowShell: { version },
         };
         const { getShellVersion } = await import('@/lib/somehow');
         expect(getShellVersion()).toBe(version);
@@ -117,8 +117,8 @@ describe('SomeHow shell API', () => {
 
       for (const platform of platforms) {
         vi.resetModules();
-        (globalThis as unknown as { window: { accomplishShell: { platform: string } } }).window = {
-          accomplishShell: { platform },
+        (globalThis as unknown as { window: { somehowShell: { platform: string } } }).window = {
+          somehowShell: { platform },
         };
         const { getShellPlatform } = await import('@/lib/somehow');
         expect(getShellPlatform()).toBe(platform);
@@ -127,8 +127,8 @@ describe('SomeHow shell API', () => {
 
     it('should return null when platform is unavailable', async () => {
       const unavailableScenarios = [
-        { accomplishShell: undefined },
-        { accomplishShell: { isElectron: true } }, // no platform property
+        { somehowShell: undefined },
+        { somehowShell: { isElectron: true } }, // no platform property
         {},
       ];
 
@@ -142,7 +142,7 @@ describe('SomeHow shell API', () => {
   });
 
   describe('getSomehow', () => {
-    it('should return accomplish API when available', async () => {
+    it('should return somehow API when available', async () => {
       const mockApi = {
         getVersion: vi.fn(),
         startTask: vi.fn(),
@@ -150,8 +150,8 @@ describe('SomeHow shell API', () => {
         saveBedrockCredentials: vi.fn(),
         getBedrockCredentials: vi.fn(),
       };
-      (globalThis as unknown as { window: { accomplish: typeof mockApi } }).window = {
-        accomplish: mockApi,
+      (globalThis as unknown as { window: { somehow: typeof mockApi } }).window = {
+        somehow: mockApi,
       };
 
       const { getSomehow } = await import('@/lib/somehow');
@@ -164,8 +164,8 @@ describe('SomeHow shell API', () => {
       expect(result.getBedrockCredentials).toBeDefined();
     });
 
-    it('should throw when accomplish API is not available', async () => {
-      const unavailableScenarios = [{ accomplish: undefined }, {}];
+    it('should throw when somehow API is not available', async () => {
+      const unavailableScenarios = [{ somehow: undefined }, {}];
 
       for (const scenario of unavailableScenarios) {
         vi.resetModules();
@@ -177,19 +177,19 @@ describe('SomeHow shell API', () => {
   });
 
   describe('useSomehow', () => {
-    it('should return accomplish API when available', async () => {
+    it('should return somehow API when available', async () => {
       const mockApi = { getVersion: vi.fn(), startTask: vi.fn() };
-      (globalThis as unknown as { window: { accomplish: typeof mockApi } }).window = {
-        accomplish: mockApi,
+      (globalThis as unknown as { window: { somehow: typeof mockApi } }).window = {
+        somehow: mockApi,
       };
 
       const { useSomehow } = await import('@/lib/somehow');
       expect(useSomehow()).toBe(mockApi);
     });
 
-    it('should throw when accomplish API is not available', async () => {
-      (globalThis as unknown as { window: { accomplish?: unknown } }).window = {
-        accomplish: undefined,
+    it('should throw when somehow API is not available', async () => {
+      (globalThis as unknown as { window: { somehow?: unknown } }).window = {
+        somehow: undefined,
       };
 
       const { useSomehow } = await import('@/lib/somehow');
@@ -204,8 +204,8 @@ describe('SomeHow shell API', () => {
         platform: 'darwin',
         isElectron: true as const,
       };
-      (globalThis as unknown as { window: { accomplishShell: typeof completeShell } }).window = {
-        accomplishShell: completeShell,
+      (globalThis as unknown as { window: { somehowShell: typeof completeShell } }).window = {
+        somehowShell: completeShell,
       };
 
       const { isRunningInElectron, getShellVersion, getShellPlatform } =
@@ -218,8 +218,8 @@ describe('SomeHow shell API', () => {
 
     it('should handle partial shell object gracefully', async () => {
       const partialShell = { version: '1.0.0', isElectron: true as const };
-      (globalThis as unknown as { window: { accomplishShell: typeof partialShell } }).window = {
-        accomplishShell: partialShell,
+      (globalThis as unknown as { window: { somehowShell: typeof partialShell } }).window = {
+        somehowShell: partialShell,
       };
 
       const { isRunningInElectron, getShellVersion, getShellPlatform } =

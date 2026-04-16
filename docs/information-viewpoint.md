@@ -1,6 +1,6 @@
 # Information Viewpoint — Rozanski & Woods
 
-This document captures all stateful data, information models, state machines, and data flows within the Accomplish system. It follows the Rozanski & Woods Information Viewpoint to document data ownership, lifecycle, and structure.
+This document captures all stateful data, information models, state machines, and data flows within the SomeHow system. It follows the Rozanski & Woods Information Viewpoint to document data ownership, lifecycle, and structure.
 
 ---
 
@@ -132,11 +132,11 @@ AES-256-GCM encrypted file-based storage, separate from SQLite.
 
 **File locations (macOS):**
 
-- SQLite DB: `~/Library/Application Support/Accomplish/accomplish.db` (prod) / `accomplish-dev.db` (dev)
-- Secure Storage: `~/Library/Application Support/Accomplish/secure-storage.json`
-- Logs: `~/Library/Application Support/Accomplish/logs/`
-- Skills: `~/Library/Application Support/Accomplish/skills/`
-- OpenCode configs: `~/Library/Application Support/Accomplish/opencode/`
+- SQLite DB: `~/Library/Application Support/SomeHow/somehow.db` (prod) / `somehow-dev.db` (dev)
+- Secure Storage: `~/Library/Application Support/SomeHow/secure-storage.json`
+- Logs: `~/Library/Application Support/SomeHow/logs/`
+- Skills: `~/Library/Application Support/SomeHow/skills/`
+- OpenCode configs: `~/Library/Application Support/SomeHow/opencode/`
 
 SQLite is opened with WAL mode (`journal_mode = WAL`), so it can be safely read by external tools while the app is running.
 
@@ -484,7 +484,7 @@ Which process/layer owns which data, and the persistence mechanism.
 flowchart LR
     subgraph Persistent["Persistent Storage"]
         direction TB
-        DB[(SQLite DB<br/>accomplish.db)]
+        DB[(SQLite DB<br/>somehow.db)]
         SS[(SecureStorage<br/>secure-storage.json)]
         OCS[(OpenCode Data<br/>~/.local/share/opencode/)]
     end
@@ -785,42 +785,42 @@ flowchart TB
 
 ## 18. userData Directory Reference
 
-Location: `~/Library/Application Support/Accomplish/` (macOS)
+Location: `~/Library/Application Support/SomeHow/` (macOS)
 
 All files and folders found in this directory at runtime:
 
-### Accomplish Application Data
+### SomeHow Application Data
 
-| Path                    | Owner               | Description                                                                                                                                                                         |
-| ----------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `accomplish.db`         | agent-core (SQLite) | Main database — tasks, messages, todos, providers, settings, skills, connectors. All application state.                                                                             |
-| `accomplish.db-wal`     | SQLite engine       | Write-Ahead Log — buffered writes not yet checkpointed to main DB. Auto-managed.                                                                                                    |
-| `accomplish.db-shm`     | SQLite engine       | Shared memory index for WAL. Enables concurrent readers. Auto-managed.                                                                                                              |
-| `accomplish-dev.db`     | agent-core (SQLite) | Development-mode database (used when running `pnpm dev`). Same schema as prod.                                                                                                      |
-| `accomplish-dev.db-wal` | SQLite engine       | WAL for dev database.                                                                                                                                                               |
-| `accomplish-dev.db-shm` | SQLite engine       | Shared memory for dev database.                                                                                                                                                     |
-| `opencode/`             | config-generator.ts | Contains `opencode.json` — generated OpenCode CLI config (system prompt, MCP servers, provider settings). Regenerated before each task. Single file shared across concurrent tasks. |
-| `skills/`               | SkillsManager       | Skill markdown files (official, community, custom). Each skill is a `.md` with frontmatter.                                                                                         |
-| `logs/`                 | log-file-writer.ts  | Application log files written by Electron main process.                                                                                                                             |
-| `dev-browser/`          | dev-browser-mcp     | Playwright browser profile data (cookies, localStorage) for the bundled Chromium used in browser automation tasks.                                                                  |
+| Path                 | Owner               | Description                                                                                                                                                                         |
+| -------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `somehow.db`         | agent-core (SQLite) | Main database — tasks, messages, todos, providers, settings, skills, connectors. All application state.                                                                             |
+| `somehow.db-wal`     | SQLite engine       | Write-Ahead Log — buffered writes not yet checkpointed to main DB. Auto-managed.                                                                                                    |
+| `somehow.db-shm`     | SQLite engine       | Shared memory index for WAL. Enables concurrent readers. Auto-managed.                                                                                                              |
+| `somehow-dev.db`     | agent-core (SQLite) | Development-mode database (used when running `pnpm dev`). Same schema as prod.                                                                                                      |
+| `somehow-dev.db-wal` | SQLite engine       | WAL for dev database.                                                                                                                                                               |
+| `somehow-dev.db-shm` | SQLite engine       | Shared memory for dev database.                                                                                                                                                     |
+| `opencode/`          | config-generator.ts | Contains `opencode.json` — generated OpenCode CLI config (system prompt, MCP servers, provider settings). Regenerated before each task. Single file shared across concurrent tasks. |
+| `skills/`            | SkillsManager       | Skill markdown files (official, community, custom). Each skill is a `.md` with frontmatter.                                                                                         |
+| `logs/`              | log-file-writer.ts  | Application log files written by Electron main process.                                                                                                                             |
+| `dev-browser/`       | dev-browser-mcp     | Playwright browser profile data (cookies, localStorage) for the bundled Chromium used in browser automation tasks.                                                                  |
 
 ### Chromium / Electron Auto-Created
 
-These are standard Chromium storage directories created automatically by Electron. Not managed by Accomplish code.
+These are standard Chromium storage directories created automatically by Electron. Not managed by SomeHow code.
 
 | Path                                                  | Owner           | Description                                                                                      |
 | ----------------------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------ |
-| `Cache/`                                              | Chromium        | HTTP cache for the renderer process (the Accomplish UI webview).                                 |
+| `Cache/`                                              | Chromium        | HTTP cache for the renderer process (the SomeHow UI webview).                                    |
 | `Code Cache/`                                         | Chromium        | Compiled/cached JavaScript bytecode for faster UI startup.                                       |
-| `Cookies`                                             | Chromium        | Cookie database for the Electron renderer (Accomplish UI, not the automation browser).           |
+| `Cookies`                                             | Chromium        | Cookie database for the Electron renderer (SomeHow UI, not the automation browser).              |
 | `Cookies-journal`                                     | Chromium        | SQLite journal for Cookies DB.                                                                   |
 | `GPUCache/`                                           | Chromium        | Cached GPU shader compilations.                                                                  |
 | `DawnGraphiteCache/`                                  | Chromium (Dawn) | WebGPU shader cache (Dawn graphics backend).                                                     |
 | `DawnWebGPUCache/`                                    | Chromium (Dawn) | WebGPU pipeline cache.                                                                           |
 | `DIPS`, `DIPS-shm`, `DIPS-wal`                        | Chromium        | Bounce Tracking Mitigations database (Detection of Indirect Proxy for Stateful bounce tracking). |
-| `IndexedDB/`                                          | Chromium        | Browser IndexedDB storage for the Accomplish UI renderer.                                        |
-| `Local Storage/`                                      | Chromium        | `localStorage` for the Accomplish React app (theme preference synced here).                      |
-| `Session Storage/`                                    | Chromium        | `sessionStorage` for the Accomplish React app.                                                   |
+| `IndexedDB/`                                          | Chromium        | Browser IndexedDB storage for the SomeHow UI renderer.                                           |
+| `Local Storage/`                                      | Chromium        | `localStorage` for the SomeHow React app (theme preference synced here).                         |
+| `Session Storage/`                                    | Chromium        | `sessionStorage` for the SomeHow React app.                                                      |
 | `Network Persistent State`                            | Chromium        | Network stack state (HSTS, transport security policies).                                         |
 | `Preferences`                                         | Chromium        | Electron/Chromium browser preferences JSON.                                                      |
 | `Shared Dictionary/`                                  | Chromium        | Shared Brotli/Zstandard compression dictionaries.                                                |
@@ -836,9 +836,9 @@ These are standard Chromium storage directories created automatically by Electro
 
 | Scenario                           | Look at                                                                           |
 | ---------------------------------- | --------------------------------------------------------------------------------- |
-| Task not completing / wrong status | `accomplish.db` → `tasks` table (status, session_id)                              |
-| Messages missing or corrupt        | `accomplish.db` → `task_messages` table (sort_order, content)                     |
-| Provider connection issues         | `accomplish.db` → `providers` table (connection_status, credentials_type)         |
+| Task not completing / wrong status | `somehow.db` → `tasks` table (status, session_id)                                 |
+| Messages missing or corrupt        | `somehow.db` → `task_messages` table (sort_order, content)                        |
+| Provider connection issues         | `somehow.db` → `providers` table (connection_status, credentials_type)            |
 | API key not working                | `secure-storage.json` (encrypted — verify key exists, can't read value)           |
 | OpenCode config wrong              | `opencode/opencode.json` (inspect generated system prompt, MCP servers)           |
 | Browser automation state           | `dev-browser/` (Playwright profile with cookies/sessions from automated browsing) |

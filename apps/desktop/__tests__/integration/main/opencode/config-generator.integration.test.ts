@@ -57,7 +57,7 @@ vi.mock('electron', () => ({
   app: mockApp,
 }));
 
-// Note: PERMISSION_API_PORT and QUESTION_API_PORT are now imported from @accomplish/shared
+// Note: PERMISSION_API_PORT and QUESTION_API_PORT are now imported from @somehow/shared
 // by config-generator.ts, so no mock needed here
 
 // Mock @somehow_ai/agent-core (uses SQLite which requires native module)

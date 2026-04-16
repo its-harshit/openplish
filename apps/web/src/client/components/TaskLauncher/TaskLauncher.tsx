@@ -13,7 +13,7 @@ export function TaskLauncher() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const { isLauncherOpen, launcherInitialPrompt, closeLauncher, tasks, startTask } = useTaskStore();
-  const accomplish = getSomehow();
+  const somehow = getSomehow();
   const [openedAt, setOpenedAt] = useState(Date.now);
 
   // Filter tasks by search query (title only)
@@ -63,7 +63,7 @@ export function TaskLauncher() {
         // "New task" selected
         if (searchQuery.trim()) {
           // Check if any provider is ready before starting task
-          const settings = await accomplish.getProviderSettings();
+          const settings = await somehow.getProviderSettings();
           if (!hasAnyReadyProvider(settings)) {
             // No ready provider - navigate to home which will show settings
             closeLauncher();
@@ -90,7 +90,7 @@ export function TaskLauncher() {
         }
       }
     },
-    [searchQuery, filteredTasks, closeLauncher, navigate, startTask, accomplish],
+    [searchQuery, filteredTasks, closeLauncher, navigate, startTask, somehow],
   );
 
   const handleKeyDown = useCallback(

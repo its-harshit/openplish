@@ -40,14 +40,14 @@ export function applyTheme(preference: string): void {
 }
 
 export function initTheme(): void {
-  const accomplish = getSomehow();
+  const somehow = getSomehow();
 
-  accomplish.getTheme().then((preference) => {
+  somehow.getTheme().then((preference) => {
     applyTheme(preference);
   });
 
-  if (accomplish.onThemeChange) {
-    themeChangeCleanup = accomplish.onThemeChange(({ theme }) => {
+  if (somehow.onThemeChange) {
+    themeChangeCleanup = somehow.onThemeChange(({ theme }) => {
       applyTheme(theme);
     });
   }

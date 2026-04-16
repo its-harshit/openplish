@@ -44,7 +44,7 @@ describe('socket-path', () => {
 
     it('produces named pipe with hash on Windows', () => {
       mockPlatform.mockReturnValue('win32');
-      const result = getSocketPath('C:\\Users\\test\\AppData\\Accomplish');
+      const result = getSocketPath('C:\\Users\\test\\AppData\\SomeHow');
       expect(result).toMatch(/^\\\\.\\pipe\\somehow-daemon-[a-f0-9]{12}$/);
     });
 

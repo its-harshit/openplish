@@ -32,10 +32,10 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   loadWorkspaces: async () => {
     set({ isLoading: true });
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       const [workspaces, activeId] = await Promise.all([
-        accomplish.listWorkspaces(),
-        accomplish.getActiveWorkspaceId(),
+        somehow.listWorkspaces(),
+        somehow.getActiveWorkspaceId(),
       ]);
       set({ workspaces, activeWorkspaceId: activeId, isLoading: false });
     } catch (err) {
@@ -50,8 +50,8 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
     }
     set({ isSwitching: true });
     try {
-      const accomplish = getSomehow();
-      const result = await accomplish.switchWorkspace(id);
+      const somehow = getSomehow();
+      const result = await somehow.switchWorkspace(id);
       if (result.success) {
         set({ activeWorkspaceId: id, isSwitching: false });
       } else {
@@ -66,8 +66,8 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
   createWorkspace: async (input: WorkspaceCreateInput) => {
     try {
-      const accomplish = getSomehow();
-      const workspace = await accomplish.createWorkspace(input);
+      const somehow = getSomehow();
+      const workspace = await somehow.createWorkspace(input);
       set((state) => ({
         workspaces: [...state.workspaces, workspace],
       }));
@@ -80,8 +80,8 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
   updateWorkspace: async (id: string, input: WorkspaceUpdateInput) => {
     try {
-      const accomplish = getSomehow();
-      const updated = await accomplish.updateWorkspace(id, input);
+      const somehow = getSomehow();
+      const updated = await somehow.updateWorkspace(id, input);
       if (updated) {
         set((state) => ({
           workspaces: state.workspaces.map((w) => (w.id === id ? updated : w)),
@@ -96,8 +96,8 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
   deleteWorkspace: async (id: string) => {
     try {
-      const accomplish = getSomehow();
-      const deleted = await accomplish.deleteWorkspace(id);
+      const somehow = getSomehow();
+      const deleted = await somehow.deleteWorkspace(id);
       if (deleted) {
         set((state) => ({
           workspaces: state.workspaces.filter((w) => w.id !== id),

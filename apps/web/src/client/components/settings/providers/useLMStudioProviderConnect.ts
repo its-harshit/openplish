@@ -55,8 +55,8 @@ export function useLMStudioProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
-      const result = await accomplish.testLMStudioConnection(serverUrl);
+      const somehow = getSomehow();
+      const result = await somehow.testLMStudioConnection(serverUrl);
 
       if (!result.success) {
         setError(result.error || t('status.connectionFailed'));
@@ -101,10 +101,10 @@ export function useLMStudioProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       const currentUrl =
         (baseProvider.credentials as LMStudioCredentials)?.serverUrl || 'http://localhost:1234';
-      const result = await accomplish.testLMStudioConnection(currentUrl);
+      const result = await somehow.testLMStudioConnection(currentUrl);
 
       if (!result.success) {
         setError(result.error || t('status.connectionFailed'));

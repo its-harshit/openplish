@@ -2,7 +2,7 @@
  * SomeHow shell API - Interface to the Electron main process
  *
  * This module provides type-safe access to the Electron preload bridge
- * (`window.somehow`, with `window.accomplish` as a legacy alias).
+ * (`window.somehow`, with `window.somehow` as a legacy alias).
  */
 
 import type {
@@ -689,8 +689,9 @@ interface SomehowShell {
 declare global {
   interface Window {
     somehow?: SomehowAPI;
-    accomplish?: SomehowAPI;
     somehowShell?: SomehowShell;
+    // Legacy globals kept for backward compatibility during rebranding.
+    accomplish?: SomehowAPI;
     accomplishShell?: SomehowShell;
   }
 }
@@ -704,7 +705,7 @@ function getElectronShell(): SomehowShell | undefined {
 }
 
 /**
- * Preferred `window.somehow` with legacy `window.accomplish` fallback.
+ * Preferred `window.somehow` with legacy `window.somehow` fallback.
  * For module-level code that must not call {@link getSomehow} (which throws when absent).
  */
 export function getOptionalWindowBridge(): SomehowAPI | undefined {
@@ -715,7 +716,7 @@ export function getOptionalWindowBridge(): SomehowAPI | undefined {
 }
 
 /**
- * Returns the Electron shell API (`window.somehow`, or legacy `window.accomplish`).
+ * Returns the Electron shell API (`window.somehow`, or legacy `window.somehow`).
  * Throws if not running in Electron.
  */
 export function getSomehow() {

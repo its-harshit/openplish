@@ -22,12 +22,12 @@ export class StorageService {
     // Match the desktop app's database naming:
     // - Packaged (SOMEHOW_IS_PACKAGED=1): somehow.db + secure-storage.json
     // - Dev mode: somehow-dev.db + secure-storage-dev.json
-    // Renames legacy accomplish*.db files in the same directory when present.
+    // Renames legacy somehow*.db files in the same directory when present.
     const isPackaged = process.env.SOMEHOW_IS_PACKAGED === '1';
     const dbName = isPackaged ? 'somehow.db' : 'somehow-dev.db';
     const secureFileName = isPackaged ? 'secure-storage.json' : 'secure-storage-dev.json';
     const databasePath = join(dir, dbName);
-    const legacyPath = join(dir, isPackaged ? 'accomplish.db' : 'accomplish-dev.db');
+    const legacyPath = join(dir, isPackaged ? 'somehow.db' : 'somehow-dev.db');
     if (!existsSync(databasePath) && existsSync(legacyPath)) {
       try {
         renameSync(legacyPath, databasePath);

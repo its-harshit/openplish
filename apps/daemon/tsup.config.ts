@@ -2,7 +2,10 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: ['src/index.ts'],
-  format: ['esm'],
+  // In packaged desktop builds we execute the daemon via `node <entry>`.
+  // On Windows in particular, we run it as CJS (no "type": "module" in the resources dir),
+  // so we emit both ESM + CJS and let the desktop choose the correct entry.
+  format: ['esm', 'cjs'],
   target: 'node20',
   platform: 'node',
   outDir: 'dist',
@@ -18,10 +21,15 @@ export default defineConfig({
     // In OSS builds it's absent (noop fallback). In Free builds CI copies it into dist/.
     '@accomplish/llm-gateway-client',
   ],
-  // gray-matter (CJS) uses require('fs') etc. — inject a CJS shim so
-  // the ESM bundle can handle dynamic require() calls for Node builtins.
-  banner: {
-    js: `import { createRequire } from 'module'; const require = createRequire(import.meta.url);`,
+  // gray-matter (CJS) uses require('fs') etc. — inject a require() shim ONLY for the ESM bundle.
+  // Never inject this into the CJS output, or Node will crash on `import ...` at runtime.
+  esbuildOptions(options) {
+    if (options.format === 'esm') {
+      options.banner ??= {};
+      options.banner.js =
+        (options.banner.js ? `${options.banner.js}\n` : '') +
+        `import { createRequire } from 'module'; const require = createRequire(import.meta.url);`;
+    }
   },
   // Bundle all JS dependencies so the packaged daemon is self-contained.
   // Only native modules (above) remain as external imports.

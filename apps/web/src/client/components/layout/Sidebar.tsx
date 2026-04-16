@@ -22,7 +22,7 @@ export default function Sidebar() {
   const [showSettings, setShowSettings] = useState(false);
   const [settingsInitialTab, setSettingsInitialTab] = useState<SettingsTabId>('providers');
   const { tasks, loadTasks, updateTaskStatus, addTaskUpdate, openLauncher } = useTaskStore();
-  const accomplish = getSomehow();
+  const somehow = getSomehow();
   const { t } = useTranslation('sidebar');
 
   useEffect(() => {
@@ -32,11 +32,11 @@ export default function Sidebar() {
   // Subscribe to task status changes (queued -> running) and task updates (complete/error)
   // This ensures sidebar always reflects current task status
   useEffect(() => {
-    const unsubscribeStatusChange = accomplish.onTaskStatusChange?.((data) => {
+    const unsubscribeStatusChange = somehow.onTaskStatusChange?.((data) => {
       updateTaskStatus(data.taskId, data.status);
     });
 
-    const unsubscribeTaskUpdate = accomplish.onTaskUpdate((event) => {
+    const unsubscribeTaskUpdate = somehow.onTaskUpdate((event) => {
       addTaskUpdate(event);
     });
 
@@ -44,7 +44,7 @@ export default function Sidebar() {
       unsubscribeStatusChange?.();
       unsubscribeTaskUpdate();
     };
-  }, [updateTaskStatus, addTaskUpdate, accomplish]);
+  }, [updateTaskStatus, addTaskUpdate, somehow]);
 
   const handleNewConversation = () => {
     navigate('/');

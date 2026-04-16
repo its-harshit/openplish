@@ -41,7 +41,7 @@ export function TaskInputToolbar({
   attachmentsCount,
 }: TaskInputToolbarProps) {
   const { t } = useTranslation('common');
-  const accomplish = getSomehow();
+  const somehow = getSomehow();
   const submitLabel = isLoading ? t('buttons.stop') : t('buttons.submit');
   const isButtonDisabled = isSubmitDisabled || isRecording || slashCommandOpen;
 
@@ -95,7 +95,7 @@ export function TaskInputToolbar({
                 aria-label={submitLabel}
                 aria-disabled={isButtonDisabled}
                 onClick={() => {
-                  accomplish.logEvent({
+                  somehow.logEvent({
                     level: 'info',
                     message: 'Task input submit clicked',
                     context: {

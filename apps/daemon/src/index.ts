@@ -1,7 +1,6 @@
 import crypto from 'node:crypto';
 import path from 'node:path';
 import { homedir } from 'node:os';
-import { fileURLToPath } from 'node:url';
 import {
   DaemonRpcServer,
   getSocketPath,
@@ -26,8 +25,6 @@ import { registerRpcMethods, safeHandler } from './daemon-routes.js';
 import { registerTaskEventForwarding } from './task-event-forwarding.js';
 import { WhatsAppDaemonService } from './whatsapp-service.js';
 import { log } from './logger.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const DRAIN_TIMEOUT_MS = 30_000;
 let pidLock: PidLockHandle | null = null;
@@ -110,10 +107,10 @@ async function main(): Promise<void> {
   const isPackaged = args.isPackaged || process.env.SOMEHOW_IS_PACKAGED === '1';
   const resourcesPath = args.resourcesPath || process.env.SOMEHOW_RESOURCES_PATH || '';
   const appPath = args.appPath || process.env.SOMEHOW_APP_PATH || '';
+  const devMcpToolsPath = path.resolve(process.cwd(), 'packages', 'agent-core', 'mcp-tools');
   const mcpToolsPath = isPackaged
     ? path.join(resourcesPath, 'mcp-tools')
-    : process.env.MCP_TOOLS_PATH ||
-      path.resolve(__dirname, '..', '..', '..', 'packages', 'agent-core', 'mcp-tools');
+    : process.env.MCP_TOOLS_PATH || devMcpToolsPath;
   const taskService = new TaskService(storage, {
     userDataPath,
     mcpToolsPath,

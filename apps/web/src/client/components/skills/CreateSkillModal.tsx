@@ -35,8 +35,8 @@ export function CreateSkillModal({ open, onOpenChange, onSettingsClose }: Create
   // Check if there's an active provider when modal opens
   useEffect(() => {
     if (open) {
-      const accomplish = getSomehow();
-      accomplish
+      const somehow = getSomehow();
+      somehow
         .getProviderSettings()
         .then((settings) => {
           setHasProvider(!!settings?.activeProviderId);
@@ -55,10 +55,10 @@ export function CreateSkillModal({ open, onOpenChange, onSettingsClose }: Create
     setIsSubmitting(true);
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       const [skillsBasePath, platform] = await Promise.all([
-        accomplish.getUserSkillsPath(),
-        accomplish.getPlatform(),
+        somehow.getUserSkillsPath(),
+        somehow.getPlatform(),
       ]);
 
       const prompt = buildCreateSkillPrompt({

@@ -52,7 +52,7 @@ export function useBedrockProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
 
       const credentialsMap = {
         apiKey: {
@@ -75,7 +75,7 @@ export function useBedrockProviderConnect({
       };
       const credentials = credentialsMap[authTab];
 
-      const validation = await accomplish.validateBedrockCredentials(credentials);
+      const validation = await somehow.validateBedrockCredentials(credentials);
 
       if (!validation.valid) {
         setError(validation.error || t('bedrock.invalidCredentials'));
@@ -83,10 +83,10 @@ export function useBedrockProviderConnect({
         return;
       }
 
-      await accomplish.saveBedrockCredentials(credentials);
+      await somehow.saveBedrockCredentials(credentials);
 
       const credentialsJson = JSON.stringify(credentials);
-      const modelsResult = await accomplish.fetchBedrockModels(credentialsJson);
+      const modelsResult = await somehow.fetchBedrockModels(credentialsJson);
       if (!modelsResult.success) {
         setError(modelsResult.error || t('status.connectionFailed'));
         return;

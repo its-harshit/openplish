@@ -40,7 +40,7 @@ export interface WhatsAppCardActions {
 }
 
 export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
-  const accomplish = useMemo(() => getSomehow(), []);
+  const somehow = useMemo(() => getSomehow(), []);
 
   const [config, setConfig] = useState<WhatsAppCardState['config']>(null);
   const [loading, setLoading] = useState(true);
@@ -76,7 +76,7 @@ export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
 
   const fetchConfig = useCallback(async () => {
     try {
-      const result = await accomplish.getWhatsAppConfig();
+      const result = await somehow.getWhatsAppConfig();
       if (result?.enabled) {
         const status = normalizeStatus(result.status);
         setConfig({
@@ -98,14 +98,14 @@ export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
     } finally {
       setLoading(false);
     }
-  }, [accomplish]);
+  }, [somehow]);
 
   useEffect(() => {
     fetchConfig();
   }, [fetchConfig]);
 
   useWhatsAppSubscriptions({
-    accomplish,
+    somehow,
     qrTimerRef,
     connectTimeoutRef,
     setQrCode,
@@ -133,7 +133,7 @@ export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
       });
     }, 30_000);
     try {
-      await accomplish.connectWhatsApp();
+      await somehow.connectWhatsApp();
     } catch (err) {
       if (connectTimeoutRef.current) {
         clearTimeout(connectTimeoutRef.current);
@@ -142,7 +142,7 @@ export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
       setError(err instanceof Error ? err.message : 'Failed to connect');
       setConnecting(false);
     }
-  }, [accomplish]);
+  }, [somehow]);
 
   const handleDisconnect = useCallback(async () => {
     if (!confirmDisconnect) {
@@ -152,7 +152,7 @@ export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
     setDisconnecting(true);
     setConfirmDisconnect(false);
     try {
-      await accomplish.disconnectWhatsApp();
+      await somehow.disconnectWhatsApp();
       setConfig(null);
       setQrCode(null);
       setError(null);
@@ -161,7 +161,7 @@ export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
     } finally {
       setDisconnecting(false);
     }
-  }, [confirmDisconnect, accomplish]);
+  }, [confirmDisconnect, somehow]);
 
   return {
     config,

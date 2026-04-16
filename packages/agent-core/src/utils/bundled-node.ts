@@ -57,6 +57,36 @@ function resolveDevNodeDir(config: PlatformConfig): string | null {
   return null;
 }
 
+function resolveNodeDirFromCandidates(candidates: string[], nodeBinary: string): string | null {
+  for (const candidate of candidates) {
+    if (!fs.existsSync(candidate)) {
+      continue;
+    }
+
+    const directNodePath = path.join(candidate, nodeBinary);
+    if (fs.existsSync(directNodePath)) {
+      return candidate;
+    }
+
+    try {
+      const children = fs.readdirSync(candidate, { withFileTypes: true });
+      for (const child of children) {
+        if (!child.isDirectory()) {
+          continue;
+        }
+        const nestedNodeDir = path.join(candidate, child.name);
+        const nestedNodePath = path.join(nestedNodeDir, nodeBinary);
+        if (fs.existsSync(nestedNodePath)) {
+          return nestedNodeDir;
+        }
+      }
+    } catch {
+      // intentionally empty
+    }
+  }
+  return null;
+}
+
 export function getBundledNodePaths(config: PlatformConfig): BundledNodePathsExtended | null {
   const isWindows = config.platform === 'win32';
   const ext = isWindows ? '.exe' : '';
@@ -67,7 +97,18 @@ export function getBundledNodePaths(config: PlatformConfig): BundledNodePathsExt
     if (!config.resourcesPath) {
       return null;
     }
-    nodeDir = path.join(config.resourcesPath, 'nodejs', config.arch);
+    // Packaged builds may store Node.js under either:
+    // - resources/nodejs/<arch>/... (new layout)
+    // - resources/nodejs/<platform>-<arch>/... (legacy layout, used by download-nodejs.cjs)
+    // and may additionally have the Node binary nested one directory deeper (node-vX.Y.Z-*).
+    const base = path.join(config.resourcesPath, 'nodejs');
+    const platformArch = `${config.platform}-${config.arch}`;
+    const nodeBinary = config.platform === 'win32' ? 'node.exe' : path.join('bin', 'node');
+    nodeDir =
+      resolveNodeDirFromCandidates(
+        [path.join(base, config.arch), path.join(base, platformArch)],
+        nodeBinary,
+      ) ?? resolveNodeDirFromCandidates([base], nodeBinary);
   } else {
     nodeDir = resolveDevNodeDir(config);
   }

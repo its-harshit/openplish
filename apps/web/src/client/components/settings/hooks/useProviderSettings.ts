@@ -15,8 +15,8 @@ export function useProviderSettings() {
 
   const fetchSettings = useCallback(async () => {
     try {
-      const accomplish = getSomehow();
-      const data = (await accomplish.getProviderSettings()) as ProviderSettings;
+      const somehow = getSomehow();
+      const data = (await somehow.getProviderSettings()) as ProviderSettings;
       setSettings(data);
       setError(null);
     } catch (err) {
@@ -31,15 +31,15 @@ export function useProviderSettings() {
   }, [fetchSettings]);
 
   const setActiveProvider = useCallback(async (providerId: ProviderId | null) => {
-    const accomplish = getSomehow();
-    await accomplish.setActiveProvider(providerId);
+    const somehow = getSomehow();
+    await somehow.setActiveProvider(providerId);
     setSettings((prev) => (prev ? { ...prev, activeProviderId: providerId } : null));
   }, []);
 
   const connectProvider = useCallback(
     async (providerId: ProviderId, provider: ConnectedProvider) => {
-      const accomplish = getSomehow();
-      await accomplish.setConnectedProvider(providerId, provider);
+      const somehow = getSomehow();
+      await somehow.setConnectedProvider(providerId, provider);
       setSettings((prev) => {
         if (!prev) return null;
         return {
@@ -55,8 +55,8 @@ export function useProviderSettings() {
   );
 
   const disconnectProvider = useCallback(async (providerId: ProviderId) => {
-    const accomplish = getSomehow();
-    await accomplish.removeConnectedProvider(providerId);
+    const somehow = getSomehow();
+    await somehow.removeConnectedProvider(providerId);
     setSettings((prev) => {
       if (!prev) return null;
       const { [providerId]: _, ...rest } = prev.connectedProviders;
@@ -69,8 +69,8 @@ export function useProviderSettings() {
   }, []);
 
   const updateModel = useCallback(async (providerId: ProviderId, modelId: string | null) => {
-    const accomplish = getSomehow();
-    await accomplish.updateProviderModel(providerId, modelId);
+    const somehow = getSomehow();
+    await somehow.updateProviderModel(providerId, modelId);
     setSettings((prev) => {
       if (!prev) return null;
       const provider = prev.connectedProviders[providerId];
@@ -86,8 +86,8 @@ export function useProviderSettings() {
   }, []);
 
   const setDebugMode = useCallback(async (enabled: boolean) => {
-    const accomplish = getSomehow();
-    await accomplish.setProviderDebugMode(enabled);
+    const somehow = getSomehow();
+    await somehow.setProviderDebugMode(enabled);
     setSettings((prev) => (prev ? { ...prev, debugMode: enabled } : null));
   }, []);
 

@@ -12,12 +12,12 @@ describe('noopRuntime', () => {
     expect(noopRuntime.isAvailable()).toBe(false);
   });
 
-  it('connect throws accomplish_runtime_unavailable', async () => {
-    await expect(noopRuntime.connect(dummyDeps)).rejects.toThrow('accomplish_runtime_unavailable');
+  it('connect throws somehow_runtime_unavailable', async () => {
+    await expect(noopRuntime.connect(dummyDeps)).rejects.toThrow('somehow_runtime_unavailable');
   });
 
-  it('getUsage throws accomplish_runtime_unavailable', async () => {
-    await expect(noopRuntime.getUsage()).rejects.toThrow('accomplish_runtime_unavailable');
+  it('getUsage throws somehow_runtime_unavailable', async () => {
+    await expect(noopRuntime.getUsage()).rejects.toThrow('somehow_runtime_unavailable');
   });
 
   it('disconnect does not throw', () => {

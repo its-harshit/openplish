@@ -109,8 +109,7 @@ describe('Shell escaping utilities', () => {
     }
 
     it('should wrap the full command in outer quotes for cmd.exe /s /c', () => {
-      const command =
-        'C:\\Users\\Li Yao\\AppData\\Local\\Programs\\@accomplishdesktop\\opencode.exe';
+      const command = 'C:\\Users\\Li Yao\\AppData\\Local\\Programs\\@somehowdesktop\\opencode.exe';
       const args = ['run', '--format', 'json', '--prompt', 'hello world'];
       const fullCommand = buildShellCommand(command, args);
       const shellArgs = getShellArgsWin32(fullCommand);
@@ -119,7 +118,7 @@ describe('Shell escaping utilities', () => {
       expect(shellArgs[2]).toBe(`"${fullCommand}"`);
       // The inner path with spaces must still be individually quoted
       expect(fullCommand).toContain(
-        '"C:\\Users\\Li Yao\\AppData\\Local\\Programs\\@accomplishdesktop\\opencode.exe"',
+        '"C:\\Users\\Li Yao\\AppData\\Local\\Programs\\@somehowdesktop\\opencode.exe"',
       );
       // The full shell args should be ['/s', '/c', '"..."']
       expect(shellArgs[0]).toBe('/s');
@@ -228,7 +227,7 @@ describe('Shell escaping utilities', () => {
 
     it('handles an exe path with spaces', () => {
       const exe =
-        'C:\\Users\\Anish Maheshwari\\AppData\\Local\\Programs\\@accomplishdesktop\\resources\\app.asar.unpacked\\node_modules\\opencode-windows-x64\\bin\\opencode.exe';
+        'C:\\Users\\Anish Maheshwari\\AppData\\Local\\Programs\\@somehowdesktop\\resources\\app.asar.unpacked\\node_modules\\opencode-windows-x64\\bin\\opencode.exe';
       const { file } = spawnArgs(exe, ['run']);
 
       expect(file).toBe(exe);
@@ -236,7 +235,7 @@ describe('Shell escaping utilities', () => {
 
     it('handles task text containing double-quotes (the original failure case)', () => {
       const exe = 'C:\\Programs\\opencode.exe';
-      const taskText = 'Take a screenshot. Type "Desktop automation by Accomplish - PR #189"';
+      const taskText = 'Take a screenshot. Type "Desktop automation by SomeHow - PR #189"';
       const { args } = spawnArgs(exe, ['run', taskText]);
 
       expect(args[1]).toBe(taskText);

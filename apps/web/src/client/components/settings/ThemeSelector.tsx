@@ -42,11 +42,11 @@ export function ThemeSelector() {
   const requestSeqRef = useRef(0);
 
   useEffect(() => {
-    const accomplish = getSomehow();
+    const somehow = getSomehow();
 
     // Load the authoritative theme value from the backend and sync both the
     // selector state and the DOM (applyTheme writes localStorage + applies class).
-    accomplish
+    somehow
       .getTheme()
       .then((theme) => {
         if (isThemeValue(theme)) {
@@ -59,7 +59,7 @@ export function ThemeSelector() {
       });
 
     // Subscribe to live theme changes (e.g. changed from another window/process).
-    const unsubscribe = accomplish.onThemeChange?.((data) => {
+    const unsubscribe = somehow.onThemeChange?.((data) => {
       if (isThemeValue(data.theme)) {
         setCurrent(data.theme);
         applyTheme(data.theme);
@@ -85,9 +85,9 @@ export function ThemeSelector() {
       setCurrent(value);
       applyTheme(value);
 
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       try {
-        await accomplish.setTheme(value);
+        await somehow.setTheme(value);
       } catch {
         // Guard against stale async rollback: only revert if this is still the latest request.
         if (requestSeqRef.current !== requestId) {

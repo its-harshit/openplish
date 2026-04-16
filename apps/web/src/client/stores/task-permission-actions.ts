@@ -23,16 +23,16 @@ export function createTaskPermissionActions(set: SetFn, get: GetFn) {
     },
 
     respondToPermission: async (response: PermissionResponse) => {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       const taskStateToken = get()._taskStateToken;
       // Save the requestId before the await to detect if a newer request arrived
       const requestId = response.requestId;
-      void accomplish.logEvent({
+      void somehow.logEvent({
         level: 'info',
         message: 'UI permission response',
         context: { ...response },
       });
-      await accomplish.respondToPermission(response);
+      await somehow.respondToPermission(response);
       if (!hasTaskStateToken(get(), taskStateToken)) {
         return;
       }

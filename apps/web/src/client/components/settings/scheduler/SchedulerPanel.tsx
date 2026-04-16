@@ -9,7 +9,7 @@ import { AddScheduleDialog } from './AddScheduleDialog';
 
 export function SchedulerPanel() {
   const { t } = useTranslation('settings');
-  const accomplish = useSomehow();
+  const somehow = useSomehow();
   const { activeWorkspaceId } = useWorkspaceStore();
 
   const [schedules, setSchedules] = useState<ScheduledTask[]>([]);
@@ -19,19 +19,19 @@ export function SchedulerPanel() {
 
   const loadSchedules = useCallback(async () => {
     try {
-      const result = await accomplish.listSchedules(activeWorkspaceId ?? undefined);
+      const result = await somehow.listSchedules(activeWorkspaceId ?? undefined);
       setSchedules(result);
     } catch {
       // Daemon may be unavailable
       setSchedules([]);
     }
-  }, [accomplish, activeWorkspaceId]);
+  }, [somehow, activeWorkspaceId]);
 
   useEffect(() => {
     const load = async () => {
       setLoading(true);
       try {
-        const [, autoStart] = await Promise.all([loadSchedules(), accomplish.isAutoStartEnabled()]);
+        const [, autoStart] = await Promise.all([loadSchedules(), somehow.isAutoStartEnabled()]);
         setAutoStartEnabled(autoStart);
       } catch {
         // ignore
@@ -40,21 +40,21 @@ export function SchedulerPanel() {
       }
     };
     load();
-  }, [loadSchedules, accomplish]);
+  }, [loadSchedules, somehow]);
 
   const handleCreate = async (cron: string, prompt: string) => {
-    await accomplish.createSchedule(cron, prompt, activeWorkspaceId ?? undefined);
+    await somehow.createSchedule(cron, prompt, activeWorkspaceId ?? undefined);
     await loadSchedules();
   };
 
   const handleToggleEnabled = async (id: string, enabled: boolean) => {
-    await accomplish.setScheduleEnabled(id, enabled);
+    await somehow.setScheduleEnabled(id, enabled);
     // Re-fetch to get updated next_run_at (recomputed server-side on enable)
     await loadSchedules();
   };
 
   const handleDelete = async (id: string) => {
-    await accomplish.deleteSchedule(id);
+    await somehow.deleteSchedule(id);
     setSchedules((prev) => prev.filter((s) => s.id !== id));
   };
 

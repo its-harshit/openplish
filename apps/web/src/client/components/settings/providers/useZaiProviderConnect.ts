@@ -59,14 +59,14 @@ export function useZaiProviderConnect({
       return;
     }
 
-    const accomplish = getSomehow();
+    const somehow = getSomehow();
     const storedRegion = storedCredentials?.region || 'international';
-    accomplish
+    somehow
       .fetchProviderModels('zai', { zaiRegion: storedRegion })
       .then((result) => {
         if (result.success && result.models?.length) {
           setFetchedModels(result.models);
-          accomplish
+          somehow
             .setConnectedProvider('zai', {
               ...connectedProvider!,
               availableModels: result.models,
@@ -88,8 +88,8 @@ export function useZaiProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
-      const validation = await accomplish.validateApiKeyForProvider('zai', apiKey.trim(), {
+      const somehow = getSomehow();
+      const validation = await somehow.validateApiKeyForProvider('zai', apiKey.trim(), {
         region,
       });
 
@@ -99,11 +99,11 @@ export function useZaiProviderConnect({
         return;
       }
 
-      await accomplish.addApiKey('zai', apiKey.trim());
+      await somehow.addApiKey('zai', apiKey.trim());
 
       let dynamicModels: Array<{ id: string; name: string }> | undefined;
       if (providerConfig?.modelsEndpoint) {
-        const fetchResult = await accomplish.fetchProviderModels('zai', { zaiRegion: region });
+        const fetchResult = await somehow.fetchProviderModels('zai', { zaiRegion: region });
         if (fetchResult.success && fetchResult.models) {
           dynamicModels = fetchResult.models;
         }

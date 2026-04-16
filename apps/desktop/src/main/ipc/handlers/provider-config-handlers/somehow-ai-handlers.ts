@@ -25,7 +25,7 @@ const RUNTIME_UNAVAILABLE_MSG =
 /** Normalize runtime-unavailable errors to a user-friendly message. */
 function normalizeRuntimeError(err: unknown): never {
   const msg = err instanceof Error ? err.message : String(err);
-  if (msg.includes('accomplish_runtime_unavailable')) {
+  if (msg.includes('somehow_runtime_unavailable')) {
     throw new Error(RUNTIME_UNAVAILABLE_MSG);
   }
   throw err;

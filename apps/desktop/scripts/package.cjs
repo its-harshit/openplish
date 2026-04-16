@@ -12,6 +12,8 @@ const path = require('path');
 
 const isWindows = process.platform === 'win32';
 const nodeModulesPath = path.join(__dirname, '..', 'node_modules');
+const workspaceRoot = path.join(__dirname, '..', '..', '..');
+const rootPnpmPath = path.join(workspaceRoot, 'node_modules', '.pnpm');
 const somehowAiPath = path.join(nodeModulesPath, '@somehow_ai');
 
 // Save symlink targets for restoration
@@ -36,8 +38,11 @@ const pnpmSymlinksToResolve = [
   'opencode-windows-x64-baseline',
 ];
 const resolvedSymlinks = {};
+const injectedPackages = [];
 
 try {
+  ensureWindowsCliPackages();
+
   // Check and remove workspace symlinks
   for (const pkg of workspacePackages) {
     const pkgPath = path.join(somehowAiPath, pkg);
@@ -92,6 +97,11 @@ try {
   }
   execSync(command, { stdio: 'inherit', cwd: path.join(__dirname, '..') });
 } finally {
+  for (const pkgPath of injectedPackages) {
+    console.log('Removing injected package:', pkgPath);
+    fs.rmSync(pkgPath, { recursive: true, force: true });
+  }
+
   // Restore pnpm store symlinks
   for (const [pkg, { linkTarget, pkgPath }] of Object.entries(resolvedSymlinks)) {
     console.log('Restoring pnpm symlink:', pkgPath);
@@ -136,4 +146,48 @@ try {
       console.log('  Restored:', pkgPath);
     }
   }
+}
+
+function ensureWindowsCliPackages() {
+  if (!isWindows) {
+    return;
+  }
+
+  const requiredPackages = ['opencode-windows-x64', 'opencode-windows-x64-baseline'];
+
+  for (const pkg of requiredPackages) {
+    const destPath = path.join(nodeModulesPath, pkg);
+    if (fs.existsSync(destPath)) {
+      continue;
+    }
+
+    const storeDir = findPnpmStoreDir(pkg);
+    if (!storeDir) {
+      console.warn(`Could not locate pnpm store entry for ${pkg}; packaging may miss bundled CLI`);
+      continue;
+    }
+
+    const sourcePath = path.join(rootPnpmPath, storeDir, 'node_modules', pkg);
+    if (!fs.existsSync(sourcePath)) {
+      console.warn(`Could not locate source package for ${pkg} at ${sourcePath}`);
+      continue;
+    }
+
+    console.log('Injecting package for packaging:', pkg);
+    fs.cpSync(sourcePath, destPath, { recursive: true });
+    injectedPackages.push(destPath);
+  }
+}
+
+function findPnpmStoreDir(pkg) {
+  if (!fs.existsSync(rootPnpmPath)) {
+    return null;
+  }
+  const prefix = `${pkg}@`;
+  for (const entry of fs.readdirSync(rootPnpmPath, { withFileTypes: true })) {
+    if (entry.isDirectory() && entry.name.startsWith(prefix)) {
+      return entry.name;
+    }
+  }
+  return null;
 }

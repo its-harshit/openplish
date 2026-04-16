@@ -1,10 +1,10 @@
 # @somehow_ai/agent-core
 
-Core library for the Accomplish desktop automation assistant. Provides factory-based APIs for task management, persistent storage, permission handling, logging, and more.
+Core library for the SomeHow desktop automation assistant. Provides factory-based APIs for task management, persistent storage, permission handling, logging, and more.
 
 ## Usage
 
-This package is internal to the Accomplish monorepo and is consumed via workspace dependencies (for example, `"@somehow_ai/agent-core": "workspace:*"`).
+This package is internal to the SomeHow monorepo and is consumed via workspace dependencies (for example, `"@somehow_ai/agent-core": "workspace:*"`).
 
 ## Quick Start
 
@@ -13,7 +13,7 @@ import { createStorage, createTaskManager } from '@somehow_ai/agent-core';
 
 // Initialize storage (SQLite + encrypted secure storage)
 const storage = createStorage({
-  databasePath: '/path/to/accomplish.db',
+  databasePath: '/path/to/somehow.db',
   userDataPath: '/path/to/user-data',
 });
 storage.initialize();

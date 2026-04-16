@@ -122,7 +122,7 @@ function getDaemonNodePath(): string {
 
 function getDaemonEntryPath(): string {
   if (app.isPackaged) {
-    return path.join(process.resourcesPath, 'daemon', 'index.js');
+    return path.join(process.resourcesPath, 'daemon', 'index.cjs');
   }
   return path.join(app.getAppPath(), '..', 'daemon', 'dist', 'index.js');
 }
@@ -235,7 +235,7 @@ function isLaunchAgentInstalled(): boolean {
 // Linux: systemd user service
 // =============================================================================
 
-const SYSTEMD_SERVICE_NAME = 'accomplish-daemon.service';
+const SYSTEMD_SERVICE_NAME = 'somehow-daemon.service';
 
 function getSystemdServiceDir(): string {
   const configDir = process.env.XDG_CONFIG_HOME || path.join(process.env.HOME || '~', '.config');

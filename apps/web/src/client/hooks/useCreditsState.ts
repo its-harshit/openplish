@@ -20,18 +20,18 @@ export function getCreditStatusColor(usage: CreditUsage): string {
 }
 
 export function useCreditsState() {
-  const accomplish = useMemo(() => getSomehow(), []);
+  const somehow = useMemo(() => getSomehow(), []);
 
   const [usage, setUsage] = useState<CreditUsage | null>(null);
   const [isCreditsBlocked, setIsCreditsBlocked] = useState(false);
   const [hasAlternativeReadyProvider, setHasAlternativeReadyProvider] = useState(false);
   const [showQuotaInline, setShowQuotaInline] = useState(false);
 
-  type ProviderSettingsSnapshot = Awaited<ReturnType<typeof accomplish.getProviderSettings>>;
+  type ProviderSettingsSnapshot = Awaited<ReturnType<typeof somehow.getProviderSettings>>;
 
   const applyLiveUsage = useCallback(
     (settings: ProviderSettingsSnapshot, liveUsage: CreditUsage): boolean => {
-      const connectedAccomplish = settings.connectedProviders['somehow-ai'];
+      const connectedSomeHow = settings.connectedProviders['somehow-ai'];
       const readyAlternativeExists = (
         Object.keys(settings.connectedProviders) as ProviderId[]
       ).some(
@@ -40,7 +40,7 @@ export function useCreditsState() {
       );
       setHasAlternativeReadyProvider(readyAlternativeExists);
 
-      if (connectedAccomplish?.connectionStatus !== 'connected') {
+      if (connectedSomeHow?.connectionStatus !== 'connected') {
         setUsage(null);
         setIsCreditsBlocked(false);
         setShowQuotaInline(false);
@@ -50,7 +50,7 @@ export function useCreditsState() {
       const isExhausted = liveUsage.remainingCredits <= 0;
       const shouldBlock =
         settings.activeProviderId === 'somehow-ai' &&
-        isProviderReady(connectedAccomplish) &&
+        isProviderReady(connectedSomeHow) &&
         isExhausted;
 
       setUsage(liveUsage);
@@ -66,9 +66,9 @@ export function useCreditsState() {
 
   const refreshCreditsState = useCallback(async (): Promise<boolean> => {
     try {
-      const settings = await accomplish.getProviderSettings();
-      const connectedAccomplish = settings.connectedProviders['somehow-ai'];
-      if (connectedAccomplish?.connectionStatus !== 'connected') {
+      const settings = await somehow.getProviderSettings();
+      const connectedSomeHow = settings.connectedProviders['somehow-ai'];
+      if (connectedSomeHow?.connectionStatus !== 'connected') {
         const readyAlternativeExists = (
           Object.keys(settings.connectedProviders) as ProviderId[]
         ).some(
@@ -81,7 +81,7 @@ export function useCreditsState() {
         setShowQuotaInline(false);
         return false;
       }
-      const liveUsage = await accomplish.somehowAiGetUsage();
+      const liveUsage = await somehow.somehowAiGetUsage();
       return applyLiveUsage(settings, liveUsage);
     } catch {
       setHasAlternativeReadyProvider(false);
@@ -90,7 +90,7 @@ export function useCreditsState() {
       setShowQuotaInline(false);
       return false;
     }
-  }, [accomplish, applyLiveUsage]);
+  }, [somehow, applyLiveUsage]);
 
   const openQuotaBlockExperience = useCallback(() => {
     setShowQuotaInline(true);
@@ -102,8 +102,8 @@ export function useCreditsState() {
     (async () => {
       try {
         const [usageData, settings] = await Promise.all([
-          accomplish.somehowAiGetUsage?.(),
-          accomplish.getProviderSettings(),
+          somehow.somehowAiGetUsage?.(),
+          somehow.getProviderSettings(),
         ]);
         if (cancelled || !usageData) return;
         applyLiveUsage(settings, usageData);
@@ -114,14 +114,14 @@ export function useCreditsState() {
     return () => {
       cancelled = true;
     };
-  }, [accomplish, applyLiveUsage]);
+  }, [somehow, applyLiveUsage]);
 
   // Subscribe to live usage updates
   useEffect(() => {
-    const unsubscribe = accomplish.onSomehowAiUsageUpdate?.((liveUsage) => {
+    const unsubscribe = somehow.onSomehowAiUsageUpdate?.((liveUsage) => {
       void (async () => {
         try {
-          const settings = await accomplish.getProviderSettings();
+          const settings = await somehow.getProviderSettings();
           applyLiveUsage(settings, liveUsage);
         } catch {
           setHasAlternativeReadyProvider(false);
@@ -135,7 +135,7 @@ export function useCreditsState() {
     return () => {
       unsubscribe?.();
     };
-  }, [accomplish, applyLiveUsage]);
+  }, [somehow, applyLiveUsage]);
 
   return {
     usage,

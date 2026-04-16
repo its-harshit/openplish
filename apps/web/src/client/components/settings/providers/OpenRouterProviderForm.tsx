@@ -45,10 +45,10 @@ export function OpenRouterProviderForm({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
 
       // Validate key
-      const validation = await accomplish.validateApiKeyForProvider('openrouter', apiKey.trim());
+      const validation = await somehow.validateApiKeyForProvider('openrouter', apiKey.trim());
       if (!validation.valid) {
         setError(validation.error || t('apiKey.invalidKey'));
         setConnecting(false);
@@ -56,10 +56,10 @@ export function OpenRouterProviderForm({
       }
 
       // Save key
-      await accomplish.addApiKey('openrouter', apiKey.trim());
+      await somehow.addApiKey('openrouter', apiKey.trim());
 
       // Fetch models
-      const result = await accomplish.fetchOpenRouterModels();
+      const result = await somehow.fetchOpenRouterModels();
       if (!result.success) {
         setError(result.error || t('openrouter.fetchModelsFailed'));
         setConnecting(false);

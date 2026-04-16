@@ -28,7 +28,7 @@ export function useVertexProviderConnect({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
 
       const credentials =
         authTab === 'serviceAccount'
@@ -44,7 +44,7 @@ export function useVertexProviderConnect({
               location,
             };
 
-      const validation = await accomplish.validateVertexCredentials(credentials);
+      const validation = await somehow.validateVertexCredentials(credentials);
 
       if (!validation.valid) {
         setError(validation.error || t('vertex.invalidCredentials'));
@@ -52,9 +52,9 @@ export function useVertexProviderConnect({
         return;
       }
 
-      await accomplish.saveVertexCredentials(credentials);
+      await somehow.saveVertexCredentials(credentials);
       const credentialsJson = JSON.stringify(credentials);
-      const modelsResult = await accomplish.fetchVertexModels(credentialsJson);
+      const modelsResult = await somehow.fetchVertexModels(credentialsJson);
       const fetchedModels = modelsResult.success ? modelsResult.models : [];
       setAvailableModels(fetchedModels);
       const preferredDefault = 'vertex/google/gemini-2.5-pro';

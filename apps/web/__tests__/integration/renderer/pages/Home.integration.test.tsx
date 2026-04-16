@@ -36,8 +36,8 @@ function createMockTask(
   };
 }
 
-// Mock accomplish API
-const mockAccomplish = {
+// Mock somehow API
+const mockSomeHow = {
   ...SOMEHOW_BASELINE_MOCKS,
   // These tests assume only API-key providers gate submit (not bundled free mode).
   getBuildCapabilities: vi.fn().mockResolvedValue({ hasFreeMode: false }),
@@ -71,12 +71,12 @@ const mockAccomplish = {
   speechIsConfigured: vi.fn().mockResolvedValue(true),
 };
 
-// Mock the accomplish module
+// Mock the somehow module
 vi.mock('@/lib/somehow', () => ({
-  getSomehow: () => mockAccomplish,
-  useSomehow: () => mockAccomplish,
+  getSomehow: () => mockSomeHow,
+  useSomehow: () => mockSomeHow,
   getOptionalWindowBridge: () =>
-    typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+    typeof window !== 'undefined' ? (window.somehow ?? window.somehow) : undefined,
 }));
 
 // Mock store state holder
@@ -190,7 +190,7 @@ describe('Home Page Integration', () => {
     // Default to having API key (legacy)
     mockHasAnyApiKey.mockResolvedValue(true);
     // Default to having a ready provider (new provider settings)
-    mockAccomplish.getProviderSettings.mockResolvedValue({
+    mockSomeHow.getProviderSettings.mockResolvedValue({
       activeProviderId: 'anthropic',
       connectedProviders: {
         anthropic: {
@@ -320,13 +320,13 @@ describe('Home Page Integration', () => {
 
       // Assert - should check provider settings (via isE2EMode and getProviderSettings)
       await waitFor(() => {
-        expect(mockAccomplish.isE2EMode).toHaveBeenCalled();
+        expect(mockSomeHow.isE2EMode).toHaveBeenCalled();
       });
     });
 
     it('should open settings dialog when no provider is ready', async () => {
       // Arrange - Set up mock to return no ready providers
-      mockAccomplish.getProviderSettings.mockResolvedValue({
+      mockSomeHow.getProviderSettings.mockResolvedValue({
         activeProviderId: null,
         connectedProviders: {},
         debugMode: false,
@@ -390,7 +390,7 @@ describe('Home Page Integration', () => {
 
       // Assert - empty tasks return early, no provider check or task start
       await waitFor(() => {
-        expect(mockAccomplish.isE2EMode).not.toHaveBeenCalled();
+        expect(mockSomeHow.isE2EMode).not.toHaveBeenCalled();
         expect(mockStartTask).not.toHaveBeenCalled();
       });
     });
@@ -412,7 +412,7 @@ describe('Home Page Integration', () => {
 
       // Assert - whitespace-only input should not trigger any API calls
       await waitFor(() => {
-        expect(mockAccomplish.isE2EMode).not.toHaveBeenCalled();
+        expect(mockSomeHow.isE2EMode).not.toHaveBeenCalled();
         expect(mockStartTask).not.toHaveBeenCalled();
       });
     });
@@ -436,7 +436,7 @@ describe('Home Page Integration', () => {
         },
         debugMode: false,
       };
-      mockAccomplish.getProviderSettings.mockResolvedValue(emptySettings);
+      mockSomeHow.getProviderSettings.mockResolvedValue(emptySettings);
       const mockTask = createMockTask('task-123', 'My task', 'running');
       mockStartTask.mockResolvedValue(mockTask);
 
@@ -458,7 +458,7 @@ describe('Home Page Integration', () => {
         expect(screen.getByTestId('settings-dialog')).toBeInTheDocument();
       });
 
-      mockAccomplish.getProviderSettings.mockResolvedValue(readySettings);
+      mockSomeHow.getProviderSettings.mockResolvedValue(readySettings);
 
       // Simulate saving API key (which triggers onApiKeySaved callback)
       const saveButton = screen.getByRole('button', { name: /save api key/i });
@@ -598,7 +598,7 @@ describe('Home Page Integration', () => {
   describe('settings dialog interaction', () => {
     it('should close settings dialog without executing when cancelled', async () => {
       // Arrange - No ready provider
-      mockAccomplish.getProviderSettings.mockResolvedValue({
+      mockSomeHow.getProviderSettings.mockResolvedValue({
         activeProviderId: null,
         connectedProviders: {},
         debugMode: false,

@@ -20,11 +20,11 @@ export function useConnectors() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchConnectors = useCallback(async () => {
-    const accomplish = getSomehow();
+    const somehow = getSomehow();
     try {
       const [connectorsResult, slackStatusResult] = await Promise.allSettled([
-        accomplish.getConnectors(),
-        accomplish.getSlackMcpOauthStatus(),
+        somehow.getConnectors(),
+        somehow.getSlackMcpOauthStatus(),
       ]);
 
       if (connectorsResult.status === 'fulfilled') {
@@ -53,15 +53,15 @@ export function useConnectors() {
   }, [fetchConnectors]);
 
   const addConnector = useCallback(async (name: string, url: string) => {
-    const accomplish = getSomehow();
-    const connector = await accomplish.addConnector(name, url);
+    const somehow = getSomehow();
+    const connector = await somehow.addConnector(name, url);
     setConnectors((prev) => [connector, ...prev]);
     return connector;
   }, []);
 
   const deleteConnector = useCallback(async (id: string) => {
-    const accomplish = getSomehow();
-    await accomplish.deleteConnector(id);
+    const somehow = getSomehow();
+    await somehow.deleteConnector(id);
     setConnectors((prev) => prev.filter((c) => c.id !== id));
   }, []);
 
@@ -70,8 +70,8 @@ export function useConnectors() {
       const connector = connectors.find((c) => c.id === id);
       if (!connector) return;
 
-      const accomplish = getSomehow();
-      await accomplish.setConnectorEnabled(id, !connector.isEnabled);
+      const somehow = getSomehow();
+      await somehow.setConnectorEnabled(id, !connector.isEnabled);
       setConnectors((prev) =>
         prev.map((c) => (c.id === id ? { ...c, isEnabled: !c.isEnabled } : c)),
       );
@@ -85,8 +85,8 @@ export function useConnectors() {
     );
 
     try {
-      const accomplish = getSomehow();
-      return await accomplish.startConnectorOAuth(connectorId);
+      const somehow = getSomehow();
+      return await somehow.startConnectorOAuth(connectorId);
     } catch (err) {
       setConnectors((prev) =>
         prev.map((c) => (c.id === connectorId ? { ...c, status: 'error' as const } : c)),
@@ -96,8 +96,8 @@ export function useConnectors() {
   }, []);
 
   const completeOAuth = useCallback(async (state: string, code: string) => {
-    const accomplish = getSomehow();
-    const updated = await accomplish.completeConnectorOAuth(state, code);
+    const somehow = getSomehow();
+    const updated = await somehow.completeConnectorOAuth(state, code);
     if (updated) {
       setConnectors((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
     }
@@ -105,15 +105,15 @@ export function useConnectors() {
   }, []);
 
   const disconnect = useCallback(async (connectorId: string) => {
-    const accomplish = getSomehow();
-    await accomplish.disconnectConnector(connectorId);
+    const somehow = getSomehow();
+    await somehow.disconnectConnector(connectorId);
     setConnectors((prev) =>
       prev.map((c) => (c.id === connectorId ? { ...c, status: 'disconnected' as const } : c)),
     );
   }, []);
 
   const authenticateSlack = useCallback(async () => {
-    const accomplish = getSomehow();
+    const somehow = getSomehow();
 
     setSlackAuth(() => ({
       connected: false,
@@ -122,16 +122,16 @@ export function useConnectors() {
 
     try {
       if (slackAuth.pendingAuthorization) {
-        await accomplish.logoutSlackMcp();
+        await somehow.logoutSlackMcp();
       }
 
-      await accomplish.loginSlackMcp();
-      const status = await accomplish.getSlackMcpOauthStatus();
+      await somehow.loginSlackMcp();
+      const status = await somehow.getSlackMcpOauthStatus();
       setSlackAuth(status);
       return status;
     } catch (err) {
       try {
-        const status = await accomplish.getSlackMcpOauthStatus();
+        const status = await somehow.getSlackMcpOauthStatus();
         setSlackAuth(status);
       } catch {
         setSlackAuth({ connected: false, pendingAuthorization: false });
@@ -141,8 +141,8 @@ export function useConnectors() {
   }, [slackAuth.pendingAuthorization]);
 
   const disconnectSlack = useCallback(async () => {
-    const accomplish = getSomehow();
-    await accomplish.logoutSlackMcp();
+    const somehow = getSomehow();
+    await somehow.logoutSlackMcp();
     setSlackAuth({ connected: false, pendingAuthorization: false });
   }, []);
 

@@ -36,10 +36,10 @@ export function LiteLLMProviderForm({
     setError(null);
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
       const trimmedKey = apiKey.trim() || undefined;
 
-      const result = await accomplish.testLiteLLMConnection(serverUrl, trimmedKey);
+      const result = await somehow.testLiteLLMConnection(serverUrl, trimmedKey);
       if (!result.success) {
         setError(result.error || t('status.connectionFailed'));
         setConnecting(false);
@@ -47,9 +47,9 @@ export function LiteLLMProviderForm({
       }
 
       if (trimmedKey) {
-        await accomplish.addApiKey('litellm', trimmedKey);
+        await somehow.addApiKey('litellm', trimmedKey);
       } else {
-        await accomplish.removeApiKey('litellm');
+        await somehow.removeApiKey('litellm');
       }
 
       const models =

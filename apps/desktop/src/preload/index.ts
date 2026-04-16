@@ -21,7 +21,7 @@ import type {
 } from '@somehow_ai/agent-core';
 import type { CloudBrowserConfig } from '@somehow_ai/agent-core/common';
 
-// Expose the accomplish API to the renderer
+// Expose the somehow API to the renderer
 const somehowAPI = {
   // Utility for safely extracting native paths from DOM File objects in drop events
   getFilePath: (file: File): string => webUtils.getPathForFile(file),
@@ -911,19 +911,18 @@ const somehowAPI = {
 
 // Expose the API to the renderer (preferred + legacy names)
 contextBridge.exposeInMainWorld('somehow', somehowAPI);
+// Legacy name kept for backward compatibility during rebranding.
 contextBridge.exposeInMainWorld('accomplish', somehowAPI);
 
 // Also expose shell info for compatibility checks
-const packageVersion = process.env.npm_package_version;
-if (!packageVersion) {
-  throw new Error('Package version is not defined. Build is misconfigured.');
-}
+const packageVersion = process.env.npm_package_version ?? 'dev';
 const shellInfo = {
   version: packageVersion,
   platform: process.platform,
   isElectron: true as const,
 };
 contextBridge.exposeInMainWorld('somehowShell', shellInfo);
+// Legacy name kept for backward compatibility during rebranding.
 contextBridge.exposeInMainWorld('accomplishShell', shellInfo);
 
 // Type declarations

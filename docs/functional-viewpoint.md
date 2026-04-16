@@ -1,4 +1,4 @@
-# Functional Viewpoint — Accomplish Architecture
+# Functional Viewpoint — SomeHow Architecture
 
 > Rozanski & Woods Functional Viewpoint: identifies the system's functional elements, their responsibilities, interfaces, and primary interactions.
 
@@ -14,7 +14,7 @@ Start here. This diagram shows the four major building blocks, their single-sent
 graph TB
   USER(["👤 User"])
 
-  subgraph ELECTRON["Accomplish Desktop App"]
+  subgraph ELECTRON["SomeHow Desktop App"]
     direction TB
 
     subgraph UI["React UI"]
@@ -80,7 +80,7 @@ graph TB
   class DB,KEYS storageClass
 ```
 
-**Key takeaway:** Accomplish never calls LLMs directly. It orchestrates OpenCode (a PTY subprocess) which does all AI interaction and file operations. Accomplish's role is configuration, gating, completion enforcement, and UI.
+**Key takeaway:** SomeHow never calls LLMs directly. It orchestrates OpenCode (a PTY subprocess) which does all AI interaction and file operations. SomeHow's role is configuration, gating, completion enforcement, and UI.
 
 ---
 
@@ -308,7 +308,7 @@ graph TB
   end
 
   subgraph BRIDGE["Preload Bridge"]
-    CB["contextBridge<br/><i>window.accomplish</i>"]
+    CB["contextBridge<br/><i>window.somehow</i>"]
   end
 
   subgraph MAIN["Electron Main Process"]
@@ -508,7 +508,7 @@ How skills and MCP connectors are managed, stored, and injected into the agent's
 graph TB
   subgraph SOURCES["Skill Sources"]
     BUNDLED["Bundled Skills<br/><i>resources/skills/</i>"]
-    USER_DIR["User Skills<br/><i>~/.../Accomplish/skills/</i>"]
+    USER_DIR["User Skills<br/><i>~/.../SomeHow/skills/</i>"]
     GITHUB["GitHub URL<br/><i>raw.githubusercontent.com</i>"]
     LOCAL_FILE["Local .md File"]
   end
@@ -594,7 +594,7 @@ graph TB
 | **IPC Handlers**             | desktop    | ~50 `ipcMain.handle()` calls bridging UI to core                    | `task:start`, `session:resume`, `permission:respond`, etc.                   |
 | **Task Callbacks**           | desktop    | 12 event listeners translating core events to IPC pushes            | `onMessage`, `onComplete`, `onToolCallComplete`, etc.                        |
 | **Permission API**           | desktop    | HTTP servers on :9226/:9227 bridging MCP to Electron UI             | `startPermissionApiServer()`, `startQuestionApiServer()`                     |
-| **Preload Bridge**           | desktop    | `contextBridge.exposeInMainWorld('accomplish', ...)`                | ~70 API methods exposed to renderer                                          |
+| **Preload Bridge**           | desktop    | `contextBridge.exposeInMainWorld('somehow', ...)`                   | ~70 API methods exposed to renderer                                          |
 | **Task Store**               | web        | Zustand store: single source of truth for UI state                  | `useTaskStore()` with ~25 actions                                            |
 | **Router**                   | web        | Hash router: `/` (Home) and `/execution/:id`                        | `createHashRouter()`                                                         |
 

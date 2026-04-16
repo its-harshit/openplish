@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const PRODUCTION_API_URL = 'https://lite.accomplish.ai';
+const PRODUCTION_API_URL = 'https://lite.somehow.ai';
 
 const desktopConfigSchema = z.object({
   apiUrl: z.string().url().default(PRODUCTION_API_URL),

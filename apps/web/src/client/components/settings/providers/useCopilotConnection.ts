@@ -48,8 +48,8 @@ export function useCopilotConnection({
       return;
     }
 
-    const accomplish = getSomehow();
-    accomplish
+    const somehow = getSomehow();
+    somehow
       .getCopilotOAuthStatus()
       .then((status) => {
         if (status.connected) {
@@ -68,11 +68,11 @@ export function useCopilotConnection({
     let pollStarted = false;
 
     try {
-      const accomplish = getSomehow();
+      const somehow = getSomehow();
 
       // loginGithubCopilot now returns immediately with the user code;
       // polling continues in the background on the main process side.
-      const result = await accomplish.loginGithubCopilot();
+      const result = await somehow.loginGithubCopilot();
 
       if (result.ok) {
         if (result.userCode) {
@@ -92,7 +92,7 @@ export function useCopilotConnection({
         const poll = async () => {
           for (let i = 0; i < MAX_ATTEMPTS; i++) {
             await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
-            const status = await accomplish.getCopilotOAuthStatus();
+            const status = await somehow.getCopilotOAuthStatus();
             if (status.connected) {
               onConnect(buildCopilotProvider());
               setUserCode(null);
@@ -127,8 +127,8 @@ export function useCopilotConnection({
 
   const handleDisconnect = async () => {
     try {
-      const accomplish = getSomehow();
-      await accomplish.logoutGithubCopilot();
+      const somehow = getSomehow();
+      await somehow.logoutGithubCopilot();
     } catch (err) {
       logger.error('Failed to logout from Copilot:', err);
     }

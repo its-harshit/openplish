@@ -31,7 +31,7 @@ vi.mock('@/lib/somehow', () => {
     getSomehow: () => api,
     useSomehow: () => api,
     getOptionalWindowBridge: () =>
-      typeof window !== 'undefined' ? (window.somehow ?? window.accomplish) : undefined,
+      typeof window !== 'undefined' ? (window.somehow ?? window.somehow) : undefined,
   };
 });
 
@@ -91,7 +91,7 @@ describe('useTheme hook', () => {
     vi.clearAllMocks();
   });
 
-  // Flush async effects (e.g. accomplish.getTheme().then()) so state updates
+  // Flush async effects (e.g. somehow.getTheme().then()) so state updates
   // triggered by resolved promises are wrapped in act().
   async function renderThemeHook() {
     const hook = renderHook(() => useTheme());
@@ -170,7 +170,7 @@ describe('useTheme hook', () => {
       expect(result.current.theme).toBe('light');
     });
 
-    it('should call accomplish.setTheme with the new preference after toggle', async () => {
+    it('should call somehow.setTheme with the new preference after toggle', async () => {
       mockMatchMedia(false);
 
       const { result } = await renderThemeHook();

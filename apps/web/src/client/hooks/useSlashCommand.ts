@@ -30,8 +30,8 @@ export function useSlashCommand({
 
   const loadSkills = useCallback(async () => {
     try {
-      const accomplish = getSomehow();
-      const skills = await accomplish.getEnabledSkills();
+      const somehow = getSomehow();
+      const skills = await somehow.getEnabledSkills();
       const visible = skills.filter((s) => !s.isHidden);
       skillsCacheRef.current = visible;
       return visible;

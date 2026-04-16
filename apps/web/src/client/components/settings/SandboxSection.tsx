@@ -10,13 +10,13 @@ export function SandboxSection({ visible }: SandboxSectionProps) {
   const [sandboxEnabled, setSandboxEnabled] = useState(false);
   const [sandboxConfig, setSandboxConfig] = useState<SandboxConfig | null>(null);
   const [loading, setLoading] = useState(true);
-  const accomplish = getSomehow();
+  const somehow = getSomehow();
 
   useEffect(() => {
     if (!visible) {
       return;
     }
-    accomplish
+    somehow
       .getSandboxConfig()
       .then((config) => {
         setSandboxConfig(config);
@@ -24,7 +24,7 @@ export function SandboxSection({ visible }: SandboxSectionProps) {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, [visible, accomplish]);
+  }, [visible, somehow]);
 
   const handleToggle = useCallback(async () => {
     const newEnabled = !sandboxEnabled;
@@ -36,10 +36,10 @@ export function SandboxSection({ visible }: SandboxSectionProps) {
       ...(sandboxConfig ?? { allowedPaths: [], networkRestricted: false, allowedHosts: [] }),
       mode: newMode,
     };
-    await accomplish.setSandboxConfig(updated);
+    await somehow.setSandboxConfig(updated);
     setSandboxConfig(updated);
     setSandboxEnabled(newEnabled);
-  }, [sandboxEnabled, sandboxConfig, accomplish]);
+  }, [sandboxEnabled, sandboxConfig, somehow]);
 
   if (loading || !visible) {
     return null;

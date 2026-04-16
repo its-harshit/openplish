@@ -11,10 +11,10 @@ function getLegacyPaths(): LegacyPath[] {
   const appDataPath = app.getPath('appData');
   const isPackaged = app.isPackaged;
 
-  const legacyAccomplishDb = isPackaged ? 'accomplish.db' : 'accomplish-dev.db';
+  const legacySomeHowDb = isPackaged ? 'somehow.db' : 'somehow-dev.db';
   return [
-    { path: path.join(appDataPath, 'Accomplish'), dbName: legacyAccomplishDb },
-    { path: path.join(appDataPath, 'accomplish'), dbName: legacyAccomplishDb },
+    { path: path.join(appDataPath, 'SomeHow'), dbName: legacySomeHowDb },
+    { path: path.join(appDataPath, 'somehow'), dbName: legacySomeHowDb },
     {
       path: path.join(appDataPath, 'Openwork'),
       dbName: isPackaged ? 'openwork.db' : 'openwork-dev.db',
@@ -24,7 +24,7 @@ function getLegacyPaths(): LegacyPath[] {
       dbName: isPackaged ? 'openwork.db' : 'openwork-dev.db',
     },
     {
-      path: path.join(appDataPath, '@accomplish', 'desktop-v2'),
+      path: path.join(appDataPath, '@somehow', 'desktop-v2'),
       dbName: isPackaged ? 'openwork.db' : 'openwork-dev.db',
     },
   ];

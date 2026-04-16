@@ -92,7 +92,7 @@ Key packages:
 - Shared types go in `packages/agent-core/src/common/types/`
 - Core business logic goes in `packages/agent-core/src/`
 - UI state via Zustand store actions (in `apps/web/src/client/stores/`)
-- IPC handlers in `apps/desktop/src/main/ipc/handlers.ts` must match `window.somehow` / `window.accomplish` API in preload
+- IPC handlers in `apps/desktop/src/main/ipc/handlers.ts` must match `window.somehow` / `window.somehow` API in preload
 - **Always use braces for `if`/`else`/`for`/`while`** - No single-line braceless statements (enforced by `curly` ESLint rule)
 - **Avoid nested ternaries** - Use mapper objects or if/else for readability
 - **No unnecessary comments** - Don't add comments that restate what the code does. Comments should explain _why_, not _what_
@@ -119,7 +119,7 @@ Static assets go in `apps/web/public/assets/`.
 
 1. Add the handler in `apps/desktop/src/main/ipc/handlers.ts`
 2. Expose the method in `apps/desktop/src/preload/index.ts` via `contextBridge`
-3. Add the typed wrapper in `apps/web/src/client/lib/accomplish.ts`
+3. Add the typed wrapper in `apps/web/src/client/lib/somehow.ts`
 4. Use from components or `taskStore.ts`
 5. Run `pnpm typecheck` to verify the chain matches
 
