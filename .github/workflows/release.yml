@@ -243,7 +243,7 @@ jobs:
           ref: v${{ needs.version-bump.outputs.new_version }}
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -294,7 +294,7 @@ jobs:
           ref: v${{ needs.version-bump.outputs.new_version }}
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -340,12 +340,12 @@ jobs:
     runs-on: ubuntu-22.04-arm
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: v${{ needs.version-bump.outputs.new_version }}
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -387,12 +387,12 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: v${{ needs.version-bump.outputs.new_version }}
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -439,7 +439,7 @@ jobs:
   #         ref: v${{ needs.version-bump.outputs.new_version }}
   #
   #     - name: Setup pnpm
-  #       uses: pnpm/action-setup@v5
+  #       uses: pnpm/action-setup@v6
   #
   #     - name: Setup Node.js
   #       uses: actions/setup-node@v6
@@ -574,7 +574,7 @@ jobs:
           find ./release -type f 2>/dev/null || echo "No artifacts found"
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ needs.version-bump.outputs.new_version }}
           name: ${{ steps.check.outputs.dry_run == 'true' && '[TEST] ' || '' }}SomeHow v${{ needs.version-bump.outputs.new_version }}
